@@ -1,15 +1,19 @@
 using EcomPulse.Repository;
+using EcomPulse.Repository.CategoryRepository;
 using EcomPulse.Repository.Entities;
+using EcomPulse.Repository.ProductRepository;
+using EcomPulse.Service.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+//DATABASE CONFIGURATION
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 });
 
+//IDENTITY CONFIGURATION
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -19,9 +23,15 @@ builder.Services.AddIdentity<AppUser, AppRole>(options =>
     options.Password.RequiredLength = 5;
 }).AddEntityFrameworkStores<AppDbContext>();
 
+//REPORSITORY DI CONFIGURATION
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
+//SERVICE DI CONFIGURATION
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
