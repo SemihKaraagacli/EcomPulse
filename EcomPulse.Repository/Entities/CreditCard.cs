@@ -3,7 +3,7 @@
     public class CreditCard
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; } // Kullanıcı ile ilişki
+        public Guid UserId { get; set; }
         public AppUser User { get; set; }
 
         public string CardHolderName { get; set; } // Kart üzerindeki isim

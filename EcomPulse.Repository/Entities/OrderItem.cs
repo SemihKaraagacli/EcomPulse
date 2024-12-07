@@ -2,13 +2,13 @@
 {
     public class OrderItem
     {
-        public Guid Id { get; set; } // Primary Key
-        public Guid OrderId { get; set; } // Order ile ilişki (Foreign Key)
-        public Guid ProductId { get; set; } // Product ile ilişki (Foreign Key)
+        public Guid Id { get; set; }
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
 
-        public int Quantity { get; set; } // Sipariş edilen ürün miktarı
-        public decimal UnitPrice { get; set; } // Sipariş anındaki ürün birim fiyatı
-        public decimal TotalPrice => Quantity * UnitPrice; // Ürün toplam fiyatı
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal TotalPrice => Quantity * UnitPrice;
 
         // Navigation Properties
         public Order Order { get; set; }

@@ -2,12 +2,12 @@
 {
     public class Order
     {
-        public Guid Id { get; set; } // Primary Key
-        public Guid UserId { get; set; } // Kullanıcı kimliği (Foreign Key)
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public AppUser User { get; set; }
-        public DateTime CreatedAt { get; set; } // Sipariş tarihi
-        public decimal TotalAmount { get; set; } // Sipariş toplam tutarı
-        public string OrderStatus { get; set; } // Örneğin: Pending, Completed
+        public DateTime CreatedAt { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string OrderStatus { get; set; }
 
         public ICollection<OrderItem> OrderItems { get; set; }
         public Payment Payment { get; set; }

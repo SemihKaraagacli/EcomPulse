@@ -6,6 +6,7 @@ namespace EcomPulse.Repository
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser, AppRole, Guid>(options)
     {
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<Basket> Baskets { get; set; }
