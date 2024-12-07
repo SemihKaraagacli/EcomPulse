@@ -23,16 +23,6 @@ namespace EcomPulse.Repository.GenericRepository
             _dbSet.Remove(Entity);
         }
 
-        public async Task<IEnumerable<T>> GetAsync()
-        {
-            return await _dbSet.ToListAsync();
-        }
-
-        public async Task<T> GetByIdAsync(Guid Id)
-        {
-            return await _dbSet.FindAsync(Id);
-        }
-
         public async void UpdateAsync(T Entity)
         {
             _dbSet.Update(Entity);
