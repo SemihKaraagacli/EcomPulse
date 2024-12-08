@@ -12,12 +12,12 @@ namespace EcomPulse.Repository.CategoryRepository
             _context = context;
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public Task<Category> GetById(Guid id)
+        public Task<Category> GetByIdAsync(Guid id)
         {
             return _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
         }

@@ -12,12 +12,12 @@ namespace EcomPulse.Repository.ProductRepository
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await _context.Products.Include(x => x.Category).ToListAsync();
         }
 
-        public async Task<Product> GetById(Guid id)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
             return await _context.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
         }

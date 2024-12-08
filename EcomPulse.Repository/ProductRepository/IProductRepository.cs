@@ -6,7 +6,7 @@ namespace EcomPulse.Repository.ProductRepository
     public interface IProductRepository : IGenericRepository<Product>
     {
         Task<IEnumerable<Product>> GetFilterProductsAsync(Guid categoryId);
-        Task<IEnumerable<Product>> GetAll();
-        Task<Product> GetById(Guid id);
+        Task<IEnumerable<Product>> GetAllAsync();
+        Task<Product> GetByIdAsync(Guid id);
     }
 }

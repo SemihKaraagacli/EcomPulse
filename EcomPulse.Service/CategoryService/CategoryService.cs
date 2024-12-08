@@ -23,10 +23,34 @@ namespace EcomPulse.Service.CategoryService
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
         }
-
-
-
-
-
+        public async Task<ServiceResult> CategoryUpdate(CategoryUpdateRequest request)
+        {
+            var hasCategory = await categoryRepository.GetByIdAsync(request.Id);
+            if (hasCategory is null)
+            {
+                return ServiceResult.Fail("Category not found", HttpStatusCode.NotFound);
+            }
+            hasCategory.Name = request.Name;
+            categoryRepository.UpdateAsync(hasCategory);
+            await unitOfWork.CommitAsync();
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult> CategoryDelete(Guid id)
+        {
+            var hasCategory = await categoryRepository.GetByIdAsync(id);
+            if (hasCategory is null)
+            {
+                return ServiceResult.Fail("Category not found", HttpStatusCode.NotFound);
+            }
+            categoryRepository.DeleteAsync(hasCategory);
+            await unitOfWork.CommitAsync();
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult<IEnumerable<CategoryResponse>>> GetAllAsync()
+        {
+            var all = await categoryRepository.GetAllAsync();
+            var categoryResponse = all.Select(x => new CategoryResponse(x.Id, x.Name));
+            return ServiceResult<IEnumerable<CategoryResponse>>.Success(categoryResponse, HttpStatusCode.OK);
+        }
     }
 }
