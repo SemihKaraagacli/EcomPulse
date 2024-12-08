@@ -2,6 +2,7 @@ using EcomPulse.Repository;
 using EcomPulse.Repository.CategoryRepository;
 using EcomPulse.Repository.Entities;
 using EcomPulse.Repository.ProductRepository;
+using EcomPulse.Service.CategoryService;
 using EcomPulse.Service.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 //SERVICE DI CONFIGURATION
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
