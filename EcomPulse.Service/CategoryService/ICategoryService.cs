@@ -8,6 +8,6 @@ namespace EcomPulse.Service.CategoryService
         Task<ServiceResult> CategoryDeleteAsync(Guid id);
         Task<ServiceResult<IEnumerable<CategoryResponse>>> CategoryGetAllAsync();
         Task<ServiceResult<CategoryResponse>> CategoryGetByIdAsync(Guid id);
-        Task<ServiceResult> CategoryUpdateAsync(CategoryUpdateRequest request);
+        Task<ServiceResult> CategoryUpdateAsync(Guid Id,CategoryUpdateRequest request);
     }
 }

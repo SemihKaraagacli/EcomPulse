@@ -23,9 +23,9 @@ namespace EcomPulse.Service.CategoryService
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
         }
-        public async Task<ServiceResult> CategoryUpdateAsync(CategoryUpdateRequest request)
+        public async Task<ServiceResult> CategoryUpdateAsync(Guid Id,CategoryUpdateRequest request)
         {
-            var hasCategory = await categoryRepository.GetByIdAsync(request.Id);
+            var hasCategory = await categoryRepository.GetByIdAsync(Id);
             if (hasCategory is null)
             {
                 return ServiceResult.Fail("Category not found", HttpStatusCode.NotFound);
