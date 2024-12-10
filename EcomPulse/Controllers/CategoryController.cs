@@ -24,13 +24,13 @@ namespace EcomPulse.Controllers
             var result = await categoryService.CategoryGetByIdAsync(id);
             return CreateObjectResult(result);
         }
-        [HttpPut("update/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> CategoryUpdate(Guid id, CategoryUpdateRequest request)
         {
             var result = await categoryService.CategoryUpdateAsync(id, request);
             return CreateObjectResult(result);
         }
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> CategoryDelete(Guid id)
         {
             var result = await categoryService.CategoryDeleteAsync(id);
