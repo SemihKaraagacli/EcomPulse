@@ -12,5 +12,6 @@ namespace EcomPulse.Controllers
             var result = await productService.ProductCreateAsync(request);
             return CreateObjectResult(result);
         }
+
     }
 }

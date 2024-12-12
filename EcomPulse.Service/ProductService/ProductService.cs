@@ -23,6 +23,7 @@ namespace EcomPulse.Service.ProductService
                 Stock = request.Stock,
                 CategoryId = request.CategoryId,
             };
+
             productRepository.CreateAsync(newProduct);
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
