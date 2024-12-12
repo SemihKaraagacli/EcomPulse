@@ -23,10 +23,41 @@ namespace EcomPulse.Service.ProductService
                 Stock = request.Stock,
                 CategoryId = request.CategoryId,
             };
-
             productRepository.CreateAsync(newProduct);
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
+        }
+
+        public async Task<ServiceResult> ProductDeleteAsync(Guid id)
+        {
+            var hasProduct = await productRepository.GetByIdAsync(id);
+            if (hasProduct is null)
+            {
+                return ServiceResult.Fail("Product not found.", HttpStatusCode.NotFound);
+            }
+            productRepository.DeleteAsync(hasProduct);
+            await unitOfWork.CommitAsync();
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
+
+        public Task<ServiceResult<IEnumerable<ProductResponse>>> ProductFilterCategoryAsync(Guid categoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ServiceResult<IEnumerable<ProductResponse>>> ProductGetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ServiceResult<ProductResponse>> ProductGetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ServiceResult> ProductUpdateAsync(ProductUpdateRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }
