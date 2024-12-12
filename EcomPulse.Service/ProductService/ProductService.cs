@@ -52,9 +52,15 @@ namespace EcomPulse.Service.ProductService
             return ServiceResult<IEnumerable<ProductResponse>>.Success(productResponse, HttpStatusCode.OK);
         }
 
-        public Task<ServiceResult<ProductResponse>> ProductGetByIdAsync(Guid id)
+        public async Task<ServiceResult<ProductResponse>> ProductGetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var hasProduct = await productRepository.GetByIdAsync(id);
+            if (hasProduct is null)
+            {
+                return ServiceResult<ProductResponse>.Fail("Product not found.", HttpStatusCode.NotFound);
+            }
+            var productResponse = new ProductResponse(hasProduct.Id, hasProduct.Name, hasProduct.Description, hasProduct.Price, hasProduct.Stock, hasProduct.Category.Name);
+            return ServiceResult<ProductResponse>.Success(productResponse, HttpStatusCode.OK);
         }
 
         public Task<ServiceResult> ProductUpdateAsync(ProductUpdateRequest request)
