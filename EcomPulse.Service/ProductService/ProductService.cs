@@ -40,9 +40,11 @@ namespace EcomPulse.Service.ProductService
             return ServiceResult.Success(HttpStatusCode.OK);
         }
 
-        public Task<ServiceResult<IEnumerable<ProductResponse>>> ProductFilterCategoryAsync(Guid categoryId)
+        public async Task<ServiceResult<IEnumerable<ProductResponse>>> ProductFilterCategoryAsync(Guid categoryId)
         {
-            throw new NotImplementedException();
+            var filterProduct = await productRepository.GetFilterProductsAsync(categoryId);
+            var productResponse = filterProduct.Select(x => new ProductResponse(x.Id, x.Name, x.Description, x.Price, x.Stock, x.Category.Name));
+            return ServiceResult<IEnumerable<ProductResponse>>.Success(productResponse, HttpStatusCode.OK);
         }
 
         public async Task<ServiceResult<IEnumerable<ProductResponse>>> ProductGetAllAsync()

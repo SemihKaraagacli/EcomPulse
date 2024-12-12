@@ -24,7 +24,7 @@ namespace EcomPulse.Repository.ProductRepository
 
         public async Task<IEnumerable<Product>> GetFilterProductsAsync(Guid categoryId)
         {
-            return await _context.Products.Where(x => x.CategoryId == categoryId).ToListAsync();
+            return await _context.Products.Include(x => x.Category).Where(x => x.CategoryId == categoryId).ToListAsync();
         }
     }
 }
