@@ -18,6 +18,12 @@ namespace EcomPulse.Controllers
             var result = await productService.ProductDeleteAsync(id);
             return CreateObjectResult(result);
         }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var result = await productService.ProductGetAllAsync();
+            return CreateObjectResult(result);
+        }
 
     }
 }

@@ -45,9 +45,11 @@ namespace EcomPulse.Service.ProductService
             throw new NotImplementedException();
         }
 
-        public Task<ServiceResult<IEnumerable<ProductResponse>>> ProductGetAllAsync()
+        public async Task<ServiceResult<IEnumerable<ProductResponse>>> ProductGetAllAsync()
         {
-            throw new NotImplementedException();
+            var allProducts = await productRepository.GetAllAsync();
+            var productResponse = allProducts.Select(x => new ProductResponse(x.Id, x.Name, x.Description, x.Price, x.Stock, x.Category.Name));
+            return ServiceResult<IEnumerable<ProductResponse>>.Success(productResponse, HttpStatusCode.OK);
         }
 
         public Task<ServiceResult<ProductResponse>> ProductGetByIdAsync(Guid id)
