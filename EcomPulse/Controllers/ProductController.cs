@@ -30,6 +30,11 @@ namespace EcomPulse.Controllers
             var result = await productService.ProductGetByIdAsync(id);
             return CreateObjectResult(result);
         }
-
+        [HttpPut]
+        public async Task<IActionResult> Update(ProductUpdateRequest request)
+        {
+            var result = await productService.ProductUpdateAsync(request);
+            return CreateObjectResult(result);
+        }
     }
 }

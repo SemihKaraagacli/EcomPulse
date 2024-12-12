@@ -63,9 +63,21 @@ namespace EcomPulse.Service.ProductService
             return ServiceResult<ProductResponse>.Success(productResponse, HttpStatusCode.OK);
         }
 
-        public Task<ServiceResult> ProductUpdateAsync(ProductUpdateRequest request)
+        public async Task<ServiceResult> ProductUpdateAsync(ProductUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var hasProduct = await productRepository.GetByIdAsync(request.Id);
+            if (hasProduct is null)
+            {
+                return ServiceResult<ProductResponse>.Fail("Product not found.", HttpStatusCode.NotFound);
+            }
+            hasProduct.Name = request.Name;
+            hasProduct.Description = request.Description;
+            hasProduct.Price = request.Price;
+            hasProduct.Stock = request.Stock;
+            hasProduct.CategoryId = request.CategoryId;
+            productRepository.UpdateAsync(hasProduct);
+            await unitOfWork.CommitAsync();
+            return ServiceResult.Success(HttpStatusCode.OK);
         }
     }
 }

@@ -1,4 +1,4 @@
 ﻿namespace EcomPulse.Service.ProductService.Dtos
 {
-    public record ProductUpdateRequest(string Name, string Description, decimal Price, int Stock, Guid CategoryId);
+    public record ProductUpdateRequest(Guid Id, string Name, string Description, decimal Price, int Stock, Guid CategoryId);
 }
