@@ -7,31 +7,31 @@ namespace EcomPulse.Controllers
     public class CategoryController(ICategoryService categoryService) : CustomControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> CategoryCreate(CategoryCreateRequest request)
+        public async Task<IActionResult> Create(CategoryCreateRequest request)
         {
             var result = await categoryService.CategoryCreateAsync(request);
             return CreateObjectResult(result);
         }
         [HttpGet]
-        public async Task<IActionResult> CategoryGetAll()
+        public async Task<IActionResult> GetAll()
         {
             var result = await categoryService.CategoryGetAllAsync();
             return CreateObjectResult(result);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> CategoryGetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var result = await categoryService.CategoryGetByIdAsync(id);
             return CreateObjectResult(result);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> CategoryUpdate(Guid id, CategoryUpdateRequest request)
+        public async Task<IActionResult> Update(Guid id, CategoryUpdateRequest request)
         {
             var result = await categoryService.CategoryUpdateAsync(id, request);
             return CreateObjectResult(result);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> CategoryDelete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await categoryService.CategoryDeleteAsync(id);
             return CreateObjectResult(result);
