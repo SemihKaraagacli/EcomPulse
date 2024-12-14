@@ -17,9 +17,9 @@ namespace EcomPulse.Repository.CategoryRepository
             return await _context.Categories.ToListAsync();
         }
 
-        public Task<Category> GetByIdAsync(Guid id)
+        public async Task<Category> GetByIdAsync(Guid id)
         {
-            return _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

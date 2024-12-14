@@ -1,4 +1,6 @@
 using EcomPulse.Repository;
+using EcomPulse.Repository.BasketItemRepository;
+using EcomPulse.Repository.BasketRepository;
 using EcomPulse.Repository.CategoryRepository;
 using EcomPulse.Repository.Entities;
 using EcomPulse.Repository.ProductRepository;
@@ -28,6 +30,8 @@ builder.Services.AddIdentity<AppUser, AppRole>(options =>
 //REPORSITORY DI CONFIGURATION
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IBasketItemRepository, BasketItemRepository>();
 
 
 //SERVICE DI CONFIGURATION
