@@ -46,31 +46,28 @@ namespace EcomPulse.Service.BasketService
             }
             else
             {
-                if (request.Quantity > 0)
+                var hasBasketItem = hasBasket.BasketItems.FirstOrDefault(bi => bi.ProductId == request.ProductId);
+                if (hasBasketItem == null)
                 {
-                    var hasBasketItem = hasBasket.BasketItems.FirstOrDefault(bi => bi.ProductId == request.ProductId);
-                    if (hasBasketItem == null)
-                    {
-                        return ServiceResult.Fail("Basket Item not found.", HttpStatusCode.NotFound);
+                    return ServiceResult.Fail("Basket Item not found.", HttpStatusCode.NotFound);
 
-                    }
-                    hasBasketItem.Quantity += request.Quantity;
-                    basketItemRepository.UpdateAsync(hasBasketItem);
                 }
-                if (request.Quantity < 0)
-                {
-                    var hasBasketItem = hasBasket.BasketItems.FirstOrDefault(bi => bi.ProductId == request.ProductId);
-                    if (hasBasketItem == null)
-                    {
-                        return ServiceResult.Fail("Basket Item not found.", HttpStatusCode.NotFound);
-
-                    }
-                    hasBasketItem.Quantity -= request.Quantity;
-                    basketItemRepository.UpdateAsync(hasBasketItem);
-                }
+                hasBasketItem.Quantity = request.Quantity;
+                basketItemRepository.UpdateAsync(hasBasketItem);
             }
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult<BasketResponse>> GetBasket(Guid userId)
+        {
+            var hasUser = await userManager.FindByIdAsync(userId.ToString());
+            if (hasUser == null)
+            {
+                return ServiceResult<BasketResponse>.Fail("User not found.", HttpStatusCode.NotFound);
+            }
+            var basket = await basketRepository.GetAllAsync(userId);
+            var basketResponse = new BasketResponse(basket.Id, userId, basket.BasketItems.ToList(), basket.TotalPrice);
+            return ServiceResult<BasketResponse>.Success(basketResponse, HttpStatusCode.NotFound);
         }
     }
 }
