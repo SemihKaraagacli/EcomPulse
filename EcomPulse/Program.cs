@@ -4,11 +4,13 @@ using EcomPulse.Repository.BasketRepository;
 using EcomPulse.Repository.CategoryRepository;
 using EcomPulse.Repository.Entities;
 using EcomPulse.Repository.ProductRepository;
+using EcomPulse.Service.BasketService;
 using EcomPulse.Service.CategoryService;
 using EcomPulse.Service.ProductService;
 using EcomPulse.Service.UnitOfWork;
 using EcomPulse.Service.UserService;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

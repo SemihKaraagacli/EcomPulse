@@ -9,7 +9,7 @@ using System.Net;
 
 namespace EcomPulse.Service.BasketService
 {
-    public class BasketService(UserManager<AppUser> userManager, IProductRepository productRepository, IBasketItemRepository basketItemRepository, BasketRepository basketRepository, IUnitOfWork unitOfWork)
+    public class BasketService(UserManager<AppUser> userManager, IProductRepository productRepository, IBasketItemRepository basketItemRepository, IBasketRepository basketRepository, IUnitOfWork unitOfWork) : IBasketService
     {
         public async Task<ServiceResult> CreateBasket(BasketCreateRequest request)
         {
@@ -66,8 +66,9 @@ namespace EcomPulse.Service.BasketService
                 return ServiceResult<BasketResponse>.Fail("User not found.", HttpStatusCode.NotFound);
             }
             var basket = await basketRepository.GetAllAsync(userId);
-            var basketResponse = new BasketResponse(basket.Id, userId, basket.BasketItems.ToList(), basket.TotalPrice);
-            return ServiceResult<BasketResponse>.Success(basketResponse, HttpStatusCode.NotFound);
+            var basketItemResponse = basket.BasketItems.Select(x => new BasketItemResponse(x.Id, x.ProductId, x.Product.Name,x.Quantity ,x.Product.Price));
+            var basketResponse = new BasketResponse(basket.Id, userId, basketItemResponse.ToList(), basket.TotalPrice);
+            return ServiceResult<BasketResponse>.Success(basketResponse, HttpStatusCode.OK);
         }
     }
 }

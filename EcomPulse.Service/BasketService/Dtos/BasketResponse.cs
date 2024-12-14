@@ -2,5 +2,5 @@
 
 namespace EcomPulse.Service.BasketService.Dtos
 {
-    public record BasketResponse(Guid Id, Guid UserId, List<BasketItem> BasketItems, decimal TotalPrice);
+    public record BasketResponse(Guid Id, Guid UserId, List<BasketItemResponse> BasketItems, decimal TotalPrice);
 }
