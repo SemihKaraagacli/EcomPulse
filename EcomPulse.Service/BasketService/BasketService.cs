@@ -59,7 +59,7 @@ namespace EcomPulse.Service.BasketService
                 {
                     hasBasketItem.Quantity = request.Quantity;
                     basketItemRepository.UpdateAsync(hasBasketItem);
-                    if (hasBasketItem.Quantity == 0)  
+                    if (hasBasketItem.Quantity == 0)
                     {
                         basketItemRepository.DeleteAsync(hasBasketItem);
                     }
@@ -76,9 +76,29 @@ namespace EcomPulse.Service.BasketService
                 return ServiceResult<BasketResponse>.Fail("User not found.", HttpStatusCode.NotFound);
             }
             var basket = await basketRepository.GetAllAsync(userId);
+            if (basket is null)
+            {
+                return ServiceResult<BasketResponse>.Fail("Basket not found.", HttpStatusCode.NotFound);
+            }
             var basketItemResponse = basket.BasketItems.Select(x => new BasketItemResponse(x.Id, x.ProductId, x.Product.Name, x.Quantity, x.Product.Price));
             var basketResponse = new BasketResponse(basket.Id, userId, basketItemResponse.ToList(), basket.TotalPrice);
             return ServiceResult<BasketResponse>.Success(basketResponse, HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult> DeleteBasket(Guid userId)
+        {
+            var hasUser = await userManager.FindByIdAsync(userId.ToString());
+            if (hasUser is null)
+            {
+                return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            }
+            var basket = await basketRepository.GetAllAsync(userId);
+            if (basket is null)
+            {
+                return ServiceResult.Fail("Basket not found.", HttpStatusCode.NotFound);
+            }
+            basketRepository.DeleteAsync(basket);
+            await unitOfWork.CommitAsync();
+            return ServiceResult.Success(HttpStatusCode.OK);
         }
 
     }

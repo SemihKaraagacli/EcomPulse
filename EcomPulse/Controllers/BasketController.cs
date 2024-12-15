@@ -12,10 +12,16 @@ namespace EcomPulse.Controllers
             var result = await basketService.CreateBasket(request);
             return CreateObjectResult(result);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> Get(Guid userId)
         {
-            var result = await basketService.GetBasket(id);
+            var result = await basketService.GetBasket(userId);
+            return CreateObjectResult(result);
+        }
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            var result = await basketService.DeleteBasket(userId);
             return CreateObjectResult(result);
         }
     }
