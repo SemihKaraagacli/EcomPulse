@@ -24,7 +24,7 @@ namespace EcomPulse.Service.BasketService
                 return ServiceResult.Fail("Product not found.", HttpStatusCode.NotFound);
             }
             var hasBasket = await basketRepository.GetAllAsync(request.UserId);
-            if (hasBasket is null)
+            if (hasBasket is null) // If there is no basket, create a new basket and a new basket item. Match the items.
             {
                 var newBasket = new Basket
                 {
@@ -37,23 +37,33 @@ namespace EcomPulse.Service.BasketService
                     Price = hasProduct.Price,
                     Quantity = request.Quantity,
                 };
-                var updateStock = hasProduct.Stock - request.Quantity;
-                hasProduct.Stock = updateStock;
                 newBasket.BasketItems.Add(newBasketItem);
-                productRepository.UpdateAsync(hasProduct);
                 basketRepository.CreateAsync(newBasket);
                 basketItemRepository.CreateAsync(newBasketItem);
             }
             else
             {
                 var hasBasketItem = hasBasket.BasketItems.FirstOrDefault(bi => bi.ProductId == request.ProductId);
-                if (hasBasketItem == null)
+                if (hasBasketItem is null) // If the cart item does not exist, create a new cart item. Match the items.
                 {
-                    return ServiceResult.Fail("Basket Item not found.", HttpStatusCode.NotFound);
-
+                    var newBasketItem = new BasketItem
+                    {
+                        ProductId = hasProduct.Id,
+                        Price = hasProduct.Price,
+                        Quantity = request.Quantity,
+                    };
+                    hasBasket.BasketItems.Add(newBasketItem);
+                    basketItemRepository.CreateAsync(newBasketItem);
                 }
-                hasBasketItem.Quantity = request.Quantity;
-                basketItemRepository.UpdateAsync(hasBasketItem);
+                else // if there is a basket and a basket item, equalize the incoming quantity with the quantity in the basket item and delete the basket item if 0.
+                {
+                    hasBasketItem.Quantity = request.Quantity;
+                    basketItemRepository.UpdateAsync(hasBasketItem);
+                    if (hasBasketItem.Quantity == 0)  
+                    {
+                        basketItemRepository.DeleteAsync(hasBasketItem);
+                    }
+                }
             }
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
@@ -66,9 +76,10 @@ namespace EcomPulse.Service.BasketService
                 return ServiceResult<BasketResponse>.Fail("User not found.", HttpStatusCode.NotFound);
             }
             var basket = await basketRepository.GetAllAsync(userId);
-            var basketItemResponse = basket.BasketItems.Select(x => new BasketItemResponse(x.Id, x.ProductId, x.Product.Name,x.Quantity ,x.Product.Price));
+            var basketItemResponse = basket.BasketItems.Select(x => new BasketItemResponse(x.Id, x.ProductId, x.Product.Name, x.Quantity, x.Product.Price));
             var basketResponse = new BasketResponse(basket.Id, userId, basketItemResponse.ToList(), basket.TotalPrice);
             return ServiceResult<BasketResponse>.Success(basketResponse, HttpStatusCode.OK);
         }
+
     }
 }
