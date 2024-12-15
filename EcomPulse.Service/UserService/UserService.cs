@@ -1,4 +1,5 @@
-﻿using EcomPulse.Repository.Entities;
+﻿using Azure.Core;
+using EcomPulse.Repository.Entities;
 using EcomPulse.Service.UserService.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,13 +40,23 @@ namespace EcomPulse.Service.UserService
             var hasUser = await userManager.FindByIdAsync(request.Id.ToString());
             if (hasUser is null)
             {
-                return ServiceResult.Fail("User already exists.", HttpStatusCode.BadRequest);
+                return ServiceResult.Fail("User already exists.", HttpStatusCode.NotFound);
             }
             hasUser.UserName = request.UserName;
             hasUser.Email = request.Email;
             hasUser.PhoneNumber = request.PhoneNumber;
             await userManager.UpdateAsync(hasUser);
             return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult<UserResponse>> GetByIdUser(Guid id)
+        {
+            var hasUser = await userManager.FindByIdAsync(id.ToString());
+            if (hasUser is null)
+            {
+                return ServiceResult<UserResponse>.Fail("User already exists.", HttpStatusCode.NotFound);
+            }
+            var userResponse = new UserResponse(hasUser.Id, hasUser.UserName, hasUser.Email, hasUser.PhoneNumber);
+            return ServiceResult<UserResponse>.Success(userResponse, HttpStatusCode.OK);
         }
     }
 }

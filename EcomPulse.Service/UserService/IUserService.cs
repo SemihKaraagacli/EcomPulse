@@ -7,5 +7,6 @@ namespace EcomPulse.Service.UserService
         Task<ServiceResult<IEnumerable<UserResponse>>> GetAllUser();
         Task<ServiceResult> SignUp(UserCreateRequest request);
         Task<ServiceResult> UserUpdate(UserUpdateRequest request);
+        Task<ServiceResult<UserResponse>> GetByIdUser(Guid id);
     }
 }

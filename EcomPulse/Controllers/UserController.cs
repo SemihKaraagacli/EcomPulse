@@ -24,5 +24,11 @@ namespace EcomPulse.Controllers
             var result = await userService.UserUpdate(request);
             return CreateObjectResult(result);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await userService.GetByIdUser(id);
+            return CreateObjectResult(result);
+        }
     }
 }
