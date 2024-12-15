@@ -3,14 +3,16 @@ using EcomPulse.Repository.BasketItemRepository;
 using EcomPulse.Repository.BasketRepository;
 using EcomPulse.Repository.CategoryRepository;
 using EcomPulse.Repository.Entities;
+using EcomPulse.Repository.OrderItemRepository;
+using EcomPulse.Repository.OrderRepository;
 using EcomPulse.Repository.ProductRepository;
 using EcomPulse.Service.BasketService;
 using EcomPulse.Service.CategoryService;
+using EcomPulse.Service.OrderService;
 using EcomPulse.Service.ProductService;
 using EcomPulse.Service.UnitOfWork;
 using EcomPulse.Service.UserService;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +37,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IBasketItemRepository, BasketItemRepository>();
-
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 //SERVICE DI CONFIGURATION
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -43,6 +46,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

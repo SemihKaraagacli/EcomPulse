@@ -8,7 +8,7 @@
 
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
-        public decimal TotalPrice => Quantity * UnitPrice;
+        public decimal TotalPrice { get; set; }
 
         // Navigation Properties
         public Order Order { get; set; }
