@@ -34,5 +34,18 @@ namespace EcomPulse.Service.UserService
             var allUser = await userManager.Users.Select(x => new UserResponse(x.Id, x.UserName, x.Email, x.PhoneNumber)).ToListAsync();
             return ServiceResult<IEnumerable<UserResponse>>.Success(allUser, HttpStatusCode.OK);
         }
+        public async Task<ServiceResult> UserUpdate(UserUpdateRequest request)
+        {
+            var hasUser = await userManager.FindByIdAsync(request.Id.ToString());
+            if (hasUser is null)
+            {
+                return ServiceResult.Fail("User already exists.", HttpStatusCode.BadRequest);
+            }
+            hasUser.UserName = request.UserName;
+            hasUser.Email = request.Email;
+            hasUser.PhoneNumber = request.PhoneNumber;
+            await userManager.UpdateAsync(hasUser);
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
     }
 }

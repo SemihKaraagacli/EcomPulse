@@ -18,5 +18,11 @@ namespace EcomPulse.Controllers
             var result = await userService.GetAllUser();
             return CreateObjectResult(result);
         }
+        [HttpPut]
+        public async Task<IActionResult> Update(UserUpdateRequest request)
+        {
+            var result = await userService.UserUpdate(request);
+            return CreateObjectResult(result);
+        }
     }
 }
