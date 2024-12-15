@@ -58,5 +58,15 @@ namespace EcomPulse.Service.UserService
             var userResponse = new UserResponse(hasUser.Id, hasUser.UserName, hasUser.Email, hasUser.PhoneNumber);
             return ServiceResult<UserResponse>.Success(userResponse, HttpStatusCode.OK);
         }
+        public async Task<ServiceResult> DeleteUser(Guid id)
+        {
+            var hasUser = await userManager.FindByIdAsync(id.ToString());
+            if (hasUser is null)
+            {
+                return ServiceResult.Fail("User already exists.", HttpStatusCode.NotFound);
+            }
+            await userManager.DeleteAsync(hasUser);
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
     }
 }

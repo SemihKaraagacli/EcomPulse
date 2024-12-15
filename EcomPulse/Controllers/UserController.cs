@@ -30,5 +30,11 @@ namespace EcomPulse.Controllers
             var result = await userService.GetByIdUser(id);
             return CreateObjectResult(result);
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await userService.DeleteUser(id);
+            return CreateObjectResult(result);
+        }
     }
 }

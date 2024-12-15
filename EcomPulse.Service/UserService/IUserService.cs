@@ -8,5 +8,6 @@ namespace EcomPulse.Service.UserService
         Task<ServiceResult> SignUp(UserCreateRequest request);
         Task<ServiceResult> UserUpdate(UserUpdateRequest request);
         Task<ServiceResult<UserResponse>> GetByIdUser(Guid id);
+        Task<ServiceResult> DeleteUser(Guid id);
     }
 }
