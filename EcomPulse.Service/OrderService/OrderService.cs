@@ -86,5 +86,15 @@ namespace EcomPulse.Service.OrderService
 
             return ServiceResult<IEnumerable<OrderResponse>>.Success(orderResponse, HttpStatusCode.OK);
         }
+        public async Task<ServiceResult<OrderResponse>> GetByIdOrder(Guid OrderId)
+        {
+            var hasOrder = await orderRepository.GetByIdOrder(OrderId);
+            if (hasOrder is null)
+            {
+                return ServiceResult<OrderResponse>.Fail("Order not found.", HttpStatusCode.NotFound);
+            }
+            var orderResponse = new OrderResponse(hasOrder.Id, hasOrder.UserId, hasOrder.OrderItems.Select(x => new OrderItemResponse(x.Id, x.ProductId, x.Quantity, x.TotalPrice, x.UnitPrice)).ToList(), hasOrder.CreatedAt, hasOrder.TotalAmount, hasOrder.OrderStatus);
+            return ServiceResult<OrderResponse>.Success(orderResponse, HttpStatusCode.OK);
+        }
     }
 }

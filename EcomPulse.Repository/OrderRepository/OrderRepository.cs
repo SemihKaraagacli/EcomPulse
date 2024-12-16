@@ -15,5 +15,11 @@ namespace EcomPulse.Repository.OrderRepository
         {
             return await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Product).Where(x => x.UserId == userId).ToListAsync();
         }
+
+        public async Task<Order> GetByIdOrder(Guid orderId)
+        {
+            return await _context.Orders.Include(x => x.OrderItems).ThenInclude(x => x.Product).FirstOrDefaultAsync(x => x.Id == orderId);
+        }
     }
 }
+
