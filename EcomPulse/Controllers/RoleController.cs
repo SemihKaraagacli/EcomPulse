@@ -18,5 +18,11 @@ namespace EcomPulse.Controllers
             var result = await roleService.GetAllRole();
             return CreateObjectResult(result);
         }
+        [HttpPut]
+        public async Task<IActionResult> Update(RoleUpdateRequest request)
+        {
+            var result = await roleService.UpdateRole(request);
+            return CreateObjectResult(result);
+        }
     }
 }

@@ -28,5 +28,16 @@ namespace EcomPulse.Service.RoleService
             var roleResponse = allRole.Select(x => new RoleResponse(x.Id, x.Name)).ToList();
             return ServiceResult<IEnumerable<RoleResponse>>.Success(roleResponse, HttpStatusCode.OK);
         }
+        public async Task<ServiceResult> UpdateRole(RoleUpdateRequest request)
+        {
+            var hasRole = await roleManager.FindByIdAsync(request.Id.ToString());
+            if (hasRole is null)
+            {
+                return ServiceResult.Fail("Role not found.", HttpStatusCode.NotFound);
+            }
+            hasRole.Name = request.RoleName;
+            var roleResult = await roleManager.UpdateAsync(hasRole);
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
     }
 }
