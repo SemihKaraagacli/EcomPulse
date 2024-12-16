@@ -1,6 +1,7 @@
 ﻿using EcomPulse.Repository.Entities;
 using EcomPulse.Service.RoleService.Dtos;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace EcomPulse.Service.RoleService
@@ -20,6 +21,12 @@ namespace EcomPulse.Service.RoleService
                 return ServiceResult.Fail("failed to create role.", HttpStatusCode.BadRequest);
             }
             return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult<IEnumerable<RoleResponse>>> GetAllRole()
+        {
+            var allRole = await roleManager.Roles.ToListAsync();
+            var roleResponse = allRole.Select(x => new RoleResponse(x.Id, x.Name)).ToList();
+            return ServiceResult<IEnumerable<RoleResponse>>.Success(roleResponse, HttpStatusCode.OK);
         }
     }
 }

@@ -5,5 +5,6 @@ namespace EcomPulse.Service.RoleService
     public interface IRoleService
     {
         Task<ServiceResult> CreateRole(RoleCreateRequest request);
+        Task<ServiceResult<IEnumerable<RoleResponse>>> GetAllRole();
     }
 }
