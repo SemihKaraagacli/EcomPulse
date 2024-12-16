@@ -39,5 +39,15 @@ namespace EcomPulse.Service.RoleService
             var roleResult = await roleManager.UpdateAsync(hasRole);
             return ServiceResult.Success(HttpStatusCode.OK);
         }
+        public async Task<ServiceResult> DeleteRole(Guid roleId)
+        {
+            var hasRole = await roleManager.FindByIdAsync(roleId.ToString());
+            if (hasRole is null)
+            {
+                return ServiceResult.Fail("Role not found.", HttpStatusCode.NotFound);
+            }
+            await roleManager.DeleteAsync(hasRole);
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
     }
 }
