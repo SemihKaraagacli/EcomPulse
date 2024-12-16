@@ -6,7 +6,7 @@ using System.Net;
 
 namespace EcomPulse.Service.RoleService
 {
-    public class RoleService(RoleManager<AppRole> roleManager) : IRoleService
+    public class RoleService(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager) : IRoleService
     {
         public async Task<ServiceResult> CreateRole(RoleCreateRequest request)
         {
@@ -18,7 +18,8 @@ namespace EcomPulse.Service.RoleService
             var roleResult = await roleManager.CreateAsync(new AppRole { Name = request.RoleName });
             if (!roleResult.Succeeded)
             {
-                return ServiceResult.Fail("failed to create role.", HttpStatusCode.BadRequest);
+                var errorList = roleResult.Errors.Select(x => x.Description).ToList();
+                return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
             }
             return ServiceResult.Success(HttpStatusCode.OK);
         }
@@ -47,6 +48,26 @@ namespace EcomPulse.Service.RoleService
                 return ServiceResult.Fail("Role not found.", HttpStatusCode.NotFound);
             }
             await roleManager.DeleteAsync(hasRole);
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult> AddRoleToUser(Guid userId, Guid roleId)
+        {
+            var hasUser = await userManager.FindByIdAsync(userId.ToString());
+            if (hasUser is null)
+            {
+                return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            }
+            var hasRole = await roleManager.FindByIdAsync(roleId.ToString());
+            if (hasRole is null)
+            {
+                return ServiceResult.Fail("Role not found.", HttpStatusCode.NotFound);
+            }
+            var result = await userManager.AddToRoleAsync(hasUser, hasRole.Name!.ToString());
+            if (!result.Succeeded)
+            {
+                var errorList = result.Errors.Select(x => x.Description).ToList();
+                return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
+            }
             return ServiceResult.Success(HttpStatusCode.OK);
         }
     }

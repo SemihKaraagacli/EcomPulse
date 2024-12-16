@@ -30,5 +30,11 @@ namespace EcomPulse.Controllers
             var result = await roleService.DeleteRole(roleId);
             return CreateObjectResult(result);
         }
+        [HttpPost("{userId}/{roleId}")]
+        public async Task<IActionResult> AddRoleToUser(Guid userId, Guid roleId)
+        {
+            var result = await roleService.AddRoleToUser(userId, roleId);
+            return CreateObjectResult(result);
+        }
     }
 }
