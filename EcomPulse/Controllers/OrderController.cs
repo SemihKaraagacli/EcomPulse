@@ -24,5 +24,11 @@ namespace EcomPulse.Controllers
             var result = await orderService.GetByIdOrder(orderId);
             return CreateObjectResult(result);
         }
+        [HttpDelete("{orderId}")]
+        public async Task<IActionResult> Delete(Guid orderId)
+        {
+            var result = await orderService.OrderDelete(orderId);
+            return CreateObjectResult(result);
+        }
     }
 }

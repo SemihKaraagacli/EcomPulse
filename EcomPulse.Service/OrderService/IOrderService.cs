@@ -7,5 +7,6 @@ namespace EcomPulse.Service.OrderService
         Task<ServiceResult> CreateOrder(OrderCreateRequest request);
         Task<ServiceResult<IEnumerable<OrderResponse>>> GetAllOrder(Guid userId);
         Task<ServiceResult<OrderResponse>> GetByIdOrder(Guid OrderId);
+        Task<ServiceResult> OrderDelete(Guid orderId);
     }
 }
