@@ -1,4 +1,5 @@
-﻿using EcomPulse.Repository.BasketItemRepository;
+﻿using Azure.Core;
+using EcomPulse.Repository.BasketItemRepository;
 using EcomPulse.Repository.BasketRepository;
 using EcomPulse.Repository.Entities;
 using EcomPulse.Repository.OrderItemRepository;
@@ -46,25 +47,44 @@ namespace EcomPulse.Service.OrderService
                 }).ToList();
                 var newOrder = new Order
                 {
-                    OrderItems = newOrderItems, // OrderItem listesini ekle
+                    OrderItems = newOrderItems, // Add OrderItem list
                     OrderStatus = "Pending",
-                    TotalAmount = newOrderItems.Sum(item => item.UnitPrice * item.Quantity), // Toplam tutarı hesapla
+                    TotalAmount = newOrderItems.Sum(item => item.UnitPrice * item.Quantity), // Calculate total amount
                     CreatedAt = DateTime.UtcNow,
                     UserId = request.UserId
                 };
                 foreach (var orderItem in newOrderItems)
                 {
-                    orderItemRepository.CreateAsync(orderItem); // Tek tek OrderItem ekle
+                    orderItemRepository.CreateAsync(orderItem); // Add OrderItem one by one
                 }
                 foreach (var basketItem in hasBasketItem)
                 {
-                    basketItemRepository.DeleteAsync(basketItem); // Tek tek BasketItem sil
+                    basketItemRepository.DeleteAsync(basketItem); // Delete individual BasketItem
                 }
                 orderRepository.CreateAsync(newOrder);
                 basketRepository.DeleteAsync(hasBasket);
             }
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult<IEnumerable<OrderResponse>>> GetAllOrder(Guid userId)
+        {
+            var hasUser = await userManager.FindByIdAsync(userId.ToString());
+            if (hasUser is null)
+            {
+                return ServiceResult<IEnumerable<OrderResponse>>.Fail("User not found.", HttpStatusCode.NotFound);
+            }
+            var allOrder = await orderRepository.GetAllOrder(userId);
+            var orderResponse = allOrder.Select(order => new OrderResponse(
+                order.Id, order.UserId, order.OrderItems.Select(orderItem => new OrderItemResponse(
+                    orderItem.Id, orderItem.ProductId, orderItem.Quantity, orderItem.TotalPrice, orderItem.UnitPrice
+                    )).ToList(),
+                order.CreatedAt,
+                order.TotalAmount,
+                order.OrderStatus
+                )).ToList();
+
+            return ServiceResult<IEnumerable<OrderResponse>>.Success(orderResponse, HttpStatusCode.OK);
         }
     }
 }

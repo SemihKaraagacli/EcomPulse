@@ -12,5 +12,11 @@ namespace EcomPulse.Controllers
             var result = await orderService.CreateOrder(request);
             return CreateObjectResult(result);
         }
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetAll(Guid userId)
+        {
+            var result = await orderService.GetAllOrder(userId);
+            return CreateObjectResult(result);
+        }
     }
 }
