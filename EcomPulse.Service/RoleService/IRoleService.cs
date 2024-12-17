@@ -9,5 +9,6 @@ namespace EcomPulse.Service.RoleService
         Task<ServiceResult> UpdateRole(RoleUpdateRequest request);
         Task<ServiceResult> DeleteRole(Guid roleId);
         Task<ServiceResult> AddRoleToUser(Guid userId, Guid roleId);
+        Task<ServiceResult> RemoveRoleToUser(Guid userId, Guid roleId);
     }
 }

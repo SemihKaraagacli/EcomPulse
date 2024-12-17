@@ -70,5 +70,26 @@ namespace EcomPulse.Service.RoleService
             }
             return ServiceResult.Success(HttpStatusCode.OK);
         }
+        public async Task<ServiceResult> RemoveRoleToUser(Guid userId, Guid roleId)
+        {
+
+            var hasUser = await userManager.FindByIdAsync(userId.ToString());
+            if (hasUser is null)
+            {
+                return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            }
+            var hasRole = await roleManager.FindByIdAsync(roleId.ToString());
+            if (hasRole is null)
+            {
+                return ServiceResult.Fail("Role not found.", HttpStatusCode.NotFound);
+            }
+            var result = await userManager.RemoveFromRoleAsync(hasUser, hasRole.Name!.ToString());
+            if (!result.Succeeded)
+            {
+                var errorList = result.Errors.Select(x => x.Description).ToList();
+                return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
+            }
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
     }
 }
