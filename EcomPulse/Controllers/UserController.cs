@@ -27,7 +27,7 @@ namespace EcomPulse.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await userService.GetByIdUser(id);
+            var result = await userService.GetByIdUser(id); 
             return CreateObjectResult(result);
         }
         [HttpDelete("{id}")]
