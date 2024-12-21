@@ -10,12 +10,14 @@ using EcomPulse.Repository.ProductRepository;
 using EcomPulse.Service.BasketService;
 using EcomPulse.Service.CategoryService;
 using EcomPulse.Service.CreditCardService;
+using EcomPulse.Service.HostedService;
 using EcomPulse.Service.OrderService;
 using EcomPulse.Service.ProductService;
 using EcomPulse.Service.RoleService;
 using EcomPulse.Service.UnitOfWork;
 using EcomPulse.Service.UserService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,7 +56,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICreditCardService, CreditCardService>();
 
-
+builder.Services.AddHostedService<ExpirationDateCheckerService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

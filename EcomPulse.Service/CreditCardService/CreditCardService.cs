@@ -1,4 +1,5 @@
-﻿using EcomPulse.Repository.CreditCardRepository;
+﻿using Azure.Core;
+using EcomPulse.Repository.CreditCardRepository;
 using EcomPulse.Repository.Entities;
 using EcomPulse.Service.CreditCardService.Dtos;
 using EcomPulse.Service.UnitOfWork;
@@ -42,10 +43,21 @@ namespace EcomPulse.Service.CreditCardService
             var hasCreditCard = await creditCardRespository.GetById(request.Id);
             if (hasCreditCard is null)
             {
-                return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+                return ServiceResult.Fail("Credit card not found.", HttpStatusCode.NotFound);
             }
             hasCreditCard.AvailableBalance = request.AvailableBalance;
             creditCardRespository.UpdateAsync(hasCreditCard);
+            await unitOfWork.CommitAsync();
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
+        public async Task<ServiceResult> DeleteAsync(Guid Id)
+        {
+            var hasCreditCard = await creditCardRespository.GetById(Id);
+            if (hasCreditCard is null)
+            {
+                return ServiceResult.Fail("Credit card not found.", HttpStatusCode.NotFound);
+            }
+            creditCardRespository.DeleteAsync(hasCreditCard);
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
         }
