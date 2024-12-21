@@ -1,6 +1,4 @@
-﻿using EcomPulse.Repository.Entities;
-using EcomPulse.Service.CreditCardService.Dtos;
-using EcomPulse.Service.RoleService.Dtos;
+﻿using EcomPulse.Service.CreditCardService.Dtos;
 
 namespace EcomPulse.Service.UserService.Dtos
 {

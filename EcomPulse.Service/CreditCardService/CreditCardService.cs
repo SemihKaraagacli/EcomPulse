@@ -37,5 +37,17 @@ namespace EcomPulse.Service.CreditCardService
             await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
         }
+        public async Task<ServiceResult> UpdateAsync(CreditCardUpdateRequest request)
+        {
+            var hasCreditCard = await creditCardRespository.GetById(request.Id);
+            if (hasCreditCard is null)
+            {
+                return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            }
+            hasCreditCard.AvailableBalance = request.AvailableBalance;
+            creditCardRespository.UpdateAsync(hasCreditCard);
+            await unitOfWork.CommitAsync();
+            return ServiceResult.Success(HttpStatusCode.OK);
+        }
     }
 }

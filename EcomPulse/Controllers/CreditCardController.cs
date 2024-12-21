@@ -12,5 +12,11 @@ namespace EcomPulse.Controllers
             var result = await creditCardService.CreateAsync(request);
             return CreateObjectResult(result);
         }
+        [HttpPut]
+        public async Task<IActionResult> Create(CreditCardUpdateRequest request)
+        {
+            var result = await creditCardService.UpdateAsync(request);
+            return CreateObjectResult(result);
+        }
     }
 }

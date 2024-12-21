@@ -5,5 +5,6 @@ namespace EcomPulse.Repository.CreditCardRepository
 {
     public interface ICreditCardRespository : IGenericRepository<CreditCard>
     {
+        Task<CreditCard> GetById(Guid Id);
     }
 }

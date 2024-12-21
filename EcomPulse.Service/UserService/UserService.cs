@@ -72,6 +72,7 @@ namespace EcomPulse.Service.UserService
             }
             var hasRole = await userManager.GetRolesAsync(hasUser);
             var creditCards = hasUser.CreditCards.Select(x => new CreditCardResponse(
+                x.Id,
                 x.UserId,
                 x.CardHolderName,
                 x.CardNumber,
