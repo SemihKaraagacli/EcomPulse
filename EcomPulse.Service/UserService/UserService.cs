@@ -78,7 +78,7 @@ namespace EcomPulse.Service.UserService
                 x.ExpirationDateFormatted,
                 x.CVV,
                 x.AvailableBalance
-                )).ToList();
+                )).ToList(); //Get CreditCard
             var userResponse = new UserResponse(
                 hasUser.Id,
                 hasUser.UserName,
