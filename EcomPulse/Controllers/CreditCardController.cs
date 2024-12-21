@@ -19,10 +19,10 @@ namespace EcomPulse.Controllers
             return CreateObjectResult(result);
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete(Guid Id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await creditCardService.DeleteAsync(Id);
+            var result = await creditCardService.DeleteAsync(id);
             return CreateObjectResult(result);
         }
     }
