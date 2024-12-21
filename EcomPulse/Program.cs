@@ -2,12 +2,14 @@ using EcomPulse.Repository;
 using EcomPulse.Repository.BasketItemRepository;
 using EcomPulse.Repository.BasketRepository;
 using EcomPulse.Repository.CategoryRepository;
+using EcomPulse.Repository.CreditCardRepository;
 using EcomPulse.Repository.Entities;
 using EcomPulse.Repository.OrderItemRepository;
 using EcomPulse.Repository.OrderRepository;
 using EcomPulse.Repository.ProductRepository;
 using EcomPulse.Service.BasketService;
 using EcomPulse.Service.CategoryService;
+using EcomPulse.Service.CreditCardService;
 using EcomPulse.Service.OrderService;
 using EcomPulse.Service.ProductService;
 using EcomPulse.Service.RoleService;
@@ -40,6 +42,7 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IBasketItemRepository, BasketItemRepository>();
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<ICreditCardRespository, CreditCardRepository>();
 
 //SERVICE DI CONFIGURATION
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -49,6 +52,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<ICreditCardService, CreditCardService>();
+
+
 
 // Add services to the container.
 builder.Services.AddControllers();

@@ -8,8 +8,10 @@
 
         public string CardHolderName { get; set; } // Kart üzerindeki isim
         public string CardNumber { get; set; } // Sadece son 4 hanesi tutulur
-        public string ExpirationDate { get; set; } // Geçerlilik tarihi (MM/YY)
+        public DateTime ExpirationDate { get; set; }
+        public string ExpirationDateFormatted => ExpirationDate.ToString("MM/yyyy"); // Geçerlilik tarihi (MM/YYYY)
         public string CVV { get; set; } // Şifrelenmiş ya da sadece doğrulama için kullanılır
+        public decimal AvailableBalance { get; set; } // kullanılabilir bakiye
         public DateTime AddedDate { get; set; } // Kartın sisteme eklendiği tarih
 
         public ICollection<Payment> Payments { get; set; }

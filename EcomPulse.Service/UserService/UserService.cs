@@ -1,5 +1,5 @@
-﻿using Azure.Core;
-using EcomPulse.Repository.Entities;
+﻿using EcomPulse.Repository.Entities;
+using EcomPulse.Service.CreditCardService.Dtos;
 using EcomPulse.Service.UserService.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using System.Net;
 
 namespace EcomPulse.Service.UserService
 {
-    public class UserService(UserManager<AppUser> userManager) : IUserService
+    public class UserService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager) : IUserService
     {
         public async Task<ServiceResult> SignUp(UserCreateRequest request)
         {
@@ -30,10 +30,25 @@ namespace EcomPulse.Service.UserService
             }
             return ServiceResult.Success(HttpStatusCode.OK);
         }
-        public async Task<ServiceResult<IEnumerable<UserResponse>>> GetAllUser()
+        public async Task<ServiceResult<IEnumerable<AllUserResponse>>> GetAllUser()
         {
-            var allUser = await userManager.Users.Select(x => new UserResponse(x.Id, x.UserName, x.Email, x.PhoneNumber)).ToListAsync();
-            return ServiceResult<IEnumerable<UserResponse>>.Success(allUser, HttpStatusCode.OK);
+            var allUser = await userManager.Users.Include(x => x.CreditCards).ToListAsync();
+            var allUserResponses = new List<AllUserResponse>();
+
+            foreach (var user in allUser)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                var allUerResponse = new AllUserResponse(
+                    user.Id,
+                    user.UserName,
+                    user.Email,
+                    user.PhoneNumber,
+                    roles.ToList()
+                );
+
+                allUserResponses.Add(allUerResponse);
+            }
+            return ServiceResult<IEnumerable<AllUserResponse>>.Success(allUserResponses, HttpStatusCode.OK);
         }
         public async Task<ServiceResult> UserUpdate(UserUpdateRequest request)
         {
@@ -50,12 +65,28 @@ namespace EcomPulse.Service.UserService
         }
         public async Task<ServiceResult<UserResponse>> GetByIdUser(Guid id)
         {
-            var hasUser = await userManager.FindByIdAsync(id.ToString());
+            var hasUser = await userManager.Users.Include(x => x.CreditCards).FirstOrDefaultAsync(x => x.Id == id);
             if (hasUser is null)
             {
                 return ServiceResult<UserResponse>.Fail("User already exists.", HttpStatusCode.NotFound);
             }
-            var userResponse = new UserResponse(hasUser.Id, hasUser.UserName, hasUser.Email, hasUser.PhoneNumber);
+            var hasRole = await userManager.GetRolesAsync(hasUser);
+            var creditCards = hasUser.CreditCards.Select(x => new CreditCardResponse(
+                x.UserId,
+                x.CardHolderName,
+                x.CardNumber,
+                x.ExpirationDateFormatted,
+                x.CVV,
+                x.AvailableBalance
+                )).ToList();
+            var userResponse = new UserResponse(
+                hasUser.Id,
+                hasUser.UserName,
+                hasUser.Email,
+                hasUser.PhoneNumber,
+                hasRole.ToList(),
+                creditCards);
+
             return ServiceResult<UserResponse>.Success(userResponse, HttpStatusCode.OK);
         }
         public async Task<ServiceResult> DeleteUser(Guid id)
