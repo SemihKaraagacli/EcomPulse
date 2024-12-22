@@ -6,12 +6,14 @@ using EcomPulse.Repository.CreditCardRepository;
 using EcomPulse.Repository.Entities;
 using EcomPulse.Repository.OrderItemRepository;
 using EcomPulse.Repository.OrderRepository;
+using EcomPulse.Repository.PaymentRepository;
 using EcomPulse.Repository.ProductRepository;
 using EcomPulse.Service.BasketService;
 using EcomPulse.Service.CategoryService;
 using EcomPulse.Service.CreditCardService;
 using EcomPulse.Service.HostedService;
 using EcomPulse.Service.OrderService;
+using EcomPulse.Service.PaymentService;
 using EcomPulse.Service.ProductService;
 using EcomPulse.Service.RoleService;
 using EcomPulse.Service.UnitOfWork;
@@ -45,6 +47,7 @@ builder.Services.AddScoped<IBasketItemRepository, BasketItemRepository>();
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ICreditCardRespository, CreditCardRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 //SERVICE DI CONFIGURATION
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -55,6 +58,7 @@ builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICreditCardService, CreditCardService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 builder.Services.AddHostedService<ExpirationDateCheckerService>();
 

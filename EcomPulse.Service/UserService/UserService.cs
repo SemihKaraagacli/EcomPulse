@@ -21,6 +21,9 @@ namespace EcomPulse.Service.UserService
                 Email = request.Email,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
+                Address = request.Address,
+                City = request.City,
+                County = request.County
             };
             var user = await userManager.CreateAsync(newUser, request.Password);
             if (!user.Succeeded)
@@ -43,6 +46,9 @@ namespace EcomPulse.Service.UserService
                     user.UserName,
                     user.Email,
                     user.PhoneNumber,
+                    user.Address,
+                    user.City,
+                    user.County,
                     roles.ToList()
                 );
 
@@ -85,6 +91,9 @@ namespace EcomPulse.Service.UserService
                 hasUser.UserName,
                 hasUser.Email,
                 hasUser.PhoneNumber,
+                hasUser.County,
+                hasUser.City,
+                hasUser.Address,
                 hasRole.ToList(),
                 creditCards);
 
