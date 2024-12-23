@@ -8,6 +8,7 @@ using EcomPulse.Repository.OrderItemRepository;
 using EcomPulse.Repository.OrderRepository;
 using EcomPulse.Repository.PaymentRepository;
 using EcomPulse.Repository.ProductRepository;
+using EcomPulse.Service.AuthService;
 using EcomPulse.Service.BasketService;
 using EcomPulse.Service.CategoryService;
 using EcomPulse.Service.CreditCardService;
@@ -18,8 +19,10 @@ using EcomPulse.Service.ProductService;
 using EcomPulse.Service.RoleService;
 using EcomPulse.Service.UnitOfWork;
 using EcomPulse.Service.UserService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,8 +62,29 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICreditCardService, CreditCardService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
+//BACKSERVICE 
 builder.Services.AddHostedService<ExpirationDateCheckerService>();
+
+//JWT TOKEN CONFIGURATION
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration.GetSection("TokenOptions").GetValue<string>("Issuer"),
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("TokenOptions").GetValue<string>("SecretKey")!)),
+        ValidateAudience = false,
+    };
+});
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -79,6 +103,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
 
 app.UseAuthorization();
 

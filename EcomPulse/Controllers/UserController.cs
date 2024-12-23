@@ -1,5 +1,6 @@
 ﻿using EcomPulse.Service.UserService;
 using EcomPulse.Service.UserService.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers

@@ -1,9 +1,11 @@
 ﻿using EcomPulse.Service.CategoryService;
 using EcomPulse.Service.CategoryService.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
+    [Authorize]
     public class CategoryController(ICategoryService categoryService) : CustomControllerBase
     {
         [HttpPost]
