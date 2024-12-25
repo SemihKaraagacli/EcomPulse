@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
-{
-    [Authorize]
+{,
     public class CategoryController(ICategoryService categoryService) : CustomControllerBase
     {
         [HttpPost]

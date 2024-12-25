@@ -43,19 +43,43 @@ namespace EcomPulse.Service.AuthService
 
 
             JwtSecurityToken newToken = new JwtSecurityToken(
-                issuer: configuration.GetSection("TokenOptions").GetValue<string>("Issuer"),
+                issuer: configuration.GetSection("SignIn_Token").GetValue<string>("Issuer"),
                 claims: userClaims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(
-                          configuration.GetSection("TokenOptions").GetValue<string>("SecretKey")!
+                          configuration.GetSection("SignIn_Token").GetValue<string>("SecretKey")!
                             )
                         ), SecurityAlgorithms.HmacSha256)
                 );
 
             var accessTokenAsString = new JwtSecurityTokenHandler().WriteToken(newToken); // converts the resulting jwt token to string format
             return ServiceResult<TokenResponse>.Success(new TokenResponse(accessTokenAsString), HttpStatusCode.OK);
+        }
+        public Task<ServiceResult<TokenResponse>> ClientCredential(ClientCredentialRequest request)
+        {
+            var clientId = configuration.GetSection("Client_Token")["ClientId"];
+            var clientSecretKey = configuration.GetSection("Client_Token")["ClientSecretKey"];
+
+            if (request.ClientId != clientId || request.ClientSecretKey != clientSecretKey)
+            {
+                return Task.FromResult(ServiceResult<TokenResponse>.Fail("ClientId or ClientSecretKey is wrong.", HttpStatusCode.BadRequest));
+            }
+
+            var clientClaims = new List<Claim>();
+            clientClaims.Add(new Claim(ClaimTypes.NameIdentifier, clientId));
+            clientClaims.Add(new Claim("token_id", Guid.NewGuid().ToString()));
+
+            JwtSecurityToken clientToken = new JwtSecurityToken(
+                issuer: configuration.GetSection("SignIn_Token")["Issuer"],
+                claims: clientClaims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Client_Token")["ClientSecretKey"]!)), SecurityAlgorithms.HmacSha256)
+                );
+            var accessTokenAsString = new JwtSecurityTokenHandler().WriteToken(clientToken);
+            return Task.FromResult(ServiceResult<TokenResponse>.Success(new TokenResponse(accessTokenAsString), HttpStatusCode.OK));
         }
     }
 }

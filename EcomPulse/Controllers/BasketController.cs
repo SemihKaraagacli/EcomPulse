@@ -1,9 +1,11 @@
 ﻿using EcomPulse.Service.BasketService;
 using EcomPulse.Service.BasketService.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
+
     public class BasketController(IBasketService basketService) : CustomControllerBase
     {
         [HttpPost]
