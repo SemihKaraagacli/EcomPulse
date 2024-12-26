@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-
+    [Authorize(AuthenticationSchemes = "SigninToken")]
     public class BasketController(IBasketService basketService) : CustomControllerBase
     {
         [HttpPost]

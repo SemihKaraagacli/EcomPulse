@@ -1,9 +1,11 @@
 ﻿using EcomPulse.Service.PaymentService;
 using EcomPulse.Service.PaymentService.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
+    [Authorize(AuthenticationSchemes = "SigninToken")]
     public class PaymentController(IPaymentService paymentService) : CustomControllerBase
     {
         [HttpPost]

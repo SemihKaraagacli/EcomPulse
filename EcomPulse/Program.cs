@@ -21,6 +21,7 @@ using EcomPulse.Service.UnitOfWork;
 using EcomPulse.Service.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -70,30 +71,38 @@ builder.Services.AddHostedService<ExpirationDateCheckerService>();
 //JWT TOKEN CONFIGURATION
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer("SignIn_Token", options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}
+).AddJwtBearer(options =>
     {
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration.GetSection("SignIn_Token").GetValue<string>("Issuer"),
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SignIn_Token").GetValue<string>("SecretKey")!)),
-        ValidateAudience = false,
-    };
-}).AddJwtBearer("Client_Token", options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration.GetSection("Client_Token").GetValue<string>("Issuer"),
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Client_Token").GetValue<string>("ClientSecretKey")!)),
+            ValidateAudience = false,
+        };
+    });
+builder.Services.AddAuthentication(options =>
     {
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration.GetSection("SignIn_Token").GetValue<string>("Issuer"),
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Client_Token").GetValue<string>("ClientSecretKey")!)),
-        ValidateAudience = false,
-    };
-});
+        options.DefaultAuthenticateScheme = "SigninToken";
+        options.DefaultChallengeScheme = "SigninToken";
+    }).AddJwtBearer("SigninToken", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration.GetSection("SignIn_Token").GetValue<string>("Issuer"),
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SignIn_Token").GetValue<string>("SecretKey")!)),
+            ValidateAudience = false,
+        };
+    });
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -113,7 +122,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

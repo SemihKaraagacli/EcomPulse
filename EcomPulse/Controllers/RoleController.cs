@@ -1,9 +1,11 @@
 ﻿using EcomPulse.Service.RoleService;
 using EcomPulse.Service.RoleService.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
+    [Authorize(AuthenticationSchemes = "SigninToken")]
     public class RoleController(IRoleService roleService) : CustomControllerBase
     {
         [HttpPost]
