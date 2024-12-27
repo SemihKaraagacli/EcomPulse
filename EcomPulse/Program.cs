@@ -27,7 +27,6 @@ using NLog.Web;
 using System.Text;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-logger.Debug("init main");
 try
 {
     var builder = WebApplication.CreateBuilder(args);
