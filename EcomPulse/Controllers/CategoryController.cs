@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-    public class CategoryController(ICategoryService categoryService) : CustomControllerBase
+    public class CategoryController(ICategoryService categoryService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]
         [Authorize(AuthenticationSchemes = "SigninToken")]

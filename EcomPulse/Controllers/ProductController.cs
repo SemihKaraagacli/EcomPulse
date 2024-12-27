@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-    public class ProductController(IProductService productService) : CustomControllerBase
+    public class ProductController(IProductService productService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
 
         [HttpPost]

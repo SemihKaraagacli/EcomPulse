@@ -3,10 +3,11 @@ using EcomPulse.Service.AuthService.Dtos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace EcomPulse.Controllers
 {
-    public class AuthServiceController(IAuthService authService) : CustomControllerBase
+    public class AuthServiceController(IAuthService authService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -6,36 +6,43 @@ using Microsoft.Extensions.Logging;
 
 namespace EcomPulse.Service.HostedService
 {
-    public class ExpirationDateCheckerService(IServiceScopeFactory scopeFactory, ILogger<ExpirationDateCheckerService> logger) : BackgroundService
+    public class ExpirationDateCheckerService : BackgroundService
     {
+        private readonly ILogger<ExpirationDateCheckerService> _logger;
+        private readonly IServiceScopeFactory _scopeFactory;
+        public ExpirationDateCheckerService(IServiceScopeFactory scopeFactory, ILogger<ExpirationDateCheckerService> logger)
+        {
+            _scopeFactory = scopeFactory;
+            _logger = logger;
+        }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken) //A back service was created to delete expired credit cards after checking every 1 day.
         {
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-                    using (var scope = scopeFactory.CreateScope())
+                    using (var scope = _scopeFactory.CreateScope())
                     {
                         var creditCards = scope.ServiceProvider.GetRequiredService<ICreditCardRespository>();
                         var expiredCards = await creditCards.GetExpiredCardsAsync(stoppingToken);
                         if (expiredCards.Any())
                         {
-                            logger.LogInformation($"Found {expiredCards.Count} expired cards. Deleting...");
+                            _logger.LogInformation($"Found {expiredCards.Count} expired cards. Deleting...");
 
                             await creditCards.DeleteExpiredCardsAsync(expiredCards, stoppingToken);
 
-                            logger.LogInformation($"{expiredCards.Count} expired cards deleted successfully.");
+                            _logger.LogInformation($"{expiredCards.Count} expired cards deleted successfully.");
                         }
                         else
                         {
-                            logger.LogInformation("No expired cards found during this cycle.");
+                            _logger.LogInformation("No expired cards found during this cycle.");
                         }
                     }
                     await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
                 }
                 catch (Exception ex)
                 {
-                    logger.LogInformation($"Error in ExpirationDateCheckerService: {ex.Message}");
+                    _logger.LogInformation($"Error in ExpirationDateCheckerService: {ex.Message}");
                 }
             }
         }

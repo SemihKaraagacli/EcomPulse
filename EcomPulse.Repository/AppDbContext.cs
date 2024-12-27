@@ -23,6 +23,13 @@ namespace EcomPulse.Repository
                 .HasOne(o => o.Payment)
                 .WithOne(p => p.Order)
                 .HasForeignKey<Payment>(p => p.OrderId);
+            builder.Entity<OrderItem>().Property(x => x.TotalPrice).HasColumnType("decimal(18,2)");
+            builder.Entity<BasketItem>().Property(x => x.Price).HasColumnType("decimal(18,2)");
+            builder.Entity<CreditCard>().Property(x => x.AvailableBalance).HasColumnType("decimal(18,2)");
+            builder.Entity<Order>().Property(x => x.TotalAmount).HasColumnType("decimal(18,2)");
+            builder.Entity<OrderItem>().Property(x => x.UnitPrice).HasColumnType("decimal(18,2)");
+            builder.Entity<Payment>().Property(x => x.Amount).HasColumnType("decimal(18,2)");
+            builder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(18,2)");
         }
     }
 }

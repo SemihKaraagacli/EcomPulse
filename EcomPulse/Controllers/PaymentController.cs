@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EcomPulse.Controllers
 {
     [Authorize(AuthenticationSchemes = "SigninToken")]
-    public class PaymentController(IPaymentService paymentService) : CustomControllerBase
+    public class PaymentController(IPaymentService paymentService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]
         public async Task<IActionResult> PaymentProcess(PaymentCreateRequest request)
