@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { ProductComponent } from '../product/product.component';
 
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [ProductComponent],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+  styleUrl: './user.component.scss',
 })
-export class UserComponent {
-
-}
+export class UserComponent {}

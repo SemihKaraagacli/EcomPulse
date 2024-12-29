@@ -1,0 +1,56 @@
+<header>
+  <form class="flex justify-center items-center">
+    <button class="bg-blue-500 text-white rounded mr-4 py-1 px-2" type="submit">
+      Basit Buton
+    </button>
+
+    <input
+      class="mr-4 bg-yellow-500 placeholder-gray-900 text-white px-4 py-1 rounded"
+      type="text"
+      name="1"
+      placeholder="Enter"
+    />
+    <label for="2">checkbox 1:</label>
+    <input class="mr-4 ml-1" type="checkbox" name="2" />
+    <label for="3">checkbox 2:</label>
+    <input class="mr-4 ml-1" type="checkbox" name="3" />
+    <label for="4">checkbox 3:</label>
+    <input class="mr-4 ml-1" type="checkbox" name="4" />
+    <label for="5">checkbox 4:</label>
+    <input class="mr-4 ml-1" type="checkbox" name="5" />
+  </form>
+</header>
+
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Product card -->
+      <div class="bg-white shadow-md rounded-md overflow-hidden">
+        <div class="relative">
+          <span
+            class="absolute top-2 right-2 bg-gray-900 text-white text-sm px-2 py-1 rounded"
+            >Sale</span
+          >
+          <img
+            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+            alt="Product"
+            class="w-full"
+          />
+        </div>
+        <div class="p-4">
+          <h3 class="text-lg font-semibold">Special Item</h3>
+          <div
+            class="flex justify-center items-center text-yellow-400 my-2"
+          ></div>
+          <p class="text-gray-600 line-through">$20.00</p>
+          <p class="text-gray-800">$18.00</p>
+        </div>
+        <div class="p-4 border-t">
+          <button class="w-full bg-gray-900 text-white py-2 rounded">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
