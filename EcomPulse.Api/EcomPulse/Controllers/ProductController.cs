@@ -24,7 +24,7 @@ namespace EcomPulse.Controllers
             return CreateObjectResult(result);
         }
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Get()
         {
             var result = await productService.ProductGetAllAsync();
