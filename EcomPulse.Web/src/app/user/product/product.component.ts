@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../shared/service/product.service';
+import { ProductService } from '../../shared/service/product/product.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,9 +9,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent {
   constructor(public service: ProductService) {}
-  ngOnInit(): void {
-    this.service.getAll();
+  submitForm(event: Event): void {
+    event.preventDefault();
+    if (this.service.selectedCategory === '') {
+      this.service.getAll();
+    } else {
+      this.service.filterProduct(this.service.selectedCategory);
+    }
   }
 }

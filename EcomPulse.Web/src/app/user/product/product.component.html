@@ -1,23 +1,16 @@
 <header>
-  <form class="flex justify-center items-center">
+  <form (submit)="submitForm($event)" class="flex justify-center items-center">
     <button class="bg-blue-500 text-white rounded mr-4 py-1 px-2" type="submit">
-      Basit Buton
+      Gönder
     </button>
-
-    <input
-      class="mr-4 bg-yellow-500 placeholder-gray-900 text-white px-4 py-1 rounded"
-      type="text"
-      name="1"
-      placeholder="Enter"
-    />
     <label for="2">checkbox 1:</label>
-    <input class="mr-4 ml-1 h-4 w-4" type="checkbox" name="2" />
-    <label for="3">checkbox 2:</label>
-    <input class="mr-4 ml-1 h-4 w-4" type="checkbox" name="3" />
-    <label for="4">checkbox 3:</label>
-    <input class="mr-4 ml-1 h-4 w-4" type="checkbox" name="4" />
-    <label for="5">checkbox 4:</label>
-    <input class="mr-4 ml-1 h-4 w-4" type="checkbox" name="5" />
+    <input
+      class="mr-4 ml-1 h-4 w-4"
+      type="checkbox"
+      value="bf819a31-e3b2-4421-8646-08dd1ad263ef"
+      (change)="service.onCategorySelect($event)"
+      name="category"
+    />
   </form>
 </header>
 

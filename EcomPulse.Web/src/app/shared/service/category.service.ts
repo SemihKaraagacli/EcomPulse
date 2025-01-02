@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ViewmodelService {
+export class CategoryService {
 
-  constructor() { }
+constructor() { }
+
 }
