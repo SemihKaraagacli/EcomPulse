@@ -44,8 +44,8 @@ namespace EcomPulse.Controllers
             var result = await productService.ProductUpdateAsync(request);
             return CreateObjectResult(result);
         }
-        [HttpGet("/Filter/{categoryId}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("Filter/{categoryId}")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Filter(Guid categoryId)
         {
             var result = await productService.ProductFilterCategoryAsync(categoryId);
