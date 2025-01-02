@@ -3,21 +3,22 @@
     <button class="bg-blue-500 text-white rounded mr-4 py-1 px-2" type="submit">
       Gönder
     </button>
-    <label for="2">checkbox 1:</label>
-    <input
-      class="mr-4 ml-1 h-4 w-4"
-      type="checkbox"
-      value="bf819a31-e3b2-4421-8646-08dd1ad263ef"
-      (change)="service.onCategorySelect($event)"
-      name="category"
-    />
+    <div *ngFor="let item of categoryService.categoryList">
+      <label for="{{ item.id }}">{{ item.name }}</label>
+      <input
+        class="mr-4 ml-1 h-4 w-4"
+        type="checkbox"
+        value="{{ item.id }}"
+        (change)="service.onCategorySelect($event)"
+        name="category"
+      />
+    </div>
   </form>
 </header>
 
 <section class="py-12">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <!-- Product card -->
       <div
         class="bg-white shadow-md rounded-md overflow-hidden"
         *ngFor="let item of service.list"
