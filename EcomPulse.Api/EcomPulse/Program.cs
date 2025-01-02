@@ -109,6 +109,16 @@ try
         };
     });
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowSpecificOrigins", policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+    });
+
 
     // Add services to the container.
     builder.Services.AddControllers();
@@ -126,6 +136,7 @@ try
         app.UseSwaggerUI();
     }
 
+    app.UseCors("AllowSpecificOrigins");
     app.UseHttpsRedirection();
 
     app.UseAuthentication();
