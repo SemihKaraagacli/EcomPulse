@@ -9,7 +9,7 @@ namespace EcomPulse.Controllers
     public class UserController(IUserService userService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> SignUp(UserCreateRequest request)
         {
             var result = await userService.SignUp(request);

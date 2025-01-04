@@ -1,24 +1,24 @@
 export class SignUpViewModel {
-  username: string;
+  userName: string;
   password: string;
   email: string;
-  phonenumber: string;
+  phoneNumber: string;
   address: string;
   city: string;
   county: string;
   constructor(
-    username: string,
+    userName: string,
     password: string,
     email: string,
-    phonenumber: string,
+    phoneNumber: string,
     address: string,
     city: string,
     county: string
   ) {
-    this.username = username;
+    this.userName = userName;
     this.password = password;
     this.email = email;
-    this.phonenumber = phonenumber;
+    this.phoneNumber = phoneNumber;
     this.address = address;
     this.city = city;
     this.county = county;

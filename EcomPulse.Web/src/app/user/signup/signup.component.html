@@ -3,21 +3,10 @@
     <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">
       Sign Up
     </h2>
-    <form class="space-y-5">
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-600">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="you@example.com"
-          class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
-          required
-        />
-      </div>
-
+    <div (ngIf)="(service.errorMessage)" class="text-red-600 text-center mb-4">
+      {{ service.errorMessage }}
+    </div>
+    <form (submit)="OnSubmit()" class="space-y-5">
       <div>
         <label for="username" class="block text-sm font-medium text-gray-600">
           Username
@@ -25,13 +14,41 @@
         <input
           type="text"
           id="username"
+          [(ngModel)]="service.signUpModel.userName"
           name="username"
           placeholder="Your username"
           class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
           required
         />
       </div>
-
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-600">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="service.signUpModel.email"
+          name="email"
+          placeholder="you@example.com"
+          class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
+          required
+        />
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-600">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="service.signUpModel.password"
+          name="password"
+          placeholder="***********"
+          class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
+          required
+        />
+      </div>
       <div>
         <label for="phone" class="block text-sm font-medium text-gray-600">
           Phone Number
@@ -39,7 +56,8 @@
         <input
           type="tel"
           id="phone"
-          name="phone"
+          name="phoneNumber"
+          [(ngModel)]="service.signUpModel.phoneNumber"
           placeholder="(555) 123-4567"
           class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
           required
@@ -54,6 +72,7 @@
           type="text"
           id="address"
           name="address"
+          [(ngModel)]="service.signUpModel.address"
           placeholder="Your address"
           class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
           required
@@ -68,6 +87,7 @@
           type="text"
           id="city"
           name="city"
+          [(ngModel)]="service.signUpModel.city"
           placeholder="Your city"
           class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
           required
@@ -82,6 +102,7 @@
           type="text"
           id="county"
           name="county"
+          [(ngModel)]="service.signUpModel.county"
           placeholder="Your county"
           class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600"
           required
@@ -97,6 +118,7 @@
         </button>
       </div>
     </form>
+
     <div class="flex justify-center mt-4">
       <a href="" class="text-indigo-600 hover:text-indigo-700"
         >Return to Back</a
