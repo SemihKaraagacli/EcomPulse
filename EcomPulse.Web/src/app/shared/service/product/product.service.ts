@@ -34,6 +34,7 @@ export class ProductService {
     this.http.get(this.url).subscribe({
       next: (res) => {
         this.list = res as ProductDto[];
+        console.log(this.list);
       },
       error: (err) => {
         console.log(err);

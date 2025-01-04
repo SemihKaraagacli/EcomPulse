@@ -11,6 +11,11 @@ import { CategoryService } from '../../shared/service/category/category.service'
   styleUrl: './product.component.scss',
 })
 export class ProductComponent implements OnInit {
+  isDropdownOpen = false;
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
   constructor(
     public service: ProductService,
     public categoryService: CategoryService

@@ -1,59 +1,82 @@
-<header>
-  <form (submit)="submitForm($event)" class="flex justify-center items-center">
-    <button class="bg-blue-500 text-white rounded mr-4 py-1 px-2" type="submit">
-      Gönder
-    </button>
-    <div *ngFor="let item of categoryService.categoryList">
-      <label for="{{ item.id }}">{{ item.name }}</label>
-      <input
-        class="mr-4 ml-1 h-4 w-4"
-        type="checkbox"
-        value="{{ item.id }}"
-        (change)="service.onCategorySelect($event)"
-        name="category"
-      />
-    </div>
-  </form>
-</header>
-
-<section class="py-12">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div class="container mx-auto p-4">
+  <div class="flex flex-col md:flex-row">
+    <!-- %15 genişlik - Sabit içerik (border ve shadow eklendi) -->
+    <div
+      class="w-full md:w-[15%] sticky flex flex-col items-center top-0 md:left-0 md:top-0 max-h-screen overflow-auto"
+    >
       <div
-        class="bg-white shadow-md rounded-md overflow-hidden"
-        *ngFor="let item of service.list"
+        class="fixed border w-[10%] flex flex-col items-center bg-gray-300 rounded-lg"
       >
-        <div class="relative">
-          <span
-            class="absolute top-2 right-2 bg-gray-900 text-white text-sm px-2 py-1 rounded"
-            >Sale</span
+        <h2
+          class="text-xl font-semibold cursor-pointer"
+          (click)="toggleDropdown()"
+        >
+          MENÜ
+        </h2>
+        <div [ngClass]="{ hidden: !isDropdownOpen }">
+          <form
+            (submit)="submitForm($event)"
+            class="flex flex-col justify-start items-start"
           >
-          <img
-            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-            alt="Product"
-            class="w-full"
-          />
+            <div
+              *ngFor="let item of categoryService.categoryList"
+              class="flex items-center mb-2"
+            >
+              <input
+                class="mr-2 h-4 w-4"
+                type="checkbox"
+                value="{{ item.id }}"
+                (change)="service.onCategorySelect($event)"
+                name="category"
+              />
+              <label for="{{ item.id }}" class="block">{{ item.name }}</label>
+            </div>
+            <button
+              class="bg-blue-500 text-white rounded mb-4 py-1 px-2"
+              type="submit"
+            >
+              Gönder
+            </button>
+          </form>
         </div>
-        <div class="p-4">
-          <h3 class="text-lg font-semibold">{{ item.name }}</h3>
-          <div
-            class="flex justify-center items-center text-yellow-400 my-2"
-          ></div>
-          <p class="text-gray-600">
-            Açıklama: <span>{{ item.description }}</span>
-          </p>
-          <p class="text-gray-600">
-            kategori: <span>{{ item.categoryname }}</span>
-          </p>
-          <p class="text-gray-600">Fiyat:{{ item.price }}</p>
-          <p class="text-gray-600">Stok:{{ item.stock }}</p>
-        </div>
-        <div class="p-4 border-t">
-          <button class="w-full bg-gray-900 text-white py-2 rounded">
-            Add to Cart
-          </button>
+      </div>
+    </div>
+
+    <!-- %85 genişlik - Kaydırılabilir içerik -->
+    <div class="w-full md:w-[85%] md:ml-[1%] mt-2 md:mt-0">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div
+          class="bg-white shadow-md rounded-md overflow-hidden"
+          *ngFor="let item of service.list"
+        >
+          <div class="relative">
+            <span
+              class="absolute top-2 right-2 bg-gray-900 text-white text-sm px-2 py-1 rounded"
+              >Sale</span
+            >
+            <img
+              src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+              alt="Product"
+              class="w-full"
+            />
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold">{{ item.name }}</h3>
+            <div
+              class="flex justify-center items-center text-yellow-400 my-2"
+            ></div>
+            <p class="text-gray-600">
+              kategori: <span>{{ item.categoryName }}</span>
+            </p>
+            <p class="text-gray-600">Fiyat:{{ item.price }}₺</p>
+          </div>
+          <div class="p-4 border-t">
+            <button class="w-full bg-gray-900 text-white py-2 rounded">
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>

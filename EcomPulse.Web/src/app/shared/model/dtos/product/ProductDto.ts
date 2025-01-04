@@ -4,5 +4,5 @@ export interface ProductDto {
   description: string;
   price: number;
   stock: number;
-  categoryname: string;
+  categoryName: string;
 }
