@@ -10,7 +10,7 @@ namespace EcomPulse.Controllers
     {
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "SigninToken")]
+        //[Authorize(AuthenticationSchemes = "SigninToken")]
         public async Task<IActionResult> Create(ProductCreateRequest request)
         {
             var result = await productService.ProductCreateAsync(request);
