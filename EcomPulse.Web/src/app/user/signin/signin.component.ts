@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../shared/service/auth/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -9,12 +9,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.scss',
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent {
   constructor(public authService: AuthService) {}
-  ngOnInit(): void {
-    console.log('claims', this.authService.getclaims());
-    console.log('token', this.authService.getToken());
-  }
 
   onSubmit() {
     if (this.authService.form.valid) {
