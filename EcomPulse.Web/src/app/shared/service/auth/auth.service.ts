@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { SignInViewModel } from '../../model/viewmodels/auth/SignInViewModel';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -13,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   private url: string = environment.authBaseUrl;
-  form!: FormGroup;
+  form: FormGroup;
   model: SignInViewModel = new SignInViewModel('', '');
   errorMessage: string = '';
 
@@ -37,6 +36,7 @@ export class AuthService {
         const token = res.accessToken;
         console.log('Token:', token);
         const decodedToken: any = jwt_decode(token);
+        console.log('Token_doceded:', decodedToken);
         const userClaims = {
           id: decodedToken.id,
           username: decodedToken.username,

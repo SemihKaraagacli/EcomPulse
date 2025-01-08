@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-    [Authorize(AuthenticationSchemes = "SigninToken")]
+    //[Authorize(AuthenticationSchemes = "SigninToken")]
     public class RoleController(IRoleService roleService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]

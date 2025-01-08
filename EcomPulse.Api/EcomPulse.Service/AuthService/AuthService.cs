@@ -28,17 +28,17 @@ namespace EcomPulse.Service.AuthService
 
 
             var userClaims = new List<Claim>(); //create a claim list to hold information in the token and give it to the token.
-            userClaims.Add(new Claim(ClaimTypes.NameIdentifier, hasUser.Id.ToString()));
-            userClaims.Add(new Claim(ClaimTypes.Name, hasUser.UserName));
-            userClaims.Add(new Claim(ClaimTypes.Email, hasUser.Email));
-            userClaims.Add(new Claim("Address", hasUser.Address));
-            userClaims.Add(new Claim("City", hasUser.City));
-            userClaims.Add(new Claim("County", hasUser.County));
+            userClaims.Add(new Claim("id", hasUser.Id.ToString()));
+            userClaims.Add(new Claim("username", hasUser.UserName));
+            userClaims.Add(new Claim("email", hasUser.Email));
+            userClaims.Add(new Claim("address", hasUser.Address));
+            userClaims.Add(new Claim("city", hasUser.City));
+            userClaims.Add(new Claim("county", hasUser.County));
 
             var hasRole = await userManager.GetRolesAsync(hasUser);
             foreach (var role in hasRole)
             {
-                userClaims.Add(new Claim(ClaimTypes.Role, role));
+                userClaims.Add(new Claim("role", role));
             }
 
 
