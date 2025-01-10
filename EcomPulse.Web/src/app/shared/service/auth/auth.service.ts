@@ -86,9 +86,9 @@ export class AuthService {
     return null;
   }
   isAuthenticated(): boolean {
-    return !!this.cookieService.get('authToken');
+    return !!this.cookieService.get('authCookie');
   }
   logout(): void {
-    this.cookieService.delete('authData');
+    this.cookieService.delete('authCookie');
   }
 }

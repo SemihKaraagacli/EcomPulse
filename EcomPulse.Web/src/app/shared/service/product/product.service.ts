@@ -1,5 +1,6 @@
+import { AuthService } from './../auth/auth.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { ProductDto } from '../../model/dtos/product/ProductDto';
 
@@ -11,7 +12,7 @@ export class ProductService {
   selectedCategory: string = '';
   list: ProductDto[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   onCategorySelect(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
@@ -31,6 +32,12 @@ export class ProductService {
   }
 
   getAll() {
+    const token = this.authService.getToken()?.toString();
+    console.log('Token 5', token);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    console.log('authantication', headers);
     this.http.get(this.url).subscribe({
       next: (res) => {
         this.list = res as ProductDto[];
