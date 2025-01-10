@@ -6,14 +6,13 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { AuthIntercaptor } from './shared/service/auth/AuthIntercaptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { tokenInterceptor } from './shared/service/auth/interceptor/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthIntercaptor, multi: true },
+    provideHttpClient(withInterceptors([tokenInterceptor])),
     CookieService,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
