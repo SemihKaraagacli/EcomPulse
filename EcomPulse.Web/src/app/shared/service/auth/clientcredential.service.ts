@@ -39,7 +39,7 @@ export class ClientcredentialService {
       localStorage.setItem('client_token', token);
       localStorage.setItem(
         'client_token_expiration',
-        (now + 2 * 60 * 1000).toString()
+        (now + 10 * 60 * 1000).toString()
       );
     }
   }
