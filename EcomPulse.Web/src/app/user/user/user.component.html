@@ -8,7 +8,10 @@
             <a href="" class="text-gray-700 hover:text-gray-900">Home</a>
           </li>
         </ul>
-        <div class="flex items-center space-x-4 relative">
+        <div
+          *ngIf="isAuthentication"
+          class="flex items-center space-x-4 relative"
+        >
           <button
             class="text-gray-700 border border-gray-300 px-4 py-2 rounded-md flex items-center"
           >
@@ -23,28 +26,55 @@
               class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 cursor-pointer"
             >
               <i class="fa-solid fa-user"></i>
-              <span>Hesap</span>
+              <span>{{ userCliams.username }}</span>
             </label>
             <!-- Dropdown Menu -->
             <div
               class="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg hidden peer-checked:block"
             >
               <a
-                href="/signin"
+                href="/"
                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >Giriş Yap</a
+                >Profil</a
               >
-              <a
-                href="signup"
-                class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >Kayıt Ol</a
-              >
+
               <a
                 href="admin"
                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >Admin Girişi</a
               >
+              <hr />
+              <a
+                (click)="logout()"
+                class="cursor-pointer block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >Logout</a
+              >
             </div>
+          </div>
+        </div>
+        <div *ngIf="!isAuthentication" class="relative">
+          <input type="checkbox" id="userMenuToggle" class="peer hidden" />
+          <label
+            for="userMenuToggle"
+            class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 cursor-pointer"
+          >
+            <i class="fa-solid fa-user"></i>
+            <span>Hesap</span>
+          </label>
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg hidden peer-checked:block"
+          >
+            <a
+              href="/signin"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >Giriş Yap</a
+            >
+            <a
+              href="signup"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >Kayıt Ol</a
+            >
           </div>
         </div>
       </div>
