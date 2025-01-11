@@ -85,27 +85,63 @@ try
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
+            ValidIssuer = builder.Configuration.GetSection("SignIn_Token").GetValue<string>("Issuer"),
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SignIn_Token").GetValue<string>("SecretKey")!)),
+            ValidateAudience = false,
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var token = context.Request.Headers["Authorization"].ToString();
+                if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                {
+                    token = token.Substring("Bearer ".Length).Trim();
+                }
+
+                // Tokenýn "SigninToken" için uygunluðunu kontrol et
+                if (!context.HttpContext.Request.Headers.ContainsKey("AuthenticationScheme") ||
+                    context.HttpContext.Request.Headers["AuthenticationScheme"] == JwtBearerDefaults.AuthenticationScheme)
+                {
+                    context.Token = token;
+                }
+
+                return Task.CompletedTask;
+            }
+        };
+    }).AddJwtBearer("Client_Token", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
             ValidIssuer = builder.Configuration.GetSection("Client_Token").GetValue<string>("Issuer"),
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Client_Token").GetValue<string>("ClientSecretKey")!)),
             ValidateAudience = false,
         };
-    });
-    builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = "SigninToken";
-        options.DefaultChallengeScheme = "SigninToken";
-    }).AddJwtBearer("SigninToken", options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
+        options.Events = new JwtBearerEvents
         {
-            ValidateIssuer = true,
-            ValidIssuer = builder.Configuration.GetSection("SignIn_Token").GetValue<string>("Issuer"),
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("SignIn_Token").GetValue<string>("SecretKey")!)),
-            ValidateAudience = false,
+            OnMessageReceived = context =>
+            {
+                var token = context.Request.Headers["Authorization"].ToString();
+                if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                {
+                    token = token.Substring("Bearer ".Length).Trim();
+                }
+
+                // Tokenýn "SigninToken" için uygunluðunu kontrol et
+                if (context.HttpContext.Request.Headers.ContainsKey("AuthenticationScheme") &&
+                    context.HttpContext.Request.Headers["AuthenticationScheme"] == "Client_Token")
+                {
+                    context.Token = token;
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 

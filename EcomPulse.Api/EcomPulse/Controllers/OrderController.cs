@@ -1,11 +1,12 @@
 ﻿using EcomPulse.Service.OrderService;
 using EcomPulse.Service.OrderService.Dtos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-    [Authorize(AuthenticationSchemes = "SigninToken")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class OrderController(IOrderService orderService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]
