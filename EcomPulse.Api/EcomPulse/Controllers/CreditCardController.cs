@@ -1,11 +1,12 @@
 ﻿using EcomPulse.Service.CreditCardService;
 using EcomPulse.Service.CreditCardService.Dtos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-    [Authorize(AuthenticationSchemes = "SigninToken")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CreditCardController(ICreditCardService creditCardService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]

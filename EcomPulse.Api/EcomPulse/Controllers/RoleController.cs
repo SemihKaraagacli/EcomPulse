@@ -1,11 +1,12 @@
 ﻿using EcomPulse.Service.RoleService;
 using EcomPulse.Service.RoleService.Dtos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "SigninToken")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class RoleController(IRoleService roleService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]

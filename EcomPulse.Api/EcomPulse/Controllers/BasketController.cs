@@ -1,11 +1,12 @@
 ﻿using EcomPulse.Service.BasketService;
 using EcomPulse.Service.BasketService.Dtos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomPulse.Controllers
 {
-    [Authorize(AuthenticationSchemes = "SigninToken")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BasketController(IBasketService basketService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]

@@ -1,11 +1,12 @@
 import { jwt_decode } from 'jwt-decode-es';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SignInViewModel } from '../../model/viewmodels/auth/SignInViewModel';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { ClientcredentialService } from './clientcredential.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private clientCredential: ClientcredentialService
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -34,17 +36,13 @@ export class AuthService {
     this.http.post(this.url, data).subscribe({
       next: (res: any) => {
         const token = res.accessToken;
-        console.log('Token:', token);
         const decodedToken: any = jwt_decode(token);
-        console.log('Token_doceded:', decodedToken);
         const userClaims = {
           id: decodedToken.id,
           username: decodedToken.username,
           role: decodedToken.role,
         };
         this.saveTokenAndClaimsCookie(token, userClaims);
-        console.log('GetToken:', this.getToken());
-        console.log('GetClaims:', this.getclaims());
         this.router.navigate(['/']);
       },
       error: (err) => {

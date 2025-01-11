@@ -9,7 +9,7 @@ namespace EcomPulse.Controllers
     public class AuthController(IAuthService authService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = "Client_Token")]
         public async Task<IActionResult> SignIn(SignInRequest request)
         {
             var result = await authService.SignIn(request);

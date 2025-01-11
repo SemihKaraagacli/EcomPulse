@@ -68,7 +68,7 @@ namespace EcomPulse.Service.AuthService
             }
 
             var clientClaims = new List<Claim>();
-            clientClaims.Add(new Claim(ClaimTypes.NameIdentifier, clientId));
+            clientClaims.Add(new Claim("id", clientId));
             clientClaims.Add(new Claim("token_id", Guid.NewGuid().ToString()));
 
             JwtSecurityToken clientToken = new JwtSecurityToken(

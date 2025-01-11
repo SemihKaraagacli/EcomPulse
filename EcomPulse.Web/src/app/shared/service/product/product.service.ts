@@ -32,12 +32,6 @@ export class ProductService {
   }
 
   getAll() {
-    const token = this.authService.getToken()?.toString();
-    console.log('Token 5', token);
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-    console.log('authantication', headers);
     this.http.get(this.url).subscribe({
       next: (res) => {
         this.list = res as ProductDto[];
