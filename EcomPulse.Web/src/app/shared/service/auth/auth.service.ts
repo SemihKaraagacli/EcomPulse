@@ -73,7 +73,7 @@ export class AuthService {
 
     return null;
   }
-  getclaims(): string | null {
+  getclaims(): { id: string; username: string; email: string } | null {
     const cookieData = this.cookieService.get('authCookie');
 
     if (cookieData) {
