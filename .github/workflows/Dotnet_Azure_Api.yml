@@ -28,4 +28,4 @@ jobs:
   
       # 5. API'yi Publish Et
       - name: Publish API
-        run: dotnet build --configuration Release --no-build ./EcomPulse.Api/EcomPulse.sln
+        run: dotnet build --configuration Release ./EcomPulse.Api/EcomPulse.sln
