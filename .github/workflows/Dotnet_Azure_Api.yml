@@ -1,22 +1,24 @@
-name: Dotnet_Azure_Api_Publish
+name: DotnetApiPublish
 on:
   workflow_dispatch:
   push:
     branches:
-    - main
+      - main
 jobs:
   publish:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-  
-    - name: Setup .NET
-    - uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
-    - name: Restore
-      run: dotnet restore ./EcomPulse.Api/EcomPulse.sln
-    - name: Build
-      run: dotnet build ./EcomPulse.Api/EcomPulse.sln --configuration Release
-    - name: Publish
-      run: dotnet publish ./EcomPulse.Api/EcomPulse.sln --configuration Release --no-build
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+      - name: Restore Dependencies
+        uses: dotnet restore ./EcomPulse.Api/EcomPulse.sln
+      - name: Build API
+        uses: dotnet build --configuration Release ./EcomPulse.Api/EcomPulse.sln
+      - name: Publish API
+        uses: dotnet build --configuration Release --no-build ./EcomPulse.Api/EcomPulse.sln
