@@ -30,7 +30,7 @@ jobs:
 
     # Uygulamanın publish edilmesi
     - name: Publish the application
-      run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --output --no-build ./release_output
+      run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --output --no-build './publish'
 
     # Publish dizininin doğrulanması
     - name: Verify publish directory
