@@ -27,13 +27,13 @@ jobs:
   
       
       - name: Publish API
-        run: dotnet publish --configuration Release --no-build --output ./EcomPulse.Api/EcomPulse/EcomPulse.csproj '/.publish'
+        run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --no-build --output  '/.publish'
         
       - name: Deployment API
         uses: azure/webapps-deploy@v2
         with:
           app-name: ecompulseapi
-          publish-profile: ''
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: './publish'
         
       - name: Set Application Settings in Azure
