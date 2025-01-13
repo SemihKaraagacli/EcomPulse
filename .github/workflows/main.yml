@@ -32,6 +32,10 @@ jobs:
     - name: Publish the application
       run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --output './publish'
 
+    # Publish dizininin doğrulanması
+    - name: Verify publish directory
+      run: ls -al ./publish  # Yeni output dizinini kontrol etmek için
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -49,4 +53,5 @@ jobs:
       with:
         app-name: 'ecompulseapi' # Azure Web App'in adını buraya yazın
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }} # Azure publish profile'ı GitHub Secrets'ınıza eklediğinizden emin olun
-        package: './publish'
+        package: './publish' # Yayınlanacak dosya burada doğru bir şekilde belirtiliyor
+        slot-name: production
