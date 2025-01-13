@@ -34,7 +34,7 @@ jobs:
 
     # Publish dizininin doğrulanması
     - name: Verify publish directory
-      run: ls -al ./publish
+      run: ls -al ./publish  # Yayımlama çıktısını kontrol etmek için
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,9 +49,9 @@ jobs:
 
     # Azure Web App'e deploy için Azure hizmet bağlantısının yapılması
     - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: 'ecompulseapi' # Azure Web App'in adını buraya yazın
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }} # Azure publish profile'ı GitHub Secrets'ınıza eklediğinizden emin olun
-        package: './publish' # Doğru yol buraya yazılmalı
+        package: './publish' # Buradaki yolu kontrol edin, doğru dizinle eşleşmeli
         slot-name: production
