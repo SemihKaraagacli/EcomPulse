@@ -4,16 +4,18 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - main
+      - main
+
 env:
   AZURE_WEBAPP_NAME: "ecompulse-dotnet-api"
   AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
@@ -27,12 +29,11 @@ jobs:
         run: dotnet build ./EcomPulse.Api/EcomPulse.sln --configuration Release --no-restore
         
       - name: Publish
-        run: dotnet publish ./EcomPulse.Api/EcomPulse.sln --configuration Release  --no-build '${{AZURE_WEBAPP_PACKAGE_PATH}}'
+        run: dotnet publish ./EcomPulse.Api/EcomPulse.sln --configuration Release --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
         
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{env.AZURE_WEBAPP_NAME}}
-          publish-profile: ${{secrets.API_PUBLISH_SECRET}}
-          package: '${{AZURE_WEBAPP_PACKAGE_PATH}}'
-      
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.API_PUBLISH_SECRET }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
