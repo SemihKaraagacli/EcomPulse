@@ -4,42 +4,40 @@ on:
   push:
     branches:
       - main
+
 jobs:
   publish:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-  
-      
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-  
-      
+
       - name: Restore Dependencies
         run: dotnet restore ./EcomPulse.Api/EcomPulse.sln
-  
-      
+
       - name: Build API
         run: dotnet build --configuration Release ./EcomPulse.Api/EcomPulse.sln
-  
-      
+
       - name: Publish API
-        run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --no-build --output  '/.publish'
-        
+        run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --no-build --output './publish'
+
       - name: Deployment API
         uses: azure/webapps-deploy@v2
         with:
           app-name: ecompulseapi
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: './publish'
-        
+
       - name: Set Application Settings in Azure
         uses: azure/appservice-settings@v1
         with:
-          app-name: YOUR_AZURE_APP_NAME
+          app-name: ecompulseapi
           app-settings-json: |
             ConnectionStrings__SqlServer=${{ secrets.CONNECTION_STRING }}
             SignIn_Token__SecretKey=${{ secrets.SIGNIN_SECRET_KEY }}
