@@ -28,3 +28,15 @@ jobs:
       
       - name: Publish API
         run: dotnet build --configuration Release ./EcomPulse.Api/EcomPulse.sln
+        
+      - name: Set Application Settings in Azure
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: YOUR_AZURE_APP_NAME
+          settings: |
+            ConnectionStrings__SqlServer=${{ secrets.CONNECTION_STRING }}
+            SignIn_Token__SecretKey=${{ secrets.SIGNIN_SECRET_KEY }}
+            SignIn_Token__Issuer=${{ secrets.ISSUER }}
+            Client_Token__ClientId=${{ secrets.CLIENT_ID }}
+            Client_Token__ClientSecretKey=${{ secrets.CLIENT_SECRET_KEY }}
+            Client_Token__Issuer=${{ secrets.ISSUER }}
