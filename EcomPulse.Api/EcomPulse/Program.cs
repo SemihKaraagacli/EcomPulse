@@ -29,6 +29,7 @@ using System.Text;
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
 {
+
     var builder = WebApplication.CreateBuilder(args);
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
@@ -166,7 +167,7 @@ try
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
