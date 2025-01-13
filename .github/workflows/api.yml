@@ -2,8 +2,12 @@ name: Deploy EcomPulse Api
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+    - main
 env:
   AZURE_WEBAPP_NAME: "ecompulse-dotnet-api"
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 jobs:
   build:
@@ -17,18 +21,18 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Install dependencies
-        run: dotnet restore ./EcomPulse.Api/EcomPulse/EcomPulse.csproj
+        run: dotnet restore ./EcomPulse.Api/EcomPulse.sln
 
       - name: Build
-        run: dotnet build ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --no-restore
+        run: dotnet build ./EcomPulse.Api/EcomPulse.sln --configuration Release --no-restore
         
       - name: Publish
-        run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release --output ./publish
+        run: dotnet publish ./EcomPulse.Api/EcomPulse.sln --configuration Release  --no-build '${{AZURE_WEBAPP_PACKAGE_PATH}}'
         
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{env.AZURE_WEBAPP_NAME}}
           publish-profile: ${{secrets.API_PUBLISH_SECRET}}
-          package: ./publish
+          package: "${{AZURE_WEBAPP_PACKAGE_PATH}}"
       
