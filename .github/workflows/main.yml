@@ -49,7 +49,7 @@ jobs:
 
     # Azure Web App'e deploy için Azure hizmet bağlantısının yapılması
     - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v3
+      uses: azure/webapps-deploy@v2
       with:
         app-name: 'ecompulseapi' # Azure Web App'in adını buraya yazın
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }} # Azure publish profile'ı GitHub Secrets'ınıza eklediğinizden emin olun
