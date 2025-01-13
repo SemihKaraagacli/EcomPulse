@@ -53,5 +53,5 @@ jobs:
       with:
         app-name: 'ecompulseapi' # Azure Web App'in adını buraya yazın
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }} # Azure publish profile'ı GitHub Secrets'ınıza eklediğinizden emin olun
-        package: './publish' # Yayınlanacak dosya burada doğru bir şekilde belirtiliyor
+        package: '/EcomPulse.Api/publish' # Yayınlanacak dosya burada doğru bir şekilde belirtiliyor
         slot-name: production
