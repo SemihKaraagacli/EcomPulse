@@ -29,7 +29,7 @@ jobs:
         run: dotnet build ./EcomPulse.Api/EcomPulse.sln --configuration Release --no-restore
         
       - name: Publish
-        run: dotnet publish ./EcomPulse.Api/EcomPulse.sln --configuration Release  --no-build --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+        run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release  --no-build --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
         
       - name: Deploy
         uses: azure/webapps-deploy@v2
