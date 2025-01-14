@@ -40,5 +40,5 @@ Ecompulse aims to deliver a user-friendly shopping experience while ensuring a r
 
 ## Project Layer Usage Guides
 
-- **Backend API Documentation:** [Link to API](https://github.com/SemihKaraagacli/EcomPulse/tree/main/EcomPulse.Api)
-- **Frontend Web Application:** [Link to Web Application](https://github.com/SemihKaraagacli/EcomPulse/tree/main/EcomPulse.Web)
+- **Backend API Documentation:**(https://github.com/SemihKaraagacli/EcomPulse/tree/main/EcomPulse.Api)
+- **Frontend Web Application:**(https://github.com/SemihKaraagacli/EcomPulse/tree/main/EcomPulse.Web)
