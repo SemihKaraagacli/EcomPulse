@@ -41,12 +41,16 @@
     </a>
   </div>
   <main class="w-[87%] bg-gray-200 text-lg pl-20 pr-20">
-    <div class="mb-8">
-      <xng-breadcrumb [autoGenerate]="false" separator="➤">
+    <div class="flex items-center mb-8 justify-between">
+      <xng-breadcrumb [autoGenerate]="false" separator=">">
         <div class="py-5" *xngBreadcrumbItem="let breadcrumb">
           <b [routerLink]="breadcrumb.label">{{ breadcrumb }}</b>
         </div>
       </xng-breadcrumb>
+
+      <a href="" class="ml-auto text-gray-500 hover:text-gray-950">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </a>
     </div>
     <router-outlet></router-outlet>
   </main>

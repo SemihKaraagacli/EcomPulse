@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'category',
-        component: ProductComponent,
+        component: CategoryComponent,
         data: { breadcrumb: { label: 'Category', disable: true } },
       },
       {
