@@ -7,6 +7,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
 import { OrderComponent } from './order/order.component';
 import { CustomerComponent } from './customer/customer.component';
+import { AddComponent } from './category/add/add.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,6 +24,11 @@ const routes: Routes = [
         path: 'category',
         component: CategoryComponent,
         data: { breadcrumb: { label: 'Category', disable: true } },
+      },
+      {
+        path: 'category/add',
+        component: AddComponent,
+        data: { breadcrumb: { label: 'Category > Add', disable: true } },
       },
       {
         path: 'product',
