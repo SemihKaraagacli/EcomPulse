@@ -1,0 +1,50 @@
+<div class="bg-white min-h-[80%] rounded-md">
+  <header class="px-14 py-6">
+    <div class="flex items-center justify-between">
+      <h1 class="font-semibold text-xl">Categories</h1>
+      <div class="flex items-center">
+        <a
+          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm"
+          href="admin/category/add"
+          >Add category</a
+        >
+        <div class="relative">
+          <input
+            type="text"
+            class="pl-10 pr-2 py-1 border border-gray-300 rounded-md w-full"
+            placeholder="Search..."
+          />
+          <i
+            class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="text-sm font-semibold">
+    <table class="min-w-full table-auto border-collapse">
+      <thead class="border-t border-b border-gray-200">
+        <tr>
+          <th class="px-4 py-2 text-center text-gray-500">#</th>
+          <th class="px-4 py-2 text-center text-gray-500">Category Name</th>
+          <th class="px-4 py-2 text-center text-gray-500">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example Row -->
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-2 text-center text-gray-500">1</td>
+          <td class="px-4 py-2 text-center text-gray-500">Technology</td>
+          <td class="px-4 py-2 text-center text-gray-500">
+            <div class="flex items-center justify-center space-x-2">
+              <a href=""
+                ><i class="fa-solid fa-pen-to-square fa-lg mr-3"></i
+              ></a>
+              <a href=""><i class="fa-solid fa-trash fa-lg"></i></a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</div>
