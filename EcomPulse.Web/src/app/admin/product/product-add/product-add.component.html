@@ -1,0 +1,59 @@
+<div class="bg-white min-h-[80%] rounded-md">
+  <header class="px-14 py-6">
+    <h1 class="font-semibold">Add Prdouct</h1>
+  </header>
+  <hr />
+  <main class="px-14 py-14">
+    <form action="">
+      <div class="grid grid-cols-3 gap-4 mb-3">
+        <div>
+          <label for="" class="text-md font-medium">Name</label>
+          <div>
+            <input
+              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
+              type="text"
+            />
+          </div>
+          <label for="" class="text-md font-medium">Price</label>
+          <div>
+            <input
+              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
+              type="number"
+            />
+          </div>
+          <label for="" class="text-md font-medium">Category</label>
+          <div>
+            <select
+              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
+              type="text"
+            >
+              <!-- <option *ngFor="let product of products" [value]="product.id">
+                {{ product.name }} - {{ product.price }} TL
+              </option> -->
+              <option value="">Tekstil</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="" class="text-md font-medium">Stock</label>
+          <div>
+            <input
+              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
+              type="number"
+            />
+          </div>
+          <label for="" class="text-md font-medium">Description</label>
+          <div>
+            <textarea
+              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3 min-h-28"
+              type="text"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <button class="px-5 py-2 bg-black text-white rounded-md" type="submit">
+        Submit
+      </button>
+    </form>
+  </main>
+</div>

@@ -8,6 +8,7 @@ import { ProductComponent } from './product/product.component';
 import { OrderComponent } from './order/order.component';
 import { CustomerComponent } from './customer/customer.component';
 import { AddComponent } from './category/add/add.component';
+import { ProductAddComponent } from './product/product-add/product-add.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -34,6 +35,11 @@ const routes: Routes = [
         path: 'product',
         component: ProductComponent,
         data: { breadcrumb: { label: 'Product', disable: true } },
+      },
+      {
+        path: 'product/add',
+        component: ProductAddComponent,
+        data: { breadcrumb: { label: 'Product > Add', disable: true } },
       },
       {
         path: 'order',
