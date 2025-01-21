@@ -1,57 +1,63 @@
-<div class="bg-white min-h-[80%] rounded-md">
+<div class="bg-white min-h-[80%] rounded-md shadow-md">
   <header class="px-14 py-6">
-    <h1 class="font-semibold">Add Prdouct</h1>
+    <h1 class="font-semibold text-xl">Add Product</h1>
   </header>
   <hr />
   <main class="px-14 py-14">
     <form action="">
-      <div class="grid grid-cols-3 gap-4 mb-3">
-        <div>
-          <label for="" class="text-md font-medium">Name</label>
-          <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
-              type="text"
-            />
-          </div>
-          <label for="" class="text-md font-medium">Price</label>
-          <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
-              type="number"
-            />
-          </div>
-          <label for="" class="text-md font-medium">Category</label>
-          <div>
-            <select
-              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
-              type="text"
-            >
-              <!-- <option *ngFor="let product of products" [value]="product.id">
-                {{ product.name }} - {{ product.price }} TL
-              </option> -->
-              <option value="">Tekstil</option>
-            </select>
-          </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+        <div class="lg:col-span-1">
+          <label for="product-name" class="text-md font-medium">Name</label>
+          <input
+            id="product-name"
+            class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
+            type="text"
+            placeholder="Enter product name"
+          />
+
+          <label for="product-price" class="text-md font-medium">Price</label>
+          <input
+            id="product-price"
+            class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
+            type="number"
+            placeholder="Enter product price"
+          />
+
+          <label for="product-category" class="text-md font-medium"
+            >Category</label
+          >
+          <select
+            id="product-category"
+            class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
+          >
+            <option value="">Tekstil</option>
+          </select>
         </div>
-        <div>
-          <label for="" class="text-md font-medium">Stock</label>
-          <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3"
-              type="number"
-            />
-          </div>
-          <label for="" class="text-md font-medium">Description</label>
-          <div>
-            <textarea
-              class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md mb-3 min-h-28"
-              type="text"
-            ></textarea>
-          </div>
+
+        <div class="lg:col-span-1">
+          <label for="product-stock" class="text-md font-medium">Stock</label>
+          <input
+            id="product-stock"
+            class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
+            type="number"
+            placeholder="Enter product stock"
+          />
+
+          <label for="product-description" class="text-md font-medium"
+            >Description</label
+          >
+          <textarea
+            id="product-description"
+            class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3 min-h-28"
+            placeholder="Enter product description"
+          ></textarea>
         </div>
       </div>
-      <button class="px-5 py-2 bg-black text-white rounded-md" type="submit">
+
+      <button
+        class="w-full sm:w-auto lg:w-auto px-6 py-2 bg-black text-white rounded-md"
+        type="submit"
+      >
         Submit
       </button>
     </form>

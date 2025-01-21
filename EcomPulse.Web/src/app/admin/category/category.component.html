@@ -1,17 +1,20 @@
-<div class="bg-white min-h-[80%] rounded-md">
-  <header class="px-14 py-6">
-    <div class="flex items-center justify-between">
-      <h1 class="font-semibold text-xl">Categories</h1>
-      <div class="flex items-center">
+<div class="bg-white min-h-[80%] rounded-md shadow-md">
+  <!-- Header -->
+  <header class="px-4 lg:px-14 py-4 lg:py-6">
+    <div
+      class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4"
+    >
+      <h1 class="font-semibold text-lg lg:text-xl">Categories</h1>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <a
-          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm"
+          class="px-4 py-2 bg-neutral-950 text-white rounded-md text-sm lg:text-base w-full sm:w-auto text-center"
           href="admin/category/add"
           >Add category</a
         >
-        <div class="relative">
+        <div class="relative w-full sm:w-auto">
           <input
             type="text"
-            class="pl-10 pr-2 py-1 border border-gray-300 rounded-md w-full"
+            class="pl-10 pr-2 py-2 border border-gray-300 rounded-md w-full sm:w-64 text-sm lg:text-base"
             placeholder="Search..."
           />
           <i
@@ -21,30 +24,40 @@
       </div>
     </div>
   </header>
-  <main class="text-sm font-semibold">
-    <table class="min-w-full table-auto border-collapse">
-      <thead class="border-t border-b border-gray-200">
-        <tr>
-          <th class="px-4 py-2 text-center text-gray-500">#</th>
-          <th class="px-4 py-2 text-center text-gray-500">Category Name</th>
-          <th class="px-4 py-2 text-center text-gray-500">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Example Row -->
-        <tr class="hover:bg-gray-50">
-          <td class="px-4 py-2 text-center text-gray-500">1</td>
-          <td class="px-4 py-2 text-center text-gray-500">Technology</td>
-          <td class="px-4 py-2 text-center text-gray-500">
-            <div class="flex items-center justify-center space-x-2">
-              <a href=""
-                ><i class="fa-solid fa-pen-to-square fa-lg mr-3"></i
-              ></a>
-              <a href=""><i class="fa-solid fa-trash fa-lg"></i></a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+  <!-- Main Content -->
+  <main class="text-sm lg:text-base font-semibold px-4 lg:px-14 py-4">
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto border-collapse">
+        <thead class="border-t border-b border-gray-200">
+          <tr>
+            <th class="px-4 py-2 text-center text-gray-500">#</th>
+            <th class="px-4 py-2 text-center text-gray-500">Category Name</th>
+            <th class="px-4 py-2 text-center text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example Row -->
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2 text-center text-gray-500">1</td>
+            <td class="px-4 py-2 text-center text-gray-500">Technology</td>
+            <td class="px-4 py-2 text-center text-gray-500">
+              <div class="flex items-center justify-center space-x-2">
+                <a href=""
+                  ><i
+                    class="fa-solid fa-pen-to-square fa-lg text-gray-600 hover:text-gray-800"
+                  ></i
+                ></a>
+                <a href=""
+                  ><i
+                    class="fa-solid fa-trash fa-lg text-gray-600 hover:text-gray-800"
+                  ></i
+                ></a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </div>

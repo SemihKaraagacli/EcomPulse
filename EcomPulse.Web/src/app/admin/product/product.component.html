@@ -1,14 +1,15 @@
-<div class="bg-white min-h-[80%] rounded-md">
-  <header class="px-14 py-6">
+<div class="bg-white min-h-[80%] rounded-md shadow-md">
+  <header class="px-4 lg:px-14 py-4 lg:py-6">
     <div class="flex items-center justify-between">
-      <h1 class="font-semibold text-xl">Products</h1>
-      <div class="flex items-center">
+      <h1 class="font-semibold text-lg lg:text-xl">Products</h1>
+      <div class="flex items-center space-x-4">
         <a
-          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm"
+          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm whitespace-nowrap"
           href="admin/product/add"
-          >Add product</a
         >
-        <div class="relative">
+          Add product
+        </a>
+        <div class="relative w-full max-w-xs">
           <input
             type="text"
             class="pl-10 pr-2 py-1 border border-gray-300 rounded-md w-full"
@@ -21,38 +22,46 @@
       </div>
     </div>
   </header>
-  <main class="text-sm font-semibold">
-    <table class="min-w-full table-auto border-collapse">
-      <thead class="border-t border-b border-gray-200">
-        <tr>
-          <th class="px-4 py-2 text-center text-gray-500">#</th>
-          <th class="px-4 py-2 text-center text-gray-500">Product Name</th>
-          <th class="px-4 py-2 text-center text-gray-500">Description</th>
-          <th class="px-4 py-2 text-center text-gray-500">Price</th>
-          <th class="px-4 py-2 text-center text-gray-500">Stock</th>
-          <th class="px-4 py-2 text-center text-gray-500">Category Name</th>
-          <th class="px-4 py-2 text-center text-gray-500">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Example Row -->
-        <tr class="hover:bg-gray-50">
-          <td class="px-4 py-2 text-center text-gray-500">1</td>
-          <td class="px-4 py-2 text-center text-gray-500">Adidas T-Shirt</td>
-          <td class="px-4 py-2 text-center text-gray-500">Description</td>
-          <td class="px-4 py-2 text-center text-gray-500">1300$</td>
-          <td class="px-4 py-2 text-center text-gray-500">100</td>
-          <td class="px-4 py-2 text-center text-gray-500">Technology</td>
-          <td class="px-4 py-2 text-center text-gray-500">
-            <div class="flex items-center justify-center space-x-2">
-              <a href=""
-                ><i class="fa-solid fa-pen-to-square fa-lg mr-3"></i
-              ></a>
-              <a href=""><i class="fa-solid fa-trash fa-lg"></i></a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <hr />
+  <main class="text-sm font-semibold px-4 lg:px-14">
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto border-collapse">
+        <thead class="border-t border-b border-gray-200">
+          <tr>
+            <th class="px-2 py-2 text-center text-gray-500">#</th>
+            <th class="px-2 py-2 text-center text-gray-500">Product Name</th>
+            <th class="px-2 py-2 text-center text-gray-500 description-column">
+              Description
+            </th>
+            <th class="px-2 py-2 text-center text-gray-500">Price</th>
+            <th class="px-2 py-2 text-center text-gray-500">Stock</th>
+            <th class="px-2 py-2 text-center text-gray-500 category-column">
+              Category Name
+            </th>
+            <th class="px-2 py-2 text-center text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hover:bg-gray-50">
+            <td class="px-2 py-2 text-center text-gray-500">1</td>
+            <td class="px-2 py-2 text-center text-gray-500">Adidas T-Shirt</td>
+            <td class="px-2 py-2 text-center text-gray-500 description-column">
+              Description
+            </td>
+            <td class="px-2 py-2 text-center text-gray-500">1300$</td>
+            <td class="px-2 py-2 text-center text-gray-500">100</td>
+            <td class="px-2 py-2 text-center text-gray-500 category-column">
+              Technology
+            </td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              <div class="flex items-center justify-center space-x-2">
+                <a href=""><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                <a href=""><i class="fa-solid fa-trash fa-lg"></i></a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </div>
