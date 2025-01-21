@@ -1,21 +1,26 @@
-<div class="bg-white min-h-[80%] rounded-md">
-  <header class="px-14 py-6">
-    <h1 class="font-semibold">Add Category</h1>
+<div class="bg-white min-h-[80%] rounded-md shadow-md">
+  <header class="px-4 lg:px-14 py-4 lg:py-6">
+    <h1 class="font-semibold text-lg lg:text-xl">Add Category</h1>
   </header>
   <hr />
-  <main class="px-14 py-14 flex justify-center">
-    <form class="flex-col items-center" action="">
-      <div class="mb-4">
-        <label for="" class="text-md font-medium">Name</label>
-        <div>
-          <input
-            class="border border-gray-300 hover:border-gray-700 px-3 py-1 w-80 rounded-md"
-            type="text"
-          />
-        </div>
+  <main class="px-4 lg:px-14 py-8 lg:py-14 flex justify-center">
+    <form class="flex flex-col items-center w-full max-w-md" action="">
+      <div class="mb-6 w-full">
+        <label for="categoryName" class="block text-sm font-medium mb-2">
+          Name
+        </label>
+        <input
+          id="categoryName"
+          class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-950 focus:border-neutral-950"
+          type="text"
+          placeholder="Enter category name"
+        />
       </div>
-      <div class="flex justify-center">
-        <button class="px-5 py-2 bg-black text-white rounded-md" type="submit">
+      <div class="w-full flex justify-center">
+        <button
+          class="px-6 py-2 bg-black text-white text-sm font-medium rounded-md hover:bg-gray-800 transition-all duration-200"
+          type="submit"
+        >
           Submit
         </button>
       </div>

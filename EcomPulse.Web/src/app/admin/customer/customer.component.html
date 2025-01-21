@@ -1,14 +1,15 @@
-<div class="bg-white min-h-[80%] rounded-md">
-  <header class="px-14 py-6">
+<div class="bg-white min-h-[80%] rounded-md shadow-md">
+  <header class="px-4 lg:px-14 py-4 lg:py-6">
     <div class="flex items-center justify-between">
-      <h1 class="font-semibold text-xl">Customers</h1>
-      <div class="flex items-center">
+      <h1 class="font-semibold text-lg lg:text-xl">Customers</h1>
+      <div class="flex items-center space-x-4">
         <a
-          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm"
-          href="admin/customer/add"
-          >Add customer</a
+          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm whitespace-nowrap"
+          href="admin/customers/add"
         >
-        <div class="relative">
+          Add customer
+        </a>
+        <div class="relative w-full max-w-xs">
           <input
             type="text"
             class="pl-10 pr-2 py-1 border border-gray-300 rounded-md w-full"
@@ -21,43 +22,50 @@
       </div>
     </div>
   </header>
-  <main class="text-sm font-semibold">
-    <table class="min-w-full table-auto border-collapse">
-      <thead class="border-t border-b border-gray-200">
-        <tr>
-          <th class="px-4 py-2 text-center text-gray-500">#</th>
-          <th class="px-4 py-2 text-center text-gray-500">Username</th>
-          <th class="px-4 py-2 text-center text-gray-500">Email</th>
-          <th class="px-4 py-2 text-center text-gray-500">Phone Number</th>
-          <th class="px-4 py-2 text-center text-gray-500">Address</th>
-          <th class="px-4 py-2 text-center text-gray-500">City</th>
-          <th class="px-4 py-2 text-center text-gray-500">County</th>
-          <th class="px-4 py-2 text-center text-gray-500">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Example Row -->
-        <tr class="hover:bg-gray-50">
-          <td class="px-4 py-2 text-center text-gray-500">1</td>
-          <td class="px-4 py-2 text-center text-gray-500">ahmet61</td>
-          <td class="px-4 py-2 text-center text-gray-500">
-            ahmet61>example.com
-          </td>
-          <td class="px-4 py-2 text-center text-gray-500">05320000000</td>
-          <td class="px-4 py-2 text-center text-gray-500">Trabzon</td>
-          <td class="px-4 py-2 text-center text-gray-500">Trabzon</td>
-          <td class="px-4 py-2 text-center text-gray-500">Trabzon</td>
-
-          <td class="px-4 py-2 text-center text-gray-500">
-            <div class="flex items-center justify-center space-x-2">
-              <a href=""
-                ><i class="fa-solid fa-pen-to-square fa-lg mr-3"></i
-              ></a>
-              <a href=""><i class="fa-solid fa-trash fa-lg"></i></a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <hr />
+  <main class="text-sm font-semibold px-4 lg:px-14">
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto border-collapse">
+        <thead class="border-t border-b border-gray-200">
+          <tr>
+            <th class="px-2 py-2 text-center text-gray-500">#</th>
+            <th class="px-2 py-2 text-center text-gray-500">Username</th>
+            <th class="px-2 py-2 text-center text-gray-500">Email</th>
+            <th class="px-2 py-2 text-center text-gray-500">Phone Number</th>
+            <th class="px-2 py-2 text-center text-gray-500">Address</th>
+            <th class="px-2 py-2 text-center text-gray-500">City</th>
+            <th class="px-2 py-2 text-center text-gray-500">County</th>
+            <th class="px-2 py-2 text-center text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hover:bg-gray-50">
+            <td class="px-2 py-2 text-center text-gray-500">1</td>
+            <td class="px-2 py-2 text-center text-gray-500">ahmet61</td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              ahmet61>example.com
+            </td>
+            <td class="px-2 py-2 text-center text-gray-500">05320000000</td>
+            <td class="px-2 py-2 text-center text-gray-500">Trabzon</td>
+            <td class="px-2 py-2 text-center text-gray-500">Trabzon</td>
+            <td class="px-2 py-2 text-center text-gray-500">Trabzon</td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              <div class="flex items-center justify-center space-x-2">
+                <a href=""
+                  ><i
+                    class="fa-solid fa-pen-to-square fa-lg text-gray-600 hover:text-gray-800"
+                  ></i
+                ></a>
+                <a href=""
+                  ><i
+                    class="fa-solid fa-trash fa-lg text-gray-600 hover:text-gray-800"
+                  ></i
+                ></a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 </div>
