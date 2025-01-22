@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
+import { AuthService } from '../../shared/service/auth/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -14,4 +15,11 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
-export class MainComponent {}
+export class MainComponent {
+  isAuthentication: boolean = false;
+  constructor(public authService: AuthService, private router: Router) {}
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['admin/login']);
+  }
+}

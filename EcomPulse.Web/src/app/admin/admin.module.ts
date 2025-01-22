@@ -10,12 +10,14 @@ import { CustomerComponent } from './customer/customer.component';
 import { AddComponent } from './category/add/add.component';
 import { ProductAddComponent } from './product/product-add/product-add.component';
 import { CustomerAddComponent } from './customer/customer-add/customer-add.component';
+import { authAdminGuard } from '../shared/service/auth/guards/auth-admin.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: '',
     component: MainComponent,
+    canActivate: [authAdminGuard],
     children: [
       {
         path: 'dashboard',

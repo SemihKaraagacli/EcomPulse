@@ -7,10 +7,11 @@
       <h1 class="font-semibold text-lg lg:text-xl">Categories</h1>
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <a
-          class="px-4 py-2 bg-neutral-950 text-white rounded-md text-sm lg:text-base w-full sm:w-auto text-center"
-          href="admin/category/add"
-          >Add category</a
+          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm whitespace-nowrap"
+          href="admin/customers/add"
         >
+          Add category
+        </a>
         <div class="relative w-full sm:w-auto">
           <input
             type="text"
@@ -38,9 +39,12 @@
         </thead>
         <tbody>
           <!-- Example Row -->
-          <tr class="hover:bg-gray-50">
-            <td class="px-4 py-2 text-center text-gray-500">1</td>
-            <td class="px-4 py-2 text-center text-gray-500">Technology</td>
+          <tr
+            class="hover:bg-gray-50"
+            *ngFor="let item of categoryService.categoryList"
+          >
+            <td class="px-4 py-2 text-center text-gray-500">{{ item.id }}</td>
+            <td class="px-4 py-2 text-center text-gray-500">{{ item.name }}</td>
             <td class="px-4 py-2 text-center text-gray-500">
               <div class="flex items-center justify-center space-x-2">
                 <a href=""

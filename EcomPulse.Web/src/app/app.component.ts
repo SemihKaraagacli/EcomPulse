@@ -13,5 +13,4 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.clientCredential.clientcredential();
   }
-  title = 'EcomPulse.Web';
 }

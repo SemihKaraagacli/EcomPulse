@@ -13,6 +13,5 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
     data: { breadcrumb: { label: 'Admin', disable: true } },
-    canActivate: [authGuard],
   },
 ];

@@ -16,7 +16,6 @@ export class AuthService {
   form: FormGroup;
   model: SignInViewModel = new SignInViewModel('', '');
   errorMessage: string = '';
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -73,7 +72,7 @@ export class AuthService {
 
     return null;
   }
-  getclaims(): { id: string; username: string; email: string } | null {
+  getclaims(): { id: string; username: string; role: string } | null {
     const cookieData = this.cookieService.get('authCookie');
 
     if (cookieData) {
@@ -85,6 +84,10 @@ export class AuthService {
   }
   isAuthenticated(): boolean {
     return !!this.cookieService.get('authCookie');
+  }
+  isAdmin(): boolean {
+    const role = this.getclaims();
+    return role?.role.includes('admin') || false;
   }
   logout(): void {
     this.cookieService.delete('authCookie');
