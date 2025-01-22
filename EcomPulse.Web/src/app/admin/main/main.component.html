@@ -1,39 +1,42 @@
 <div class="flex flex-col lg:flex-row h-screen">
   <div class="w-full lg:w-[13%] p-4 lg:p-6 bg-white">
-    <div class="flex justify-center items-center mb-6 lg:mb-10">
+    <a
+      routerLink="/admin"
+      class="flex justify-center items-center mb-6 lg:mb-10"
+    >
       <img class="w-6 h-6 lg:w-8 lg:h-8 mr-1" src="favicon-32x32.png" alt="" />
       <h1 class="font-bold text-sm lg:text-lg">ADMIN</h1>
-    </div>
+    </a>
     <a
-      href="admin/dashboard"
+      routerLink="/admin/dashboard"
       class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
     >
       <i class="fa-solid fa-chart-line mr-2 lg:mr-3"></i>
       <h1 class="font-semibold text-sm lg:text-base">Dashboard</h1>
     </a>
     <a
-      href="admin/category"
+      routerLink="/admin/category"
       class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
     >
       <i class="fa-solid fa-list mr-2 lg:mr-3"></i>
       <h1 class="font-semibold text-sm lg:text-base">Category</h1>
     </a>
     <a
-      href="admin/product"
+      routerLink="/admin/product"
       class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
     >
       <i class="fa-solid fa-box-archive mr-2 lg:mr-3"></i>
       <h1 class="font-semibold text-sm lg:text-base">Product</h1>
     </a>
     <a
-      href="admin/order"
+      routerLink="/admin/order"
       class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
     >
       <i class="fa-solid fa-cart-shopping mr-2 lg:mr-3"></i>
       <h1 class="font-semibold text-sm lg:text-base">Orders</h1>
     </a>
     <a
-      href="admin/customers"
+      routerLink="/admin/customers"
       class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
     >
       <i class="fa-solid fa-user-group mr-2 lg:mr-3"></i>
@@ -48,11 +51,12 @@
           <b [routerLink]="breadcrumb.label">{{ breadcrumb }}</b>
         </div>
       </xng-breadcrumb>
-
-      <!-- Logout Icon -->
-      <a href="" class="ml-auto text-gray-500 hover:text-gray-950">
+      <button
+        (click)="logout()"
+        class="ml-auto text-gray-500 hover:text-gray-950 cursor-pointer"
+      >
         <i class="fa-solid fa-right-from-bracket"></i>
-      </a>
+      </button>
     </div>
     <router-outlet></router-outlet>
   </main>
