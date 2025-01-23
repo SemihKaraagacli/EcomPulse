@@ -39,24 +39,35 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="hover:bg-gray-50">
-            <td class="px-2 py-2 text-center text-gray-500">1</td>
-            <td class="px-2 py-2 text-center text-gray-500">ahmet61</td>
+          <tr
+            *ngFor="let item of userService.userList"
+            class="hover:bg-gray-50"
+          >
+            <td class="px-2 py-2 text-center text-gray-500">{{ item.id }}</td>
             <td class="px-2 py-2 text-center text-gray-500">
-              ahmet61>example.com
+              {{ item.userName }}
             </td>
-            <td class="px-2 py-2 text-center text-gray-500">05320000000</td>
-            <td class="px-2 py-2 text-center text-gray-500">Trabzon</td>
-            <td class="px-2 py-2 text-center text-gray-500">Trabzon</td>
-            <td class="px-2 py-2 text-center text-gray-500">Trabzon</td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              {{ item.email }}
+            </td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              {{ item.phoneNumber }}
+            </td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              {{ item.address }}
+            </td>
+            <td class="px-2 py-2 text-center text-gray-500">{{ item.city }}</td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              {{ item.county }}
+            </td>
             <td class="px-2 py-2 text-center text-gray-500">
               <div class="flex items-center justify-center space-x-2">
-                <a href=""
+                <a routerLink=""
                   ><i
                     class="fa-solid fa-pen-to-square fa-lg text-gray-600 hover:text-gray-800"
                   ></i
                 ></a>
-                <a href=""
+                <a routerLink=""
                   ><i
                     class="fa-solid fa-trash fa-lg text-gray-600 hover:text-gray-800"
                   ></i
