@@ -11,7 +11,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.url.includes('/Auth')) {
     token = clientCredential.getToken();
   }
-  if (req.url.includes('/User')) {
+  if (req.method === 'POST' && req.url.includes('/User')) {
     token = clientCredential.getToken();
   }
   if (req.method === 'GET' && req.url.includes('/Product')) {
