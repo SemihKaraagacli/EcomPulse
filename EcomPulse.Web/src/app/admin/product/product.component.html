@@ -42,21 +42,27 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="hover:bg-gray-50">
-            <td class="px-2 py-2 text-center text-gray-500">1</td>
-            <td class="px-2 py-2 text-center text-gray-500">Adidas T-Shirt</td>
+          <tr *ngFor="let item of productService.list" class="hover:bg-gray-50">
+            <td class="px-2 py-2 text-center text-gray-500">{{ item.id }}</td>
+            <td class="px-2 py-2 text-center text-gray-500">{{ item.name }}</td>
             <td class="px-2 py-2 text-center text-gray-500 description-column">
               Description
             </td>
-            <td class="px-2 py-2 text-center text-gray-500">1300$</td>
-            <td class="px-2 py-2 text-center text-gray-500">100</td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              {{ item.price }}$
+            </td>
+            <td class="px-2 py-2 text-center text-gray-500">
+              {{ item.stock }}
+            </td>
             <td class="px-2 py-2 text-center text-gray-500 category-column">
-              Technology
+              {{ item.description }}
             </td>
             <td class="px-2 py-2 text-center text-gray-500">
               <div class="flex items-center justify-center space-x-2">
-                <a href=""><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
-                <a href=""><i class="fa-solid fa-trash fa-lg"></i></a>
+                <a routerLink=""
+                  ><i class="fa-solid fa-pen-to-square fa-lg"></i
+                ></a>
+                <a routerLink=""><i class="fa-solid fa-trash fa-lg"></i></a>
               </div>
             </td>
           </tr>
