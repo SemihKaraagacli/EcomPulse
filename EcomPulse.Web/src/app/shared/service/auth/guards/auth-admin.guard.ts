@@ -7,6 +7,9 @@ export const authAdminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   if (authService.isAuthenticated()) {
     if (authService.isAdmin()) {
+      if (state.url === '/admin/login') {
+        router.navigate(['/admin/dashboard']);
+      }
       return true;
     } else {
       router.navigate(['admin/login']);

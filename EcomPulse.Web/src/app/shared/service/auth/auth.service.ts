@@ -1,12 +1,11 @@
 import { jwt_decode } from 'jwt-decode-es';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { SignInViewModel } from '../../model/viewmodels/auth/SignInViewModel';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-import { ClientcredentialService } from './clientcredential.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +18,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private cookieService: CookieService,
-    private clientCredential: ClientcredentialService
+    private cookieService: CookieService
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),

@@ -51,12 +51,11 @@
           <b [routerLink]="breadcrumb.label">{{ breadcrumb }}</b>
         </div>
       </xng-breadcrumb>
-      <button
+      <a
         (click)="logout()"
-        class="ml-auto text-gray-500 hover:text-gray-950 cursor-pointer"
+        class="cursor-pointer block px-4 py-2 text-gray-700 hover:bg-gray-100"
+        >Logout</a
       >
-        <i class="fa-solid fa-right-from-bracket"></i>
-      </button>
     </div>
     <router-outlet></router-outlet>
   </main>
