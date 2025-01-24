@@ -11,6 +11,7 @@ import { AddComponent } from './category/add/add.component';
 import { ProductAddComponent } from './product/product-add/product-add.component';
 import { CustomerAddComponent } from './customer/customer-add/customer-add.component';
 import { authAdminGuard } from '../shared/service/auth/guards/auth-admin.guard';
+import { UpdateComponent } from './category/update/update.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -33,6 +34,11 @@ const routes: Routes = [
         path: 'category/add',
         component: AddComponent,
         data: { breadcrumb: { label: 'Category > Add', disable: true } },
+      },
+      {
+        path: 'category/update/:id',
+        component: UpdateComponent,
+        data: { breadcrumb: { label: 'Category > Update', disable: true } },
       },
       {
         path: 'product',

@@ -11,9 +11,14 @@ import { Router } from '@angular/router';
 export class CategoryService {
   url: string = environment.categoryBaseUrl;
   categoryList: CategoryDto[] = [];
+  category: CategoryDto = {
+    id: '',
+    name: '',
+  };
   categoryAdd: CategoryCreateViewModel = {
     name: '',
   };
+
   constructor(private http: HttpClient, private router: Router) {}
   getAllCategory() {
     this.http.get(this.url).subscribe({
@@ -33,6 +38,29 @@ export class CategoryService {
       },
       error: (err) => {
         console.log(`Error: ${err}`);
+      },
+    });
+  }
+
+  getById(id: any) {
+    this.http.get(`${this.url}/${id}`).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.category = res as CategoryDto;
+      },
+      error: (err) => {
+        `${err.details}`;
+      },
+    });
+  }
+
+  updateCategory(id: any, data: CategoryDto) {
+    this.http.put(`${this.url}/${id}`, data).subscribe({
+      next: (res) => {
+        console.log('güncelleme başarılı.');
+      },
+      error: (err) => {
+        `Error: ${err.details}`;
       },
     });
   }

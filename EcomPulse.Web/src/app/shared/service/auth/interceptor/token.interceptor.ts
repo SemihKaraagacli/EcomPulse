@@ -20,6 +20,9 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.method === 'GET' && req.url.includes('/Category')) {
     token = clientCredential.getToken();
   }
+  if (req.method === 'GET' && req.url.includes('/Category/:id')) {
+    token = clientCredential.getToken();
+  }
   if (token) {
     const reqClone = req.clone({
       setHeaders: {
