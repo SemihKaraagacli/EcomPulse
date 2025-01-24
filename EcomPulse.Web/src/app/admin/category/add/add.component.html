@@ -17,12 +17,22 @@
           name="name"
           required
           #name="ngModel"
-          class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-950 focus:border-neutral-950"
+          [ngClass]="{
+            'border-red-500 focus:ring-red-600':
+              name.invalid && (name.touched || categoryForm.submitted),
+            'border-gray-300 focus:ring-neutral-950 focus:border-neutral-950':
+              !(name.invalid && (name.touched || categoryForm.submitted))
+          }"
+          title="Please enter the category name"
+          class="border px-3 py-2 w-full rounded-md text-sm focus:outline-none"
           type="text"
           placeholder="Enter category name"
         />
-        <div *ngIf="(name.invalid && name.touched) || categoryForm.submitted">
-          <span class="text-red-600">Category name is required</span>
+        <div
+          *ngIf="(name.invalid && name.touched) || categoryForm.submitted"
+          class="text-sm text-red-600 mt-1"
+        >
+          Category name is required
         </div>
       </div>
       <div class="w-full flex justify-center">
