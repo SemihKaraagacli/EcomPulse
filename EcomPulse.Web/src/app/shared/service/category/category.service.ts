@@ -49,7 +49,7 @@ export class CategoryService {
         this.category = res as CategoryDto;
       },
       error: (err) => {
-        `${err.details}`;
+        `${err.detail}`;
       },
     });
   }
@@ -60,7 +60,7 @@ export class CategoryService {
         console.log('güncelleme başarılı.');
       },
       error: (err) => {
-        `Error: ${err.details}`;
+        `Error: ${err.detail}`;
       },
     });
   }

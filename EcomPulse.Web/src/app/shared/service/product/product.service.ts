@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { ProductDto } from '../../model/dtos/product/ProductDto';
+import { ProductCreateRequestViewModel } from '../../model/viewmodels/product/ProductCreateViewModel';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,13 @@ export class ProductService {
   url: string = environment.productBaseUrl;
   selectedCategory: string = '';
   list: ProductDto[] = [];
+  productCreate: ProductCreateRequestViewModel = {
+    name: '',
+    description: '',
+    price: 0,
+    stock: 0,
+    categoryId: '',
+  };
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -51,6 +59,17 @@ export class ProductService {
       },
       error: (err) => {
         console.log(err);
+      },
+    });
+  }
+
+  createProduct(data: ProductCreateRequestViewModel) {
+    this.http.post(this.url, data).subscribe({
+      next: (res) => {
+        console.log('ürün oluşturuldu.');
+      },
+      error: (err) => {
+        console.log(`Error: ${err.detail}`);
       },
     });
   }
