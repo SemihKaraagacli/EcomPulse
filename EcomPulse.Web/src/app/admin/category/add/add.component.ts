@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CategoryService } from '../../../shared/service/category/category.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add',
@@ -11,7 +11,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class AddComponent {
   constructor(public categoryService: CategoryService) {}
-  OnSubmit() {
-    this.categoryService.createCategory(this.categoryService.categoryAdd);
+  OnSubmit(categoryForm: NgForm) {
+    if (categoryForm.valid) {
+      this.categoryService.createCategory(this.categoryService.categoryAdd);
+    } else {
+      console.log('Form is invalid.');
+    }
   }
 }

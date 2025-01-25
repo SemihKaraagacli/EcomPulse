@@ -4,59 +4,131 @@
   </header>
   <hr />
   <main class="px-14 py-14">
-    <form action="">
+    <form #productForm="ngForm" (ngSubmit)="OnSubmit(productForm)">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
         <div class="lg:col-span-1">
-          <label for="product-name" class="text-md font-medium">Name</label>
+          <label for="name" class="text-md font-medium">Name</label>
           <input
-            id="product-name"
+            [(ngModel)]="productService.productCreate.name"
+            id="name"
+            name="name"
+            required
+            minlength="3"
             class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
             type="text"
             placeholder="Enter product name"
+            #name="ngModel"
           />
+          <div
+            *ngIf="name.invalid && (name.dirty || name.touched)"
+            class="text-red-500 text-sm"
+          >
+            <p *ngIf="name.errors?.['required']">Name is required.</p>
+            <p *ngIf="name.errors?.['minlength']">
+              Name must be at least 3 characters long.
+            </p>
+          </div>
 
-          <label for="product-price" class="text-md font-medium">Price</label>
+          <label for="price" class="text-md font-medium">Price</label>
           <input
-            id="product-price"
+            id="price"
+            [(ngModel)]="productService.productCreate.price"
+            name="price"
+            required
+            min="0.01"
+            step="0.01"
             class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
             type="number"
             placeholder="Enter product price"
+            #price="ngModel"
           />
+          <div
+            *ngIf="price.invalid && (price.dirty || price.touched)"
+            class="text-red-500 text-sm"
+          >
+            <p *ngIf="price.errors?.['required']">Price is required.</p>
+            <p *ngIf="price.errors?.['min']">Price must be greater than 0.</p>
+          </div>
 
-          <label for="product-category" class="text-md font-medium"
-            >Category</label
-          >
+          <label for="category" class="text-md font-medium">Category</label>
           <select
-            id="product-category"
+            id="category"
+            [(ngModel)]="productService.productCreate.categoryId"
+            name="category"
+            required
             class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
+            #category="ngModel"
           >
-            <option value="">Tekstil</option>
+            <option value="" disabled selected>Select category</option>
+            <option
+              *ngFor="let item of categoryService.categoryList"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
           </select>
+          <div
+            *ngIf="category.invalid && (category.dirty || category.touched)"
+            class="text-red-500 text-sm"
+          >
+            <p *ngIf="category.errors?.['required']">Category is required.</p>
+          </div>
         </div>
 
         <div class="lg:col-span-1">
-          <label for="product-stock" class="text-md font-medium">Stock</label>
+          <label for="stock" class="text-md font-medium">Stock</label>
           <input
-            id="product-stock"
+            id="stock"
+            name="stock"
+            [(ngModel)]="productService.productCreate.stock"
+            required
+            min="0"
             class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3"
             type="number"
             placeholder="Enter product stock"
+            #stock="ngModel"
           />
+          <div
+            *ngIf="stock.invalid && (stock.dirty || stock.touched)"
+            class="text-red-500 text-sm"
+          >
+            <p *ngIf="stock.errors?.['required']">Stock is required.</p>
+            <p *ngIf="stock.errors?.['min']">Stock must be 0 or greater.</p>
+          </div>
 
-          <label for="product-description" class="text-md font-medium"
+          <label for="description" class="text-md font-medium"
             >Description</label
           >
           <textarea
-            id="product-description"
+            id="description"
+            name="description"
+            [(ngModel)]="productService.productCreate.description"
+            required
+            minlength="10"
             class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full sm:w-80 lg:w-full rounded-md mb-3 min-h-28"
             placeholder="Enter product description"
+            #description="ngModel"
           ></textarea>
+          <div
+            *ngIf="
+              description.invalid && (description.dirty || description.touched)
+            "
+            class="text-red-500 text-sm"
+          >
+            <p *ngIf="description.errors?.['required']">
+              Description is required.
+            </p>
+            <p *ngIf="description.errors?.['minlength']">
+              Description must be at least 10 characters long.
+            </p>
+          </div>
         </div>
       </div>
 
       <button
         class="w-full sm:w-auto lg:w-auto px-6 py-2 bg-black text-white rounded-md"
         type="submit"
+        [disabled]="productForm.invalid"
       >
         Submit
       </button>
