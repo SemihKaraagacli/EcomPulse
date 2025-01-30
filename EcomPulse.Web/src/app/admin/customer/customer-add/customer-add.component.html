@@ -4,74 +4,91 @@
   </header>
   <hr />
   <main class="px-4 lg:px-14 py-6">
-    <form action="">
+    <form [formGroup]="customerForm" (ngSubmit)="OnSubmit()">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-3">
         <div>
           <label for="username" class="text-md font-medium">Username</label>
           <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-3"
-              type="text"
-              id="username"
-              name="username"
-            />
+            <input class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1"
+              [ngClass]="{ 'border-red-500': submitted && f['userName'].errors }" type="text" id="username"
+              formControlName="userName" />
+            <div *ngIf="submitted && f['userName'].errors" class="text-red-500 text-sm mb-2">
+              <div *ngIf="f['userName'].errors['required']">Username is required</div>
+              <div *ngIf="f['userName'].errors['minlength']">Username must be at least 3 characters</div>
+            </div>
           </div>
+
           <label for="email" class="text-md font-medium">Email</label>
           <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-3"
-              type="email"
-              id="email"
-              name="email"
-            />
+            <input class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1"
+              [ngClass]="{ 'border-red-500': submitted && f['email'].errors }" type="email" id="email"
+              formControlName="email" />
+            <div *ngIf="submitted && f['email'].errors" class="text-red-500 text-sm mb-2">
+              <div *ngIf="f['email'].errors['required']">Email is required</div>
+              <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+            </div>
           </div>
+
           <label for="password" class="text-md font-medium">Password</label>
           <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-3"
-              type="password"
-              id="password"
-              name="password"
-            />
+            <input class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1"
+              [ngClass]="{ 'border-red-500': submitted && f['password'].errors }" type="password" id="password"
+              formControlName="password" />
+            <div *ngIf="submitted && f['password'].errors" class="text-red-500 text-sm mb-2">
+              <div *ngIf="f['password'].errors['required']">Password is required</div>
+              <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+              <div *ngIf="f['password'].errors['pattern']">Password must contain at least one letter and one number
+              </div>
+            </div>
           </div>
         </div>
+
         <div>
           <label for="city" class="text-md font-medium">City</label>
           <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-3"
-              type="text"
-              id="city"
-              name="city"
-            />
+            <input class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1"
+              [ngClass]="{ 'border-red-500': submitted && f['city'].errors }" type="text" id="city"
+              formControlName="city" />
+            <div *ngIf="submitted && f['city'].errors" class="text-red-500 text-sm mb-2">
+              <div *ngIf="f['city'].errors['required']">City is required</div>
+            </div>
           </div>
+
           <label for="county" class="text-md font-medium">County</label>
           <div>
-            <input
-              class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-3"
-              type="text"
-              id="county"
-              name="county"
-            />
+            <input class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1"
+              [ngClass]="{ 'border-red-500': submitted && f['county'].errors }" type="text" id="county"
+              formControlName="county" />
+            <div *ngIf="submitted && f['county'].errors" class="text-red-500 text-sm mb-2">
+              <div *ngIf="f['county'].errors['required']">County is required</div>
+            </div>
+          </div>
+
+          <label for="phoneNumber" class="text-md font-medium">Phone Number</label>
+          <div>
+            <input class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1"
+              [ngClass]="{ 'border-red-500': submitted && f['phoneNumber'].errors }" type="tel" id="phoneNumber"
+              formControlName="phoneNumber" maxlength="11" />
+            <div *ngIf="submitted && f['phoneNumber'].errors" class="text-red-500 text-sm mb-2">
+              <div *ngIf="f['phoneNumber'].errors['pattern']">Phone number must be exactly 11 digits</div>
+              <div *ngIf="f['phoneNumber'].errors['required']">Phone number is required</div>
+            </div>
           </div>
         </div>
+
         <div>
           <label for="address" class="text-md font-medium">Address</label>
           <div>
-            <textarea
-              class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-3 min-h-28"
-              id="address"
-              name="address"
-            ></textarea>
+            <textarea class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1 min-h-28"
+              [ngClass]="{ 'border-red-500': submitted && f['address'].errors }" id="address"
+              formControlName="address"></textarea>
+            <div *ngIf="submitted && f['address'].errors" class="text-red-500 text-sm mb-2">
+              <div *ngIf="f['address'].errors['required']">Address is required</div>
+            </div>
           </div>
         </div>
       </div>
-      <button
-        class="w-full sm:w-auto px-5 py-2 bg-black text-white rounded-md"
-        type="submit"
-      >
-        Submit
-      </button>
+      <button class="w-full sm:w-auto px-5 py-2 bg-black text-white rounded-md" type="submit">Submit</button>
     </form>
   </main>
 </div>
