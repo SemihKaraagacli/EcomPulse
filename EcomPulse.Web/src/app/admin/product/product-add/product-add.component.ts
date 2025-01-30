@@ -24,8 +24,6 @@ export class ProductAddComponent implements OnInit {
     if (productForm.valid) {
       this.productService.createProduct(this.productService.productCreate);
       this.router.navigate(['/admin/product']);
-    } else {
-      console.log('Ürün oluşturulamadı.');
     }
   }
 }

@@ -25,9 +25,7 @@ export class UserService {
 
   signUp(user: SignUpViewModel) {
     this.http.post(this.url, user).subscribe({
-      next: (res) => {
-        this.router.navigate(['/']);
-      },
+      next: (res) => {},
       error: (err) => {
         console.log(err);
         this.errorMessage = err.error.detail;
