@@ -45,7 +45,6 @@ export class CategoryService {
   getById(id: any) {
     this.http.get(`${this.url}/${id}`).subscribe({
       next: (res) => {
-        console.log(res);
         this.category = res as CategoryDto;
       },
       error: (err) => {
@@ -56,9 +55,7 @@ export class CategoryService {
 
   updateCategory(id: any, data: CategoryDto) {
     this.http.put(`${this.url}/${id}`, data).subscribe({
-      next: (res) => {
-        console.log('güncelleme başarılı.');
-      },
+      next: (res) => {},
       error: (err) => {
         `Error: ${err.detail}`;
       },

@@ -26,7 +26,17 @@ export class ProductService {
     const checkbox = event.target as HTMLInputElement;
     const value = String(checkbox.value);
 
+    const checkboxes = document.querySelectorAll(
+      'input[type="checkbox"][name="category"]'
+    );
+
     if (checkbox.checked) {
+      checkboxes.forEach((cb: Element) => {
+        const input = cb as HTMLInputElement;
+        if (input !== checkbox) {
+          input.checked = false;
+        }
+      });
       this.selectedCategory = value;
     } else {
       this.selectedCategory = '';
@@ -43,7 +53,6 @@ export class ProductService {
     this.http.get(this.url).subscribe({
       next: (res) => {
         this.list = res as ProductDto[];
-        console.log(this.list);
       },
       error: (err) => {
         console.log(err);
@@ -65,9 +74,7 @@ export class ProductService {
 
   createProduct(data: ProductCreateRequestViewModel) {
     this.http.post(this.url, data).subscribe({
-      next: (res) => {
-        console.log('ürün oluşturuldu.');
-      },
+      next: (res) => {},
       error: (err) => {
         console.log(`Error: ${err.detail}`);
       },

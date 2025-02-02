@@ -1,26 +1,18 @@
 <div class="bg-white min-h-[80%] rounded-md shadow-md">
   <!-- Header -->
   <header class="px-4 lg:px-14 py-4 lg:py-6">
-    <div
-      class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4"
-    >
+    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <h1 class="font-semibold text-lg lg:text-xl">Categories</h1>
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <a
-          class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm whitespace-nowrap"
-          routerLink="/admin/category/add"
-        >
+        <a class="px-4 py-2 mr-4 bg-neutral-950 text-white rounded-md text-sm whitespace-nowrap"
+          routerLink="/admin/category/add">
           Add category
         </a>
         <div class="relative w-full sm:w-auto">
-          <input
-            type="text"
+          <input type="text"
             class="pl-10 pr-2 py-2 border border-gray-300 rounded-md w-full sm:w-64 text-sm lg:text-base"
-            placeholder="Search..."
-          />
-          <i
-            class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          ></i>
+            placeholder="Search..." />
+          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
       </div>
     </div>
@@ -39,24 +31,14 @@
         </thead>
         <tbody>
           <!-- Example Row -->
-          <tr
-            class="hover:bg-gray-50"
-            *ngFor="let item of categoryService.categoryList"
-          >
+          <tr class="hover:bg-gray-50" *ngFor="let item of categoryService.categoryList">
             <td class="px-4 py-2 text-center text-gray-500">{{ item.id }}</td>
             <td class="px-4 py-2 text-center text-gray-500">{{ item.name }}</td>
             <td class="px-4 py-2 text-center text-gray-500">
               <div class="flex items-center justify-center space-x-4">
-                <a routerLink="/admin/category/update/{{ item.id }}"
-                  ><i
-                    class="fa-solid fa-pen-to-square fa-lg text-gray-600 hover:text-gray-800"
-                  ></i
-                ></a>
-                <a routerLink=""
-                  ><i
-                    class="fa-solid fa-trash fa-lg text-gray-600 hover:text-gray-800"
-                  ></i
-                ></a>
+                <a routerLink="/admin/category/update/{{ item.id }}"><i
+                    class="fa-solid fa-pen-to-square fa-lg text-gray-600 hover:text-gray-800"></i></a>
+                <a routerLink=""><i class="fa-solid fa-trash fa-lg text-gray-600 hover:text-gray-800"></i></a>
               </div>
             </td>
           </tr>

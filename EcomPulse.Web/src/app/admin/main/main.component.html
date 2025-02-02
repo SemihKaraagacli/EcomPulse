@@ -1,61 +1,54 @@
-<div class="flex flex-col lg:flex-row h-screen">
-  <div class="w-full lg:w-[13%] p-4 lg:p-6 bg-white">
-    <a
-      routerLink="/admin"
-      class="flex justify-center items-center mb-6 lg:mb-10"
-    >
+<div class="flex flex-col lg:flex-row min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-full lg:w-[13%] p-4 lg:p-6 bg-white">
+    <a routerLink="/admin" class="flex justify-center items-center mb-6 lg:mb-10">
       <img class="w-6 h-6 lg:w-8 lg:h-8 mr-1" src="favicon-32x32.png" alt="" />
-      <h1 class="font-bold text-sm lg:text-lg">ADMIN</h1>
+      <h1 class="font-bold text-xs lg:text-lg">ADMIN</h1> <!-- Küçük ekranlarda daha küçük yazı -->
     </a>
-    <a
-      routerLink="/admin/dashboard"
-      class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
-    >
-      <i class="fa-solid fa-chart-line mr-2 lg:mr-3"></i>
-      <h1 class="font-semibold text-sm lg:text-base">Dashboard</h1>
-    </a>
-    <a
-      routerLink="/admin/category"
-      class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
-    >
-      <i class="fa-solid fa-list mr-2 lg:mr-3"></i>
-      <h1 class="font-semibold text-sm lg:text-base">Category</h1>
-    </a>
-    <a
-      routerLink="/admin/product"
-      class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
-    >
-      <i class="fa-solid fa-box-archive mr-2 lg:mr-3"></i>
-      <h1 class="font-semibold text-sm lg:text-base">Product</h1>
-    </a>
-    <a
-      routerLink="/admin/order"
-      class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
-    >
-      <i class="fa-solid fa-cart-shopping mr-2 lg:mr-3"></i>
-      <h1 class="font-semibold text-sm lg:text-base">Orders</h1>
-    </a>
-    <a
-      routerLink="/admin/customers"
-      class="flex items-center py-2 px-4 lg:px-8 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-4"
-    >
-      <i class="fa-solid fa-user-group mr-2 lg:mr-3"></i>
-      <h1 class="font-semibold text-sm lg:text-base">Customers</h1>
-    </a>
-  </div>
-  <main class="flex-1 bg-gray-200 text-sm lg:text-lg p-4 lg:pl-20 lg:pr-20">
-    <div class="flex items-center mb-6 lg:mb-8 justify-between">
+    <nav>
+      <a routerLink="/admin/dashboard"
+        class="flex items-center py-2 px-3 lg:px-6 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-3 lg:mb-4">
+        <i class="fa-solid fa-chart-line mr-2 lg:mr-3 text-sm lg:text-base"></i>
+        <h1 class="font-semibold text-xs lg:text-base">Dashboard</h1>
+      </a>
+      <a routerLink="/admin/category"
+        class="flex items-center py-2 px-3 lg:px-6 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-3 lg:mb-4">
+        <i class="fa-solid fa-list mr-2 lg:mr-3 text-sm lg:text-base"></i>
+        <h1 class="font-semibold text-xs lg:text-base">Category</h1>
+      </a>
+      <a routerLink="/admin/product"
+        class="flex items-center py-2 px-3 lg:px-6 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-3 lg:mb-4">
+        <i class="fa-solid fa-box-archive mr-2 lg:mr-3 text-sm lg:text-base"></i>
+        <h1 class="font-semibold text-xs lg:text-base">Product</h1>
+      </a>
+      <a routerLink="/admin/order"
+        class="flex items-center py-2 px-3 lg:px-6 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-3 lg:mb-4">
+        <i class="fa-solid fa-cart-shopping mr-2 lg:mr-3 text-sm lg:text-base"></i>
+        <h1 class="font-semibold text-xs lg:text-base">Orders</h1>
+      </a>
+      <a routerLink="/admin/customers"
+        class="flex items-center py-2 px-3 lg:px-6 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-3 lg:mb-4">
+        <i class="fa-solid fa-user-group mr-2 lg:mr-3 text-sm lg:text-base"></i>
+        <h1 class="font-semibold text-xs lg:text-base">Customers</h1>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 bg-gray-200 text-sm lg:text-lg p-4 lg:px-16">
+    <div class="flex flex-col lg:flex-row items-center justify-between mb-6 lg:mb-8 w-full">
       <!-- Breadcrumb -->
       <xng-breadcrumb [autoGenerate]="false" separator=">">
-        <div class="py-2 lg:py-5" *xngBreadcrumbItem="let breadcrumb">
+        <div class="py-2 lg:py-5 text-xs lg:text-base" *xngBreadcrumbItem="let breadcrumb">
           <b [routerLink]="breadcrumb.label">{{ breadcrumb }}</b>
         </div>
       </xng-breadcrumb>
-      <a
-        (click)="logout()"
-        class="cursor-pointer block px-4 py-2 text-gray-700 hover:bg-gray-100"
-        >Logout</a
-      >
+
+      <!-- Logout -->
+      <a (click)="logout()"
+        class="cursor-pointer block px-3 py-2 text-gray-700 hover:bg-gray-100 text-xs lg:text-sm mt-4 lg:mt-0 lg:px-4">
+        Logout
+      </a>
     </div>
     <router-outlet></router-outlet>
   </main>
