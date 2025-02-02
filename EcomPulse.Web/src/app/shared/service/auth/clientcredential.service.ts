@@ -26,6 +26,9 @@ export class ClientcredentialService {
           const token = res.accessToken;
           this.saveToken(token);
         },
+        error: (err) => {
+          console.log(`Error: ${err.detail}`);
+        },
       });
     }
   }

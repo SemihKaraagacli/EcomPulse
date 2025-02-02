@@ -13,11 +13,13 @@ import { AuthService } from '../../shared/service/auth/auth.service';
     CommonModule,
   ],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.scss',
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
   isAuthentication: boolean = false;
+
   constructor(public authService: AuthService, private router: Router) {}
+
   ngOnInit(): void {
     this.isAuthentication = this.authService.isAuthenticated();
   }
@@ -25,6 +27,8 @@ export class MainComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.isAuthentication = false;
-    this.router.navigate(['/admin/login']);
+    setTimeout(() => {
+      this.router.navigate(['/admin/login']);
+    }, 100);
   }
 }

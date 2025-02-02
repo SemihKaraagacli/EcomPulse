@@ -29,7 +29,7 @@ export class AuthService {
     });
   }
 
-  signIn(data: SignInViewModel) {
+  signIn(data: SignInViewModel, isAdminLogin: boolean = false) {
     this.http.post(this.url, data).subscribe({
       next: (res: any) => {
         const token = res.accessToken;
@@ -40,7 +40,18 @@ export class AuthService {
           role: decodedToken.role,
         };
         this.saveTokenAndClaimsCookie(token, userClaims);
-        this.router.navigate(['/']);
+        
+        // Navigate based on login source and user role
+        if (isAdminLogin) {
+          if (userClaims.role.includes('admin')) {
+            this.router.navigate(['/admin']);
+          } else {
+            this.errorMessage = 'You do not have admin privileges';
+            this.logout();
+          }
+        } else {
+          this.router.navigate(['/']);
+        }
       },
       error: (err) => {
         console.log('SignIn failed.', err);
@@ -88,6 +99,7 @@ export class AuthService {
     return role?.role.includes('admin') || false;
   }
   logout(): void {
-    this.cookieService.delete('authCookie');
+    this.cookieService.delete('authCookie', '/');
+    this.cookieService.deleteAll('/');
   }
 }
