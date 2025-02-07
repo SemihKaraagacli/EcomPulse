@@ -27,7 +27,7 @@ export class ClientcredentialService {
           this.saveToken(token);
         },
         error: (err) => {
-          console.log(`Error: ${err.detail}`);
+          console.log(`ErrorClientCredential: ${err.message || err}`);
         },
       });
     }
