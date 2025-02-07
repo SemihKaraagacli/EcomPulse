@@ -76,7 +76,7 @@ export class ProductService {
     this.http.post(this.url, data).subscribe({
       next: (res) => {},
       error: (err) => {
-        console.log(`Error: ${err.detail}`);
+        console.log(`Error3: ${err.detail}`);
       },
     });
   }

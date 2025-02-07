@@ -27,7 +27,7 @@ export class ClientcredentialService {
           this.saveToken(token);
         },
         error: (err) => {
-          console.log(`Error: ${err.detail}`);
+          console.log(`ErrorClientCredential: ${err.message || err}`);
         },
       });
     }
@@ -42,7 +42,7 @@ export class ClientcredentialService {
       localStorage.setItem('client_token', token);
       localStorage.setItem(
         'client_token_expiration',
-        (now + 10 * 60 * 1000).toString()
+        (now + 20 * 60 * 1000).toString()
       );
     }
   }

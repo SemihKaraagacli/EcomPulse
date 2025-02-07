@@ -37,7 +37,7 @@ export class CategoryService {
         this.router.navigate(['/admin/category']);
       },
       error: (err) => {
-        console.log(`Error: ${err}`);
+        console.log(`Error2: ${err.detail}`);
       },
     });
   }
@@ -48,7 +48,7 @@ export class CategoryService {
         this.category = res as CategoryDto;
       },
       error: (err) => {
-        `${err.detail}`;
+        `Error3: ${err.detail}`;
       },
     });
   }
@@ -57,7 +57,7 @@ export class CategoryService {
     this.http.put(`${this.url}/${id}`, data).subscribe({
       next: (res) => {},
       error: (err) => {
-        `Error: ${err.detail}`;
+        `Error1: ${err.detail}`;
       },
     });
   }

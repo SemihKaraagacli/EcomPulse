@@ -1,0 +1,103 @@
+<div class="min-h-screen flex flex-col">
+  <header class="bg-white">
+    <section class="w-full flex gap-8 2xl:px-52 py-4 items-center">
+      <div class="w-3/12 flex items-center">
+        <img class="w-[40px] h-[40px]" src="favicon-32x32.png" alt="icon">
+        <h1 class="font-extrabold text-xl ml-2">Ecompulse</h1>
+      </div>
+      <div class="w-5/12">
+        <nav class="flex space-x-12 text-[#5C5F6A] text-lg font-medium">
+          <a routerLink="/">Home</a>
+          <a routerLink="/products">Products</a>
+          <a routerLink="#">About</a>
+          <a routerLink="#">Contact</a>
+        </nav>
+      </div>
+      <div class="w-4/12">
+        <div class="flex w-full ">
+          <section class=" w-9/12">
+            <div class="relative w-full">
+              <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-[#878A92]"></i>
+              <input
+                class="px-10 py-3 placeholder:text-[#878A92] placeholder:font-medium rounded-md w-full border border-[#E6E7E8] hover:border-[#878A92] focus:border-[#878A92] focus:outline-none"
+                type="text" placeholder="Search products...">
+            </div>
+          </section>
+          <section class="text-[#5C5F6A] flex items-center justify-center w-3/12 space-x-8 ml-6">
+            <a href=""><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+            <a href=""> <i class="fa-solid fa-circle-user fa-lg"></i></a>
+          </section>
+        </div>
+      </div>
+    </section>
+  </header>
+  <main>
+    <div class="2xl:px-56 py-8">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <footer class="mt-auto">
+    <section class="bg-[#F6F6F6] py-8 flex 2xl:px-56 justify-between items-center">
+      <div class="">
+        <div class=" mb-4 text-2xl font-extrabold">Join Our Newsletter</div>
+        <div class="text-sm text-[#5C5F6A]">We love to surprise our subscribers with occasional gifts.</div>
+      </div>
+      <div class="flex gap-6">
+        <input
+          class="border border-[#E6E7E8] rounded-md 2xl:w-[300px] px-4 py-3 placeholder:text-[#AAAAAA] placeholder:text-sm"
+          type="text" placeholder="Enter your email address">
+        <button class=" px-10  bg-[#0E1422] text-sm text-white rounded-lg"> Subscribe</button>
+      </div>
+    </section>
+    <section class="flex gap-24  justify-center items-start py-24">
+      <div class="w-1/6 ">
+        <div class="flex items-center space-x-3 mb-3">
+          <img class="w-[44px] h-[44px]" src="favicon-32x32.png" alt="">
+          <div class="font-extrabold text-xl">Ecompulse</div>
+        </div>
+        <div class="text-[#5C5F6A] text-sm w-[80%] mb-3 pl-2">
+          DevCut is a YouTube channel for practical project-based learning.
+        </div>
+        <div class="space-x-7 text-[#5C5F6A] pl-2">
+          <a href="#"><i class="fa-brands fa-instagram fa-xl"></i></a>
+          <a href="#"><i class="fa-brands fa-github fa-xl"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube fa-xl"></i></a>
+        </div>
+      </div>
+      <div class="w-4/12 flex gap-24  ">
+        <div class="space-y-3 text-sm">
+          <div class="text-[#878A92] mb-8 font-medium">SUPPORT</div>
+          <div class="text-[#5C5F6A] font-medium">FAQ</div>
+          <div class="text-[#5C5F6A] font-medium">Term of use</div>
+          <div class="text-[#5C5F6A] font-medium">Privacy policy</div>
+        </div>
+        <div class="space-y-3 text-sm">
+          <div class="text-[#878A92] mb-8 font-medium">COMPANY</div>
+          <div class="text-[#5C5F6A] font-medium">About us</div>
+          <div class="text-[#5C5F6A] font-medium">Contact</div>
+          <div class="text-[#5C5F6A] font-medium">Careers</div>
+        </div>
+        <div class="space-y-3 text-sm">
+          <div class="text-[#878A92] mb-8 font-medium">SHOP</div>
+          <div class="text-[#5C5F6A] font-medium">My Account</div>
+          <div class="text-[#5C5F6A] font-medium">Checkout</div>
+          <div class="text-[#5C5F6A] font-medium">Cart</div>
+        </div>
+      </div>
+      <div class="w-1/6 ">
+        <div class="text-sm">
+          <div class="text-[#878A92] mb-8 font-medium">ACCEPTED PAYMENTS</div>
+          <div class="flex gap-3">
+            <div class="text-[#5C5F6A]"><i class="fa-brands fa-cc-mastercard fa-xl"></i></div>
+            <div class="text-[#5C5F6A]">
+              <i class="fa-brands fa-cc-visa fa-xl"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <hr>
+    <div class="text-center py-4 text-[#5C5F6A]"> 2024 Ecompulse. All rights reserved.</div>
+  </footer>
+</div>

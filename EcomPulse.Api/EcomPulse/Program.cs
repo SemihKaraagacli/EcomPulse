@@ -103,7 +103,7 @@ try
                     token = token.Substring("Bearer ".Length).Trim();
                 }
 
-                // Tokenýn "SigninToken" için uygunluðunu kontrol et
+                // Tokenï¿½n "SigninToken" iï¿½in uygunluï¿½unu kontrol et
                 if (!context.HttpContext.Request.Headers.ContainsKey("AuthenticationScheme") ||
                     context.HttpContext.Request.Headers["AuthenticationScheme"] == JwtBearerDefaults.AuthenticationScheme)
                 {
@@ -134,7 +134,7 @@ try
                     token = token.Substring("Bearer ".Length).Trim();
                 }
 
-                // Tokenýn "SigninToken" için uygunluðunu kontrol et
+                // Tokenï¿½n "SigninToken" iï¿½in uygunluï¿½unu kontrol et
                 if (context.HttpContext.Request.Headers.ContainsKey("AuthenticationScheme") &&
                     context.HttpContext.Request.Headers["AuthenticationScheme"] == "Client_Token")
                 {
