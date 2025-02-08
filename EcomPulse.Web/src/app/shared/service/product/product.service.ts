@@ -10,7 +10,6 @@ import { ProductCreateRequestViewModel } from '../../model/viewmodels/product/Pr
 })
 export class ProductService {
   url: string = environment.productBaseUrl;
-  selectedCategory: string = '';
   list: ProductDto[] = [];
   productCreate: ProductCreateRequestViewModel = {
     name: '',
@@ -22,35 +21,9 @@ export class ProductService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  onCategorySelect(event: Event): void {
-    const checkbox = event.target as HTMLInputElement;
-    const value = String(checkbox.value);
-
-    const checkboxes = document.querySelectorAll(
-      'input[type="checkbox"][name="category"]'
-    );
-
-    if (checkbox.checked) {
-      checkboxes.forEach((cb: Element) => {
-        const input = cb as HTMLInputElement;
-        if (input !== checkbox) {
-          input.checked = false;
-        }
-      });
-      this.selectedCategory = value;
-    } else {
-      this.selectedCategory = '';
-    }
-  }
-  submitForm(event: Event): void {
-    event.preventDefault();
-    if (this.selectedCategory === '') {
-    } else {
-    }
-  }
-
-  getAll() {
-    this.http.get(this.url).subscribe({
+  filterProduct(categoryId: string) {
+    const url = `${this.url}/Filter/${categoryId}`;
+    this.http.get(url).subscribe({
       next: (res) => {
         this.list = res as ProductDto[];
       },
@@ -59,10 +32,8 @@ export class ProductService {
       },
     });
   }
-
-  filterProduct(categoryId: string) {
-    const url = `${this.url}/Filter/${categoryId}`;
-    this.http.get(url).subscribe({
+  getAll() {
+    this.http.get(this.url).subscribe({
       next: (res) => {
         this.list = res as ProductDto[];
       },
