@@ -15,7 +15,14 @@
   <div class="w-5/6 py-6 px-6">
     <h1 class="text-lg font-medium mb-4">Products</h1>
     <section class="flex justify-end mb-4">
-      sorting operations
+      <select [(ngModel)]="selectedSortOption" (change)="sortItems()"
+        class="px-2 focus:outline-none cursor-pointer text-[#5C5F6A] font-medium ">
+        <option value="" [selected]="selectedSortOption === ''">SORT BY</option>
+        <option value="nameA">Name A to Z</option>
+        <option value="nameB">Name Z to A</option>
+        <option value="priceA">Price Low to High</option>
+        <option value="priceB">Price High to Low</option>
+      </select>
     </section>
     <section class="">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">

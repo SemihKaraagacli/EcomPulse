@@ -25,9 +25,7 @@ export class CategoryService {
       next: (res) => {
         this.categoryList = res as CategoryDto[];
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
 
@@ -36,9 +34,7 @@ export class CategoryService {
       next: (res) => {
         this.router.navigate(['/admin/category']);
       },
-      error: (err) => {
-        console.log(`Error2: ${err.detail}`);
-      },
+      error: (err) => {},
     });
   }
 
@@ -47,18 +43,14 @@ export class CategoryService {
       next: (res) => {
         this.category = res as CategoryDto;
       },
-      error: (err) => {
-        `Error3: ${err.detail}`;
-      },
+      error: (err) => {},
     });
   }
 
   updateCategory(id: any, data: CategoryDto) {
     this.http.put(`${this.url}/${id}`, data).subscribe({
       next: (res) => {},
-      error: (err) => {
-        `Error1: ${err.detail}`;
-      },
+      error: (err) => {},
     });
   }
 }
