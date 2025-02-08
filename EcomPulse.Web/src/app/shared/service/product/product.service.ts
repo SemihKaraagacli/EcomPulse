@@ -27,9 +27,7 @@ export class ProductService {
       next: (res) => {
         this.list = res as ProductDto[];
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
   getAll() {
@@ -37,18 +35,14 @@ export class ProductService {
       next: (res) => {
         this.list = res as ProductDto[];
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
 
   createProduct(data: ProductCreateRequestViewModel) {
     this.http.post(this.url, data).subscribe({
       next: (res) => {},
-      error: (err) => {
-        console.log(`Error3: ${err.detail}`);
-      },
+      error: (err) => {},
     });
   }
 }

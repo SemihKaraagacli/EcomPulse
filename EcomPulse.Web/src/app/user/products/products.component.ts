@@ -12,6 +12,7 @@ import { CategoryService } from '../../shared/service/category/category.service'
 })
 export class ProductsComponent implements OnInit {
   selectedCategory: string = '';
+  selectedSortOption = '';
   constructor(
     public productService: ProductService,
     public categoryService: CategoryService
@@ -30,5 +31,26 @@ export class ProductsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.categoryService.getAllCategory();
+    this.productService.getAll();
+    this.sortItems();
+  }
+  sortItems(): void {
+    if (this.selectedSortOption === 'nameA') {
+      this.productService.list.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (this.selectedSortOption === 'nameB') {
+      this.productService.list.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (this.selectedSortOption === 'priceA') {
+      this.productService.list.sort((a, b) => {
+        const priceA = Number(a.price);
+        const priceB = Number(b.price);
+        return priceA - priceB;
+      });
+    } else if (this.selectedSortOption === 'priceB') {
+      this.productService.list.sort((a, b) => {
+        const priceA = Number(a.price);
+        const priceB = Number(b.price);
+        return priceB - priceA;
+      });
+    }
   }
 }
