@@ -70,6 +70,5 @@ export class CustomerAddComponent implements OnInit {
     };
 
     this.userService.signUp(signUpModel);
-    this.router.navigate(['/admin/customers']);
   }
 }

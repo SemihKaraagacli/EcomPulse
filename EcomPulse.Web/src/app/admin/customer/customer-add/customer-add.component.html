@@ -57,10 +57,10 @@
           <label for="county" class="text-md font-medium">County</label>
           <div>
             <input class="border border-gray-300 hover:border-gray-700 px-3 py-2 w-full rounded-md mb-1"
-              [ngClass]="{ 'border-red-500': submitted && f['county'].errors }" type="text" id="county"
-              formControlName="county" />
+              [ngClass]="{ 'border-red-500': submitted && f['county'].errors }" type="text" id="country"
+              formControlName="country" />
             <div *ngIf="submitted && f['county'].errors" class="text-red-500 text-sm mb-2">
-              <div *ngIf="f['county'].errors['required']">County is required</div>
+              <div *ngIf="f['county'].errors['required']">Country is required</div>
             </div>
           </div>
 

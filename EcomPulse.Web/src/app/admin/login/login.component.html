@@ -6,22 +6,34 @@
     </div>
     <form action="" method="post" [formGroup]="loginForm" (ngSubmit)="OnSubmit()">
       <label for="email" class="text-sm font-medium">Email</label>
+
       <div>
+
         <input class="border border-gray-300 w-full rounded h-10 mb-4 p-3 text-sm" type="text" id="email"
           formControlName="email" />
+
         <div *ngIf="submitted && f['email'].errors" class="text-red-500 text-sm mb-2">
           <div *ngIf="f['email'].errors['required']">Email is required</div>
           <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
         </div>
+
       </div>
+
+
       <label for="password" class="text-sm font-medium">Password</label>
+
       <div>
+
         <input class="border border-gray-300 w-full rounded h-10 mb-4 p-3 text-sm" type="password" id="password"
           formControlName="password" />
+
         <div *ngIf="submitted && f['password'].errors" class="text-red-500 text-sm mb-2">
           <div *ngIf="f['password'].errors['required']">Password is required</div>
         </div>
+
       </div>
+
+
       <div class="flex justify-center mb-3">
         <button class="py-2 rounded bg-gray-900 text-white w-full text-sm">
           Login
