@@ -24,10 +24,8 @@ export class ProductsComponent implements OnInit {
       this.selectedCategory = categoryId;
       this.productService.filterProduct(categoryId);
     } else {
-      this.selectedCategory = '';
       this.productService.getAll();
     }
-    this.productService.filterProduct(this.selectedCategory);
   }
   ngOnInit(): void {
     this.categoryService.getAllCategory();
