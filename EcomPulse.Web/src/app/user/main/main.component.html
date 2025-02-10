@@ -1,5 +1,5 @@
 <div class="min-h-screen flex flex-col">
-  <header class="bg-[#F6F6F6]">
+  <header class="border-b-2 border-[#F6F6F6]">
     <section class="w-full flex gap-8 2xl:px-52 py-4 items-center">
       <div class="w-3/12 flex items-center">
         <img class="w-[40px] h-[40px]" src="favicon-32x32.png" alt="icon">
@@ -28,8 +28,17 @@
             <button (click)="toggleDropdown()" class="relative"> <i class="fa-solid fa-circle-user fa-lg"></i></button>
             <div *ngIf="isOpen"
               class="absolute sm:right-0  top-14 mt-2 w-48 bg-white border rounded-b-md shadow-lg flex flex-col  ">
-              <a routerLink="/signup" class="  text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign up</a>
-              <a routerLink="/signin" class=" text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign in</a>
+              <div *ngIf="!authService.isAuthenticated()" class="flex flex-col">
+                <a routerLink="/signup" class="  text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign up</a>
+                <a routerLink="/signin" class=" text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign in</a>
+              </div>
+              <div *ngIf="authService.isAuthenticated()" class="flex flex-col">
+                <h1 class="uppercase text-center px-4 py-2 text-gray-700 font-extrabold hover:bg-gray-200">{{username}}
+                </h1>
+                <hr>
+                <a routerLink="/" class="  text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Profil</a>
+                <a (click)="logout()" class=" text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Logout</a>
+              </div>
             </div>
           </section>
         </div>
@@ -37,9 +46,7 @@
     </section>
   </header>
   <main>
-    <div class="2xl:px-56 py-8">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </main>
   <footer class="mt-auto bg-[#F6F6F6]">
     <section class="flex gap-24  justify-center items-start py-24">

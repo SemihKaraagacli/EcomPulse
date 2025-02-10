@@ -1,3 +1,4 @@
+import { AuthService } from './../../shared/service/auth/auth.service';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,8 @@ import { CommonModule } from '@angular/common';
 })
 export class MainComponent implements OnInit {
   isOpen = false;
-  constructor(private router: Router) {}
+  username: string = '';
+  constructor(private router: Router, public authService: AuthService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -18,6 +20,10 @@ export class MainComponent implements OnInit {
         this.isOpen = false;
       }
     });
+    this.username = this.authService.getclaims()?.username || '';
+  }
+  logout() {
+    this.authService.logout();
   }
 
   toggleDropdown() {

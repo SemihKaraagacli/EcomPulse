@@ -12,9 +12,10 @@ import { ProductAddComponent } from './product/product-add/product-add.component
 import { CustomerAddComponent } from './customer/customer-add/customer-add.component';
 import { authAdminGuard } from '../shared/service/auth/guards/auth-admin.guard';
 import { UpdateComponent } from './category/update/update.component';
+import { notAuthGuard } from '../shared/service/auth/guards/not-auth.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [notAuthGuard] },
   {
     path: '',
     component: MainComponent,
