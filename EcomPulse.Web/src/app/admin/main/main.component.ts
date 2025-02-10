@@ -17,11 +17,13 @@ import { AuthService } from '../../shared/service/auth/auth.service';
 })
 export class MainComponent implements OnInit {
   isAuthentication: boolean = false;
+  username: string = '';
 
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.isAuthentication = this.authService.isAuthenticated();
+    this.username = this.authService.getclaims()?.username || '';
   }
 
   logout(): void {

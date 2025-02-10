@@ -5,6 +5,7 @@ import { ProductsComponent } from './products/products.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
+import { notAuthGuard } from '../shared/service/auth/guards/not-auth.guard';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
       {
         path: 'signin',
         component: SigninComponent,
+        canActivate: [notAuthGuard],
       },
     ],
   },

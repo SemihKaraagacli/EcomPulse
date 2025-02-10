@@ -1,97 +1,99 @@
-<div class="flex flex-col items-center ">
-  <div>
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class=" px-12 space-y-6 mb-6">
+<div class="2xl:px-56 py-8">
+  <div class="flex flex-col items-center ">
+    <div>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class=" px-12 space-y-6 mb-6">
 
-      <h1 class=" text-2xl text-black font-extrabold pb-2">Sign Up</h1>
-
-
-      <div class="flex flex-col space-4">
-        <label class="text-sm text-[#474B57] font-medium" for="userName">Surname</label>
-        <input type="text" id="userName" formControlName="userName"
-          class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
-
-        <div *ngIf="submitted && f['userName'].errors" class="text-red-500 text-sm mb-2">
-          <div *ngIf="f['userName'].errors['required']">Username is required</div>
-          <div *ngIf="f['userName'].errors['minlength']">Username must be at least 3 characters</div>
-        </div>
-
-      </div>
+        <h1 class=" text-2xl text-black font-extrabold pb-2">Sign Up</h1>
 
 
-      <div class="flex flex-col space-4">
-        <label class="text-sm text-[#474B57] font-medium" for="email">Email</label>
-        <input type="text" id="email" formControlName="email"
-          class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
-        <div *ngIf="submitted && f['email'].errors" class="text-red-500 text-sm mb-2">
-          <div *ngIf="f['email'].errors['required']">Email is required</div>
-          <div *ngIf="f['email'].errors['email']">Email must be valid</div>
-        </div>
-      </div>
+        <div class="flex flex-col space-4">
+          <label class="text-sm text-[#474B57] font-medium" for="userName">Surname</label>
+          <input type="text" id="userName" formControlName="userName"
+            class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
 
-
-      <div class="flex flex-col space-4">
-        <label class="text-sm text-[#474B57] font-medium" for="password">Password</label>
-        <input type="password" id="password" formControlName="password"
-          class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
-        <div *ngIf="submitted && f['password'].errors" class="text-red-500 text-sm mb-2">
-          <div *ngIf="f['password'].errors['required']">Password is required</div>
-          <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+          <div *ngIf="submitted && f['userName'].errors" class="text-red-500 text-sm mb-2">
+            <div *ngIf="f['userName'].errors['required']">Username is required</div>
+            <div *ngIf="f['userName'].errors['minlength']">Username must be at least 3 characters</div>
+          </div>
 
         </div>
-      </div>
 
 
-      <div class="flex flex-col space-4">
-        <label class="text-sm text-[#474B57] font-medium" for="phoneNumber">Phone Number</label>
-        <input type="tel" id="phoneNumber" formControlName="phoneNumber" maxlength="11"
-          class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
-        <div *ngIf="submitted && f['phoneNumber'].errors" class="text-red-500 text-sm mb-2">
-          <div *ngIf="f['phoneNumber'].errors['required']">Phone Number is required</div>
-          <div *ngIf="f['phoneNumber'].errors['minlength']">Phone Number must be at least 10 characters</div>
+        <div class="flex flex-col space-4">
+          <label class="text-sm text-[#474B57] font-medium" for="email">Email</label>
+          <input type="text" id="email" formControlName="email"
+            class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
+          <div *ngIf="submitted && f['email'].errors" class="text-red-500 text-sm mb-2">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Email must be valid</div>
+          </div>
         </div>
-      </div>
 
-      <div class="flex flex-col space-4">
-        <label class="text-sm text-[#474B57] font-medium" for="city">City</label>
-        <select id="city" formControlName="city"
-          class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57]"
-          (change)="onCityChange($event)">
-          <option value="">Select a city</option>
-          <option *ngFor="let item of userService.cities" [value]="item.ilAdi">{{item.ilAdi}}</option>
-        </select>
-        <div *ngIf="submitted && f['city'].errors" class="text-red-500 text-sm mb-2">
-          <div *ngIf="f['city'].errors['required']">City is required</div>
+
+        <div class="flex flex-col space-4">
+          <label class="text-sm text-[#474B57] font-medium" for="password">Password</label>
+          <input type="password" id="password" formControlName="password"
+            class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
+          <div *ngIf="submitted && f['password'].errors" class="text-red-500 text-sm mb-2">
+            <div *ngIf="f['password'].errors['required']">Password is required</div>
+            <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+
+          </div>
         </div>
-      </div>
 
-      <div class="flex flex-col space-4">
-        <label class="text-sm text-[#474B57] font-medium" for="country">County</label>
-        <select id="county" formControlName="county"
-          class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57]">
-          <option value="">Select a county</option>
-          <option *ngFor="let item of userService.counties" [value]="item.ilceAdi">{{item.ilceAdi}}</option>
-        </select>
-        <div *ngIf="submitted && f['county'].errors" class="text-red-500 text-sm mb-2">
-          <div *ngIf="f['county'].errors['required']">Country is required</div>
+
+        <div class="flex flex-col space-4">
+          <label class="text-sm text-[#474B57] font-medium" for="phoneNumber">Phone Number</label>
+          <input type="tel" id="phoneNumber" formControlName="phoneNumber" maxlength="11"
+            class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] " />
+          <div *ngIf="submitted && f['phoneNumber'].errors" class="text-red-500 text-sm mb-2">
+            <div *ngIf="f['phoneNumber'].errors['required']">Phone Number is required</div>
+            <div *ngIf="f['phoneNumber'].errors['minlength']">Phone Number must be at least 10 characters</div>
+          </div>
         </div>
-      </div>
 
-      <div class="flex flex-col space-4">
-        <label class="text-sm text-[#474B57] font-medium" for="address">Address</label>
-        <textarea type="text" id="address" formControlName="address"
-          class="border w-[320px] h-[100px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] "></textarea>
-        <div *ngIf="submitted && f['address'].errors" class="text-red-500 text-sm mb-2">
-          <div *ngIf="f['address'].errors['required']">Address is required</div>
+        <div class="flex flex-col space-4">
+          <label class="text-sm text-[#474B57] font-medium" for="city">City</label>
+          <select id="city" formControlName="city"
+            class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57]"
+            (change)="onCityChange($event)">
+            <option value="">Select a city</option>
+            <option *ngFor="let item of userService.cities" [value]="item.ilAdi">{{item.ilAdi}}</option>
+          </select>
+          <div *ngIf="submitted && f['city'].errors" class="text-red-500 text-sm mb-2">
+            <div *ngIf="f['city'].errors['required']">City is required</div>
+          </div>
         </div>
+
+        <div class="flex flex-col space-4">
+          <label class="text-sm text-[#474B57] font-medium" for="country">County</label>
+          <select id="county" formControlName="county"
+            class="border w-[320px] h-[45px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57]">
+            <option value="">Select a county</option>
+            <option *ngFor="let item of userService.counties" [value]="item.ilceAdi">{{item.ilceAdi}}</option>
+          </select>
+          <div *ngIf="submitted && f['county'].errors" class="text-red-500 text-sm mb-2">
+            <div *ngIf="f['county'].errors['required']">Country is required</div>
+          </div>
+        </div>
+
+        <div class="flex flex-col space-4">
+          <label class="text-sm text-[#474B57] font-medium" for="address">Address</label>
+          <textarea type="text" id="address" formControlName="address"
+            class="border w-[320px] h-[100px] rounded-md px-4 py-3 text-[#474B57] font-medium outline-[#474B57] "></textarea>
+          <div *ngIf="submitted && f['address'].errors" class="text-red-500 text-sm mb-2">
+            <div *ngIf="f['address'].errors['required']">Address is required</div>
+          </div>
+        </div>
+
+
+        <button type="submit" class="w-[320px] h-[45px] rounded-md px-4 py-3 text-white font-medium bg-[#0E1422]">Sign
+          Up</button>
+      </form>
+      <div class="flex justify-center items-center px-12">
+        <p class="text-sm text-[#474B57] font-medium mr-1">Already have an account? </p>
+        <a routerLink="/signin" class="text-sm text-[#474B57] font-medium">Login</a>
       </div>
-
-
-      <button type="submit" class="w-[320px] h-[45px] rounded-md px-4 py-3 text-white font-medium bg-[#0E1422]">Sign
-        Up</button>
-    </form>
-    <div class="flex justify-center items-center px-12">
-      <p class="text-sm text-[#474B57] font-medium mr-1">Already have an account? </p>
-      <a routerLink="/signin" class="text-sm text-[#474B57] font-medium">Login</a>
     </div>
   </div>
 </div>

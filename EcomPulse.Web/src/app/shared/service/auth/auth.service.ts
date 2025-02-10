@@ -13,6 +13,7 @@ export class AuthService {
   private url: string = environment.authBaseUrl;
   model: SignInViewModel = new SignInViewModel('', '');
   errorMessage: string = '';
+  userClaims: any = {};
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -24,24 +25,28 @@ export class AuthService {
       next: (res: any) => {
         const token = res.accessToken;
         const decodedToken: any = jwt_decode(token);
-        const userClaims = {
+        this.userClaims = {
           id: decodedToken.id,
           username: decodedToken.username,
           role: decodedToken.role,
         };
-        this.saveTokenAndClaimsCookie(token, userClaims);
+        this.saveTokenAndClaimsCookie(token, this.userClaims);
 
-        const currentRoute = this.router.url; // Router'dan mevcut URL'yi alabilirsiniz.
+        const currentRoute = this.router.url;
 
         if (currentRoute.includes('/admin/login')) {
           if (this.isAdmin()) {
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/admin']).then(() => {
+              window.location.reload();
+            });
           } else {
             window.alert('Yetkisiz giriş!');
             this.router.navigate(['/admin/login']);
           }
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
         }
       },
       error: (err) => {

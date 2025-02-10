@@ -1,12 +1,12 @@
 <div class="flex flex-col lg:flex-row min-h-screen">
   <!-- Sidebar -->
-  <aside class="w-full lg:w-[13%] p-4 lg:p-6 bg-white">
+  <aside class="w-full lg:w-[13%] p-4 lg:p-6 bg-white flex flex-col h-screen relative">
     <a routerLink="/admin" class="flex justify-center items-center mb-6 lg:mb-10">
       <img class="w-6 h-6 lg:w-8 lg:h-8 mr-1" src="favicon-32x32.png" alt="" />
-      <h1 class="font-bold text-xs lg:text-lg">ADMIN</h1> <!-- Küçük ekranlarda daha küçük yazı -->
+      <h1 class="font-bold text-xs lg:text-lg">ADMIN</h1>
     </a>
-    <nav>
-      <a routerLink="/admin/dashboard"
+    <nav class="flex-1">
+      <a routerLink="/admin"
         class="flex items-center py-2 px-3 lg:px-6 hover:bg-gray-200 text-gray-500 hover:text-gray-950 rounded-lg mb-3 lg:mb-4">
         <i class="fa-solid fa-chart-line mr-2 lg:mr-3 text-sm lg:text-base"></i>
         <h1 class="font-semibold text-xs lg:text-base">Dashboard</h1>
@@ -32,9 +32,18 @@
         <h1 class="font-semibold text-xs lg:text-base">Customers</h1>
       </a>
     </nav>
+
+    <div class="absolute bottom-0 left-0 w-full p-3 lg:p-4 bg-gray-100 border-t flex items-center justify-between">
+      <div>
+        <h1 class="text-sm lg:text-base font-semibold text-gray-700">{{ username }}</h1>
+        <p class="text-xs text-gray-500">Admin Panel</p>
+      </div>
+      <button (click)="logout()" class="text-gray-600 hover:text-red-500">
+        <i class="fa-solid fa-sign-out-alt text-lg"></i>
+      </button>
+    </div>
   </aside>
 
-  <!-- Main Content -->
   <main class="flex-1 bg-gray-200 text-sm lg:text-lg p-4 lg:px-16">
     <div class="flex flex-col lg:flex-row items-center justify-between mb-6 lg:mb-8 w-full">
       <!-- Breadcrumb -->
@@ -43,12 +52,6 @@
           <b [routerLink]="breadcrumb.label">{{ breadcrumb }}</b>
         </div>
       </xng-breadcrumb>
-
-      <!-- Logout -->
-      <a (click)="logout()"
-        class="cursor-pointer block px-3 py-2 text-gray-700 hover:bg-gray-100 text-xs lg:text-sm mt-4 lg:mt-0 lg:px-4">
-        Logout
-      </a>
     </div>
     <router-outlet></router-outlet>
   </main>
