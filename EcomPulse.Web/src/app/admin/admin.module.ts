@@ -21,7 +21,7 @@ const routes: Routes = [
     canActivate: [authAdminGuard],
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: DashboardComponent,
         data: { breadcrumb: { label: 'Dashboard', disable: true } },
       },
@@ -70,7 +70,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), MainComponent],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class AdminModule {}

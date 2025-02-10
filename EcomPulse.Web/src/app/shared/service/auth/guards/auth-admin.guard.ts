@@ -5,17 +5,25 @@ import { AuthService } from '../auth.service';
 export const authAdminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
+
   if (authService.isAuthenticated()) {
     if (authService.isAdmin()) {
       if (state.url === '/admin/login') {
-        router.navigate(['/admin/dashboard']);
+        router.navigate(['/admin']);
       }
       return true;
     } else {
-      router.navigate(['admin/login']);
+      if (typeof window !== 'undefined') {
+        window.alert('Yetkisiz giriş!');
+      }
+      router.navigate(['/admin/login']);
+      return false;
     }
   } else {
-    router.navigate(['admin/login']);
+    if (typeof window !== 'undefined') {
+      window.alert('Yetkisiz giriş!');
+    }
+    router.navigate(['/admin/login']);
+    return false;
   }
-  return false;
 };

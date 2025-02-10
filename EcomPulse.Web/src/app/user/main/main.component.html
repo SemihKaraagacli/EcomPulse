@@ -28,8 +28,8 @@
             <button (click)="toggleDropdown()" class="relative"> <i class="fa-solid fa-circle-user fa-lg"></i></button>
             <div *ngIf="isOpen"
               class="absolute sm:right-0  top-14 mt-2 w-48 bg-white border rounded-b-md shadow-lg flex flex-col  ">
-              <a href="/signup" class="  text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign up</a>
-              <a href="#" class=" text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign in</a>
+              <a routerLink="/signup" class="  text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign up</a>
+              <a routerLink="/signin" class=" text-center px-4 py-2 text-gray-700 hover:bg-gray-200">Sign in</a>
             </div>
           </section>
         </div>

@@ -10,6 +10,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   if (req.url.includes('/Auth')) {
     token = clientCredential.getToken();
+    console.log('Token:', token);
   }
   if (req.method === 'POST' && req.url.includes('/User')) {
     token = clientCredential.getToken();
