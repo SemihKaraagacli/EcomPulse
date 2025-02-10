@@ -20,9 +20,7 @@ export class ClientcredentialService {
 
     if (!token || this.isTokenExpired(now)) {
       this.router.navigate(['/']).then(() => {
-        this.refreshToken().catch((error) => {
-          console.error('Token yenileme hatası:', error);
-        });
+        this.refreshToken().catch((error) => {});
       });
     }
   }

@@ -4,7 +4,6 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { SignInViewModel } from '../../model/viewmodels/auth/SignInViewModel';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -12,24 +11,15 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   private url: string = environment.authBaseUrl;
-  form: FormGroup;
   model: SignInViewModel = new SignInViewModel('', '');
   errorMessage: string = '';
   constructor(
     private http: HttpClient,
     private router: Router,
     private cookieService: CookieService
-  ) {
-    this.form = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-      ]),
-    });
-  }
+  ) {}
 
-  signIn(data: SignInViewModel, isAdminLogin: boolean = false) {
+  signIn(data: SignInViewModel) {
     this.http.post(this.url, data).subscribe({
       next: (res: any) => {
         const token = res.accessToken;
@@ -40,14 +30,15 @@ export class AuthService {
           role: decodedToken.role,
         };
         this.saveTokenAndClaimsCookie(token, userClaims);
-        
-        // Navigate based on login source and user role
-        if (isAdminLogin) {
-          if (userClaims.role.includes('admin')) {
+
+        const currentRoute = this.router.url; // Router'dan mevcut URL'yi alabilirsiniz.
+
+        if (currentRoute.includes('/admin/login')) {
+          if (this.isAdmin()) {
             this.router.navigate(['/admin']);
           } else {
-            this.errorMessage = 'You do not have admin privileges';
-            this.logout();
+            window.alert('Yetkisiz giriş!');
+            this.router.navigate(['/admin/login']);
           }
         } else {
           this.router.navigate(['/']);
@@ -55,10 +46,12 @@ export class AuthService {
       },
       error: (err) => {
         console.log('SignIn failed.', err);
-        this.errorMessage = err.error.detail;
+        this.errorMessage =
+          err.error?.detail || 'An error occurred during sign-in.';
       },
     });
   }
+
   saveTokenAndClaimsCookie(token: string, claims: any): void {
     const cookieData = {
       token: token,
@@ -95,11 +88,10 @@ export class AuthService {
     return !!this.cookieService.get('authCookie');
   }
   isAdmin(): boolean {
-    const role = this.getclaims();
-    return role?.role.includes('admin') || false;
+    const claims = this.getclaims();
+    return claims?.role ? claims.role.includes('admin') : false;
   }
   logout(): void {
     this.cookieService.delete('authCookie', '/');
-    this.cookieService.deleteAll('/');
   }
 }
