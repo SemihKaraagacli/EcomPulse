@@ -4,7 +4,8 @@
       <form class="border py-6 px-6 rounded-lg">
         <h5 class="text-lg font-medium mb-4">Categories</h5>
         <div class="flex border-b py-2 px-2 items-center" *ngFor="let category of categoryService.categoryList">
-          <input type="checkbox" name="category" class="w-5 h-5 accent-[#474B57] cursor-pointer border-[#E6E7E8]"
+          <input type="checkbox" name="category"
+            class="appearance-none w-5 h-5 border-2 border-[#E6E7E8]  checked:bg-[#F6F6F6] checked:border-[#E6E7E8] relative checked:after:content-['✔'] checked:after:absolute checked:after:inset-0 checked:after:flex checked:after:items-center checked:after:justify-center checked:after:text-white checked:after:text-sm"
             [value]="category.id" [checked]="selectedCategory === category.id"
             (change)="onCategorySelect($event, category.id)">
           <label class="ml-3 cursor-pointer text-lg text-[#474B57]">{{ category.name }}</label>
