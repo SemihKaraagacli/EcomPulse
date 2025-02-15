@@ -164,22 +164,16 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference(opt =>
-    {
-        opt.Title = "EcomPulse";
-        opt.Theme = ScalarTheme.BluePlanet;
-        opt.DefaultHttpClient = new(ScalarTarget.CSharp, ScalarClient.HttpClient);
-        opt.CustomCss = "";
-        opt.ShowSidebar = true;
-    });
-}
 
-app.UseCors();
+app.MapOpenApi();
+app.MapScalarApiReference();
+
+
+
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthentication();
 
