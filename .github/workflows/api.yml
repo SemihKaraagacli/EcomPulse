@@ -20,16 +20,16 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 9.0.x
 
       - name: Install dependencies
-        run: dotnet restore ./EcomPulse.Api/EcomPulse.sln
+        run: dotnet restore ./Server/Server.sln
 
       - name: Build
-        run: dotnet build ./EcomPulse.Api/EcomPulse.sln --configuration Release --no-restore
+        run: dotnet build ./Server/Server.sln --configuration Release --no-restore
         
       - name: Publish
-        run: dotnet publish ./EcomPulse.Api/EcomPulse/EcomPulse.csproj --configuration Release  --no-build --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+        run: dotnet publish ./Server\PresentationLayer/PresentationLayer.csproj --configuration Release  --no-build --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
         
       - name: Deploy
         uses: azure/webapps-deploy@v2
