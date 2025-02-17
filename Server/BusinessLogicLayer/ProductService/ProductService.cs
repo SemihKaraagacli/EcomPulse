@@ -8,12 +8,12 @@ namespace BusinessLogicLayer.ProductService;
 
 public class ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork) : IProductService
 {
-    public async Task<ServiceResult> ProductCreateAsync(ProductCreateRequest request)
+    public async Task<Result<string>> ProductCreateAsync(ProductCreateRequest request)
     {
         var hasProduct = await productRepository.WhereAsync(x => x.Name == request.Name);
         if (hasProduct.Any())
         {
-            return ServiceResult.Fail("Product already exists.", HttpStatusCode.BadRequest);
+            return Result<string>.Failure(HttpStatusCode.BadRequest, "Found an order pending processing");
         }
         var newProduct = new Product
         {
@@ -25,52 +25,52 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
         };
         productRepository.Create(newProduct);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Ürün başarıyla oluşturuldu";
     }
 
-    public async Task<ServiceResult> ProductDeleteAsync(Guid id)
+    public async Task<Result<string>> ProductDeleteAsync(Guid id)
     {
         var hasProduct = await productRepository.GetByIdAsync(id);
         if (hasProduct is null)
         {
-            return ServiceResult.Fail("Product not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Found an order pending processing");
         }
         productRepository.Delete(hasProduct);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Ürün başarıyla silindi";
     }
 
-    public async Task<ServiceResult<IEnumerable<ProductResponse>>> ProductFilterCategoryAsync(Guid categoryId)
+    public async Task<Result<IEnumerable<ProductResponse>>> ProductFilterCategoryAsync(Guid categoryId)
     {
         var filterProduct = await productRepository.GetFilterProductsAsync(categoryId);
         var productResponse = filterProduct.Select(x => new ProductResponse(x.Id, x.Name, x.Description, x.Price, x.Stock, x.Category!.Name));
-        return ServiceResult<IEnumerable<ProductResponse>>.Success(productResponse, HttpStatusCode.OK);
+        return Result<IEnumerable<ProductResponse>>.Successful(productResponse);
     }
 
-    public async Task<ServiceResult<IEnumerable<ProductResponse>>> ProductGetAllAsync()
+    public async Task<Result<IEnumerable<ProductResponse>>> ProductGetAllAsync()
     {
         var allProducts = await productRepository.GetAllAsync();
         var productResponse = allProducts.Select(x => new ProductResponse(x.Id, x.Name, x.Description, x.Price, x.Stock, x.Category!.Name));
-        return ServiceResult<IEnumerable<ProductResponse>>.Success(productResponse, HttpStatusCode.OK);
+        return Result<IEnumerable<ProductResponse>>.Successful(productResponse);
     }
 
-    public async Task<ServiceResult<ProductResponse>> ProductGetByIdAsync(Guid id)
+    public async Task<Result<ProductResponse>> ProductGetByIdAsync(Guid id)
     {
         var hasProduct = await productRepository.GetByIdAsync(id);
         if (hasProduct is null)
         {
-            return ServiceResult<ProductResponse>.Fail("Product not found.", HttpStatusCode.NotFound);
+            return Result<ProductResponse>.Failure(HttpStatusCode.NotFound, "Product not found.");
         }
         var productResponse = new ProductResponse(hasProduct.Id, hasProduct.Name, hasProduct.Description, hasProduct.Price, hasProduct.Stock, hasProduct.Category!.Name);
-        return ServiceResult<ProductResponse>.Success(productResponse, HttpStatusCode.OK);
+        return productResponse;
     }
 
-    public async Task<ServiceResult> ProductUpdateAsync(ProductUpdateRequest request)
+    public async Task<Result<string>> ProductUpdateAsync(ProductUpdateRequest request)
     {
         var hasProduct = await productRepository.GetByIdAsync(request.Id);
         if (hasProduct is null)
         {
-            return ServiceResult<ProductResponse>.Fail("Product not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Found an order pending processing");
         }
         hasProduct.Name = request.Name;
         hasProduct.Description = request.Description;
@@ -79,6 +79,6 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
         hasProduct.CategoryId = request.CategoryId;
         productRepository.Update(hasProduct);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Ürün başarıyla güncellendi";
     }
 }

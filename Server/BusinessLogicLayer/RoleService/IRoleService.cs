@@ -4,10 +4,10 @@ namespace BusinessLogicLayer.RoleService;
 
 public interface IRoleService
 {
-    Task<ServiceResult> CreateRole(RoleCreateRequest request);
-    Task<ServiceResult<IEnumerable<RoleResponse>>> GetAllRole();
-    Task<ServiceResult> UpdateRole(RoleUpdateRequest request);
-    Task<ServiceResult> DeleteRole(Guid roleId);
-    Task<ServiceResult> AddRoleToUser(Guid userId, Guid roleId);
-    Task<ServiceResult> RemoveRoleToUser(Guid userId, Guid roleId);
+    Task<Result<string>> CreateRole(RoleCreateRequest request);
+    Task<Result<IEnumerable<RoleResponse>>> GetAllRole();
+    Task<Result<string>> UpdateRole(RoleUpdateRequest request);
+    Task<Result<string>> DeleteRole(Guid roleId);
+    Task<Result<string>> AddRoleToUser(Guid userId, Guid roleId);
+    Task<Result<string>> RemoveRoleToUser(Guid userId, Guid roleId);
 }

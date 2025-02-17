@@ -4,8 +4,8 @@ namespace BusinessLogicLayer.OrderService;
 
 public interface IOrderService
 {
-    Task<ServiceResult> CreateOrder(OrderCreateRequest request);
-    Task<ServiceResult<IEnumerable<OrderResponse>>> GetAllOrder(Guid userId);
-    Task<ServiceResult<OrderResponse>> GetByIdOrder(Guid OrderId);
-    Task<ServiceResult> OrderDelete(Guid orderId);
+    Task<Result<string>> CreateOrder(OrderCreateRequest request);
+    Task<Result<IEnumerable<OrderResponse>>> GetAllOrder(Guid userId);
+    Task<Result<OrderResponse>> GetByIdOrder(Guid OrderId);
+    Task<Result<string>> OrderDelete(Guid orderId);
 }

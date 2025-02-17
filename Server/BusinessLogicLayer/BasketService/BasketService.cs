@@ -11,17 +11,17 @@ namespace BusinessLogicLayer.BasketService;
 
 public class BasketService(UserManager<AppUser> userManager, IProductRepository productRepository, IBasketItemRepository basketItemRepository, IBasketRepository basketRepository, IUnitOfWork unitOfWork) : IBasketService
 {
-    public async Task<ServiceResult> CreateBasket(BasketCreateRequest request)
+    public async Task<Result<string>> CreateBasket(BasketCreateRequest request)
     {
         var hasUser = await userManager.FindByIdAsync(request.UserId.ToString());
         if (hasUser is null)
         {
-            return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "User not found");
         }
         var hasProduct = await productRepository.GetByIdAsync(request.ProductId);
         if (hasProduct is null)
         {
-            return ServiceResult.Fail("Product not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Product not found");
         }
         var hasBasket = await basketRepository.GetAllAsync(request.UserId);
         if (hasBasket is null) // If there is no basket, create a new basket and a new basket item. Match the items.
@@ -66,39 +66,39 @@ public class BasketService(UserManager<AppUser> userManager, IProductRepository 
             }
         }
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Basket başarıyla oluşturuldu";
     }
-    public async Task<ServiceResult<BasketResponse>> GetBasket(Guid userId)
+    public async Task<Result<BasketResponse>> GetBasket(Guid userId)
     {
         var hasUser = await userManager.FindByIdAsync(userId.ToString());
         if (hasUser == null)
         {
-            return ServiceResult<BasketResponse>.Fail("User not found.", HttpStatusCode.NotFound);
+            return Result<BasketResponse>.Failure(HttpStatusCode.NotFound, "User not found.");
         }
         var basket = await basketRepository.GetAllAsync(userId);
         if (basket is null)
         {
-            return ServiceResult<BasketResponse>.Fail("Basket not found.", HttpStatusCode.NotFound);
+            return Result<BasketResponse>.Failure(HttpStatusCode.NotFound, "Basket not found.");
         }
         var basketItemResponse = basket.BasketItems!.Select(x => new BasketItemResponse(x.Id, x.ProductId, x.Product!.Name, x.Quantity, x.Product.Price));
         var basketResponse = new BasketResponse(basket.Id, userId, basketItemResponse.ToList(), basket.TotalPrice);
-        return ServiceResult<BasketResponse>.Success(basketResponse, HttpStatusCode.OK);
+        return basketResponse;
     }
-    public async Task<ServiceResult> DeleteBasket(Guid userId)
+    public async Task<Result<string>> DeleteBasket(Guid userId)
     {
         var hasUser = await userManager.FindByIdAsync(userId.ToString());
         if (hasUser is null)
         {
-            return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "User not found.");
         }
         var basket = await basketRepository.GetAllAsync(userId);
         if (basket is null)
         {
-            return ServiceResult.Fail("Basket not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Basket not found.");
         }
         basketRepository.Delete(basket);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Basket başarıyla silindi";
     }
 
 }

@@ -4,7 +4,7 @@ namespace BusinessLogicLayer.BasketService;
 
 public interface IBasketService
 {
-    Task<ServiceResult> CreateBasket(BasketCreateRequest request);
-    Task<ServiceResult<BasketResponse>> GetBasket(Guid userId);
-    Task<ServiceResult> DeleteBasket(Guid userId);
+    Task<Result<string>> CreateBasket(BasketCreateRequest request);
+    Task<Result<BasketResponse>> GetBasket(Guid userId);
+    Task<Result<string>> DeleteBasket(Guid userId);
 }

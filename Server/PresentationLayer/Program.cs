@@ -3,6 +3,7 @@ using BusinessLogicLayer.BasketService;
 using BusinessLogicLayer.CategoryService;
 using BusinessLogicLayer.CreditCardService;
 using BusinessLogicLayer.HostedService;
+using BusinessLogicLayer.Middleware;
 using BusinessLogicLayer.OrderService;
 using BusinessLogicLayer.PaymentService;
 using BusinessLogicLayer.ProductService;
@@ -24,12 +25,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
 using NLog.Web;
+using PresentationLayer.ScalarAuthorizationService;
 using Scalar.AspNetCore;
 using System.Text;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
@@ -101,13 +104,6 @@ builder.Services.AddAuthentication(options =>
             {
                 token = token.Substring("Bearer ".Length).Trim();
             }
-
-            // Token�n "SigninToken" i�in uygunlu�unu kontrol et
-            //if (!context.HttpContext.Request.Headers.ContainsKey("AuthenticationScheme") ||
-            //    context.HttpContext.Request.Headers["AuthenticationScheme"] == JwtBearerDefaults.AuthenticationScheme)
-            //{
-            //    context.Token = token;
-            //}
             context.Token = token;
             return Task.CompletedTask;
         }
@@ -132,13 +128,6 @@ builder.Services.AddAuthentication(options =>
             {
                 token = token.Substring("Bearer ".Length).Trim();
             }
-
-            // Tokenun "SigninToken" igin uygunlugunu kontrol et
-            //if (context.HttpContext.Request.Headers.ContainsKey("AuthenticationScheme") &&
-            //    context.HttpContext.Request.Headers["AuthenticationScheme"] == "Client_Token")
-            //{
-            //    context.Token = token;
-            //}
             context.Token = token;
             return Task.CompletedTask;
         }
@@ -159,17 +148,15 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
+app.ConfigureExceptionHandling();
 
 app.MapOpenApi();
+
 app.MapScalarApiReference();
-
-
-
 
 app.UseHttpsRedirection();
 
