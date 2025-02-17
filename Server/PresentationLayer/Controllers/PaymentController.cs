@@ -5,14 +5,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers;
-
+[ApiController]
+[Route("[controller]")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class PaymentController(IPaymentService paymentService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
+public class PaymentController(IPaymentService paymentService) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> PaymentProcess(PaymentCreateRequest request)
     {
         var result = await paymentService.PaymnetProcessing(request);
-        return CreateObjectResult(result);
+        return result.IsSuccessful
+            ? Ok(result)
+            : StatusCode((int)result.StatusCode, result.ErrorMessage);
     }
 }

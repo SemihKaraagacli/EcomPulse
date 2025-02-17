@@ -4,5 +4,5 @@ namespace BusinessLogicLayer.PaymentService;
 
 public interface IPaymentService
 {
-    Task<ServiceResult<PaymentResponse>> PaymnetProcessing(PaymentCreateRequest request);
+    Task<Result<PaymentResponse>> PaymnetProcessing(PaymentCreateRequest request);
 }

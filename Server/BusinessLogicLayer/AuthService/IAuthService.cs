@@ -4,6 +4,6 @@ namespace BusinessLogicLayer.AuthService;
 
 public interface IAuthService
 {
-    Task<ServiceResult<TokenResponse>> SignIn(SignInRequest request);
-    Task<ServiceResult<TokenResponse>> ClientCredential(ClientCredentialRequest request);
+    Task<Result<TokenResponse>> SignIn(SignInRequest request);
+    Task<Result<TokenResponse>> ClientCredential(ClientCredentialRequest request);
 }

@@ -4,7 +4,7 @@ namespace BusinessLogicLayer.CreditCardService;
 
 public interface ICreditCardService
 {
-    Task<ServiceResult> CreateAsync(CreditCardCreateRequest request);
-    Task<ServiceResult> UpdateAsync(CreditCardUpdateRequest request);
-    Task<ServiceResult> DeleteAsync(Guid Id);
+    Task<Result<string>> CreateAsync(CreditCardCreateRequest request);
+    Task<Result<string>> UpdateAsync(CreditCardUpdateRequest request);
+    Task<Result<string>> DeleteAsync(Guid Id);
 }

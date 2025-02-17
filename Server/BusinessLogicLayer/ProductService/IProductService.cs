@@ -4,10 +4,10 @@ namespace BusinessLogicLayer.ProductService;
 
 public interface IProductService
 {
-    Task<ServiceResult> ProductCreateAsync(ProductCreateRequest request);
-    Task<ServiceResult> ProductUpdateAsync(ProductUpdateRequest request);
-    Task<ServiceResult> ProductDeleteAsync(Guid id);
-    Task<ServiceResult<IEnumerable<ProductResponse>>> ProductGetAllAsync();
-    Task<ServiceResult<IEnumerable<ProductResponse>>> ProductFilterCategoryAsync(Guid categoryId);
-    Task<ServiceResult<ProductResponse>> ProductGetByIdAsync(Guid id);
+    Task<Result<string>> ProductCreateAsync(ProductCreateRequest request);
+    Task<Result<string>> ProductUpdateAsync(ProductUpdateRequest request);
+    Task<Result<string>> ProductDeleteAsync(Guid id);
+    Task<Result<IEnumerable<ProductResponse>>> ProductGetAllAsync();
+    Task<Result<IEnumerable<ProductResponse>>> ProductFilterCategoryAsync(Guid categoryId);
+    Task<Result<ProductResponse>> ProductGetByIdAsync(Guid id);
 }

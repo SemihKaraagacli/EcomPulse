@@ -10,17 +10,17 @@ namespace BusinessLogicLayer.CreditCardService;
 
 public class CreditCardService(ICreditCardRespository creditCardRespository, UserManager<AppUser> userManager, IUnitOfWork unitOfWork) : ICreditCardService
 {
-    public async Task<ServiceResult> CreateAsync(CreditCardCreateRequest request)
+    public async Task<Result<string>> CreateAsync(CreditCardCreateRequest request)
     {
         var hasUser = await userManager.FindByIdAsync(request.UserId.ToString());
         if (hasUser is null)
         {
-            return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "User not found.");
         }
         var hasCreditCard = await userManager.Users.Select(x => x.CreditCards).ToListAsync();
         if (hasCreditCard != null && !hasCreditCard.Any())
         {
-            return ServiceResult.Fail("Credit card already exists.", HttpStatusCode.BadRequest);
+            return Result<string>.Failure(HttpStatusCode.BadRequest, "Credit card already exists.");
         }
         DateTime parseDate = DateTime.ParseExact(request.ExpirationDate, "MM/yyyy", null);
         var newCreditCard = new CreditCard
@@ -35,29 +35,29 @@ public class CreditCardService(ICreditCardRespository creditCardRespository, Use
         };
         creditCardRespository.Create(newCreditCard);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kredi kartı başarıyla oluşturuldu";
     }
-    public async Task<ServiceResult> UpdateAsync(CreditCardUpdateRequest request)
+    public async Task<Result<string>> UpdateAsync(CreditCardUpdateRequest request)
     {
         var hasCreditCard = await creditCardRespository.GetById(request.Id);
         if (hasCreditCard is null)
         {
-            return ServiceResult.Fail("Credit card not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Credit card not found.");
         }
         hasCreditCard.AvailableBalance = request.AvailableBalance;
         creditCardRespository.Update(hasCreditCard);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kredi kartı başarıyla güncellendi";
     }
-    public async Task<ServiceResult> DeleteAsync(Guid Id)
+    public async Task<Result<string>> DeleteAsync(Guid Id)
     {
         var hasCreditCard = await creditCardRespository.GetById(Id);
         if (hasCreditCard is null)
         {
-            return ServiceResult.Fail("Credit card not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Credit card not found.");
         }
         creditCardRespository.Delete(hasCreditCard);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kredi kartı başarıyla silindi";
     }
 }

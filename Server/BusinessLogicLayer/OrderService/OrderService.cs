@@ -12,27 +12,27 @@ namespace BusinessLogicLayer.OrderService;
 
 public class OrderService(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IBasketRepository basketRepository, IBasketItemRepository basketItemRepository, UserManager<AppUser> userManager, IUnitOfWork unitOfWork) : IOrderService
 {
-    public async Task<ServiceResult> CreateOrder(OrderCreateRequest request)
+    public async Task<Result<string>> CreateOrder(OrderCreateRequest request)
     {
         var hasUser = await userManager.FindByIdAsync(request.UserId.ToString());
         if (hasUser is null)
         {
-            return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "User not found");
         }
         var hasBasket = await basketRepository.GetAllAsync(request.UserId);
         if (hasBasket is null)
         {
-            return ServiceResult.Fail("Basket not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Basket not found");
         }
         var hasBasketItem = hasBasket.BasketItems;
         if (hasBasketItem is null)
         {
-            return ServiceResult.Fail("Basket item not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Basket item not found");
         }
         var hasOrder = await orderRepository.GetAllOrder(request.UserId);
         if (hasOrder != null && hasOrder.Any(x => x.OrderStatus == "Pending"))
         {
-            return ServiceResult.Fail("Found an order pending processing.", HttpStatusCode.BadRequest);
+            return Result<string>.Failure(HttpStatusCode.BadRequest, "Found an order pending processing");
         }
         else
         {
@@ -63,14 +63,14 @@ public class OrderService(IOrderRepository orderRepository, IOrderItemRepository
             basketRepository.Delete(hasBasket);
         }
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Sipariş oluşturuldu";
     }
-    public async Task<ServiceResult<IEnumerable<OrderResponse>>> GetAllOrder(Guid userId)
+    public async Task<Result<IEnumerable<OrderResponse>>> GetAllOrder(Guid userId)
     {
         var hasUser = await userManager.FindByIdAsync(userId.ToString());
         if (hasUser is null)
         {
-            return ServiceResult<IEnumerable<OrderResponse>>.Fail("User not found.", HttpStatusCode.NotFound);
+            return Result<IEnumerable<OrderResponse>>.Failure(HttpStatusCode.NotFound, "User not found.");
         }
         var allOrder = await orderRepository.GetAllOrder(userId);
         var orderResponse = allOrder.Select(order => new OrderResponse(
@@ -82,24 +82,24 @@ public class OrderService(IOrderRepository orderRepository, IOrderItemRepository
             order.OrderStatus
             )).ToList();
 
-        return ServiceResult<IEnumerable<OrderResponse>>.Success(orderResponse, HttpStatusCode.OK);
+        return orderResponse;
     }
-    public async Task<ServiceResult<OrderResponse>> GetByIdOrder(Guid orderId)
+    public async Task<Result<OrderResponse>> GetByIdOrder(Guid orderId)
     {
         var hasOrder = await orderRepository.GetByIdOrder(orderId);
         if (hasOrder is null)
         {
-            return ServiceResult<OrderResponse>.Fail("Order not found.", HttpStatusCode.NotFound);
+            return Result<OrderResponse>.Failure(HttpStatusCode.NotFound, "Order not found.");
         }
         var orderResponse = new OrderResponse(hasOrder.Id, hasOrder.UserId, hasOrder.OrderItems!.Select(x => new OrderItemResponse(x.Id, x.ProductId, x.Quantity, x.TotalPrice, x.UnitPrice)).ToList(), hasOrder.CreatedAt, hasOrder.TotalAmount, hasOrder.OrderStatus);
-        return ServiceResult<OrderResponse>.Success(orderResponse, HttpStatusCode.OK);
+        return orderResponse;
     }
-    public async Task<ServiceResult> OrderDelete(Guid orderId)
+    public async Task<Result<string>> OrderDelete(Guid orderId)
     {
         var hasOrder = await orderRepository.GetByIdOrder(orderId);
         if (hasOrder is null)
         {
-            return ServiceResult<OrderResponse>.Fail("Order not found.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Order not found.");
         }
         foreach (var item in hasOrder.OrderItems!)
         {
@@ -107,6 +107,6 @@ public class OrderService(IOrderRepository orderRepository, IOrderItemRepository
         }
         orderRepository.Delete(hasOrder);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Sipariş başarıyla silindi";
     }
 }

@@ -8,12 +8,12 @@ namespace BusinessLogicLayer.CategoryService;
 
 public class CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork) : ICategoryService
 {
-    public async Task<ServiceResult> CategoryCreateAsync(CategoryCreateRequest request)
+    public async Task<Result<string>> CategoryCreateAsync(CategoryCreateRequest request)
     {
         var hasCategory = await categoryRepository.WhereAsync(x => x.Name == request.Name);
         if (hasCategory.Any())
         {
-            return ServiceResult.Fail("Category already exists", HttpStatusCode.BadRequest);
+            return Result<string>.Failure(HttpStatusCode.BadRequest, "Category already exists");
         }
         var newCategory = new Category
         {
@@ -21,45 +21,45 @@ public class CategoryService(ICategoryRepository categoryRepository, IUnitOfWork
         };
         categoryRepository.Create(newCategory);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kategori başarıyla oluşyuruldu";
     }
-    public async Task<ServiceResult> CategoryUpdateAsync(Guid Id, CategoryUpdateRequest request)
+    public async Task<Result<string>> CategoryUpdateAsync(Guid Id, CategoryUpdateRequest request)
     {
         var hasCategory = await categoryRepository.GetByIdAsync(Id);
         if (hasCategory is null)
         {
-            return ServiceResult.Fail("Category not found", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Category not found");
         }
         hasCategory.Name = request.Name;
         categoryRepository.Update(hasCategory);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kategori başarıyla güncellendi";
     }
-    public async Task<ServiceResult> CategoryDeleteAsync(Guid id)
+    public async Task<Result<string>> CategoryDeleteAsync(Guid id)
     {
         var hasCategory = await categoryRepository.GetByIdAsync(id);
         if (hasCategory is null)
         {
-            return ServiceResult.Fail("Category not found", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "Category not found");
         }
         categoryRepository.Delete(hasCategory);
         await unitOfWork.CommitAsync();
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kategori başarıyla silindi";
     }
-    public async Task<ServiceResult<IEnumerable<CategoryResponse>>> CategoryGetAllAsync()
+    public async Task<Result<IEnumerable<CategoryResponse>>> CategoryGetAllAsync()
     {
         var all = await categoryRepository.GetAllAsync();
         var categoryResponse = all.Select(x => new CategoryResponse(x.Id, x.Name)).ToList();
-        return ServiceResult<IEnumerable<CategoryResponse>>.Success(categoryResponse, HttpStatusCode.OK);
+        return categoryResponse;
     }
-    public async Task<ServiceResult<CategoryResponse>> CategoryGetByIdAsync(Guid id)
+    public async Task<Result<CategoryResponse>> CategoryGetByIdAsync(Guid id)
     {
         var hasCategory = await categoryRepository.GetByIdAsync(id);
         if (hasCategory is null)
         {
-            return ServiceResult<CategoryResponse>.Fail("Category not found.", HttpStatusCode.NotFound);
+            return Result<CategoryResponse>.Failure(HttpStatusCode.NotFound, "Category not found.");
         }
         var categoryResponse = new CategoryResponse(hasCategory.Id, hasCategory.Name);
-        return ServiceResult<CategoryResponse>.Success(categoryResponse, HttpStatusCode.OK);
+        return categoryResponse;
     }
 }

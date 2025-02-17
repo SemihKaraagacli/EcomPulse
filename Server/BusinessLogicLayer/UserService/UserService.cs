@@ -9,12 +9,12 @@ namespace BusinessLogicLayer.UserService;
 
 public class UserService(UserManager<AppUser> userManager) : IUserService
 {
-    public async Task<ServiceResult> SignUp(UserCreateRequest request)
+    public async Task<Result<string>> SignUp(UserCreateRequest request)
     {
         var hasUser = await userManager.FindByEmailAsync(request.Email);
         if (hasUser != null)
         {
-            return ServiceResult.Fail("User already exists.", HttpStatusCode.BadRequest);
+            return Result<string>.Failure(HttpStatusCode.BadRequest, "User already exists.");
         }
         var newUser = new AppUser
         {
@@ -29,11 +29,11 @@ public class UserService(UserManager<AppUser> userManager) : IUserService
         if (!user.Succeeded)
         {
             var errorList = user.Errors.Select(x => x.Description).ToList();
-            return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
+            return Result<string>.Failure(HttpStatusCode.BadRequest, errorList);
         }
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kullanıcı başarıyla oluşturuldu";
     }
-    public async Task<ServiceResult<IEnumerable<AllUserResponse>>> GetAllUser()
+    public async Task<Result<IEnumerable<AllUserResponse>>> GetAllUser()
     {
         var allUser = await userManager.Users.Include(x => x.CreditCards).ToListAsync();
         var allUserResponses = new List<AllUserResponse>();
@@ -54,27 +54,27 @@ public class UserService(UserManager<AppUser> userManager) : IUserService
 
             allUserResponses.Add(allUerResponse);
         }
-        return ServiceResult<IEnumerable<AllUserResponse>>.Success(allUserResponses, HttpStatusCode.OK);
+        return allUserResponses;
     }
-    public async Task<ServiceResult> UserUpdate(UserUpdateRequest request)
+    public async Task<Result<string>> UserUpdate(UserUpdateRequest request)
     {
         var hasUser = await userManager.FindByIdAsync(request.Id.ToString());
         if (hasUser is null)
         {
-            return ServiceResult.Fail("User already exists.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "User already exists.");
         }
         hasUser.UserName = request.UserName;
         hasUser.Email = request.Email;
         hasUser.PhoneNumber = request.PhoneNumber;
         await userManager.UpdateAsync(hasUser);
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kullanıcı başarıyla güncellendi";
     }
-    public async Task<ServiceResult<UserResponse>> GetByIdUser(Guid id)
+    public async Task<Result<UserResponse>> GetByIdUser(Guid id)
     {
         var hasUser = await userManager.Users.Include(x => x.CreditCards).FirstOrDefaultAsync(x => x.Id == id);
         if (hasUser is null)
         {
-            return ServiceResult<UserResponse>.Fail("User already exists.", HttpStatusCode.NotFound);
+            return Result<UserResponse>.Failure(HttpStatusCode.NotFound, "User already exists.");
         }
         var hasRole = await userManager.GetRolesAsync(hasUser);
         var creditCards = hasUser.CreditCards.Select(x => new CreditCardResponse(
@@ -97,16 +97,16 @@ public class UserService(UserManager<AppUser> userManager) : IUserService
             hasRole.ToList(),
             creditCards);
 
-        return ServiceResult<UserResponse>.Success(userResponse, HttpStatusCode.OK);
+        return userResponse;
     }
-    public async Task<ServiceResult> DeleteUser(Guid id)
+    public async Task<Result<string>> DeleteUser(Guid id)
     {
         var hasUser = await userManager.FindByIdAsync(id.ToString());
         if (hasUser is null)
         {
-            return ServiceResult.Fail("User already exists.", HttpStatusCode.NotFound);
+            return Result<string>.Failure(HttpStatusCode.NotFound, "User already exists.");
         }
         await userManager.DeleteAsync(hasUser);
-        return ServiceResult.Success(HttpStatusCode.OK);
+        return "Kullanıcı başarıyla silindi";
     }
 }

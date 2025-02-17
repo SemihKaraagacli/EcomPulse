@@ -4,9 +4,9 @@ namespace BusinessLogicLayer.CategoryService;
 
 public interface ICategoryService
 {
-    Task<ServiceResult> CategoryCreateAsync(CategoryCreateRequest request);
-    Task<ServiceResult> CategoryDeleteAsync(Guid id);
-    Task<ServiceResult<IEnumerable<CategoryResponse>>> CategoryGetAllAsync();
-    Task<ServiceResult<CategoryResponse>> CategoryGetByIdAsync(Guid id);
-    Task<ServiceResult> CategoryUpdateAsync(Guid Id, CategoryUpdateRequest request);
+    Task<Result<string>> CategoryCreateAsync(CategoryCreateRequest request);
+    Task<Result<string>> CategoryDeleteAsync(Guid id);
+    Task<Result<IEnumerable<CategoryResponse>>> CategoryGetAllAsync();
+    Task<Result<CategoryResponse>> CategoryGetByIdAsync(Guid id);
+    Task<Result<string>> CategoryUpdateAsync(Guid Id, CategoryUpdateRequest request);
 }

@@ -11,16 +11,16 @@ namespace BusinessLogicLayer.PaymentService;
 
 public class PaymentService(IPaymentRepository paymentRepository, IUnitOfWork unitOfWork, IOrderRepository orderRepository, ICreditCardRespository creditCardRespository, IProductRepository productRepository) : IPaymentService
 {
-    public async Task<ServiceResult<PaymentResponse>> PaymnetProcessing(PaymentCreateRequest request)
+    public async Task<Result<PaymentResponse>> PaymnetProcessing(PaymentCreateRequest request)
     {
         var hasOrder = await orderRepository.GetByIdOrder(request.OrderId);
         if (hasOrder is null)
         {
-            return ServiceResult<PaymentResponse>.Fail("Order not found.", HttpStatusCode.NotFound);
+            return Result<PaymentResponse>.Failure(HttpStatusCode.NotFound, "Order not found.");
         }
         else if (hasOrder.OrderStatus is "Completed")
         {
-            return ServiceResult<PaymentResponse>.Fail("The order has been paid.", HttpStatusCode.BadRequest);
+            return Result<PaymentResponse>.Failure(HttpStatusCode.BadRequest, "The order has been paid.");
         }
         var newPayment = new Payment();
         if (request.PaymentMethod == "Cash")
@@ -46,11 +46,11 @@ public class PaymentService(IPaymentRepository paymentRepository, IUnitOfWork un
             var hasCredirCard = await creditCardRespository.GetById(request.CreditCardId);
             if (hasOrder is null)
             {
-                return ServiceResult<PaymentResponse>.Fail("Credit Card not found.", HttpStatusCode.NotFound);
+                return Result<PaymentResponse>.Failure(HttpStatusCode.NotFound, "Credit Card not found.");
             }
             if (hasOrder.TotalAmount > hasCredirCard.AvailableBalance)
             {
-                return ServiceResult<PaymentResponse>.Fail("The budget for shopping is insufficient.", HttpStatusCode.BadRequest);
+                return Result<PaymentResponse>.Failure(HttpStatusCode.BadRequest, "The budget for shopping is insufficient.");
             }
             newPayment.OrderId = request.OrderId;
             newPayment.PaymentDate = DateTime.Now;
@@ -83,6 +83,6 @@ public class PaymentService(IPaymentRepository paymentRepository, IUnitOfWork un
             newPayment.PaymentStatus,
             newPayment.CreditCardId
             );
-        return ServiceResult<PaymentResponse>.Success(paymentResponse, HttpStatusCode.OK);
+        return paymentResponse;
     }
 }

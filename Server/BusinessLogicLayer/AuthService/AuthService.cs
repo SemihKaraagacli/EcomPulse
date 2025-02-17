@@ -12,18 +12,18 @@ namespace BusinessLogicLayer.AuthService;
 
 public class AuthService(UserManager<AppUser> userManager, IConfiguration configuration) : IAuthService
 {
-    public async Task<ServiceResult<TokenResponse>> SignIn(SignInRequest request)
+    public async Task<Result<TokenResponse>> SignIn(SignInRequest request)
     {
         var hasUser = await userManager.FindByEmailAsync(request.Email);
         if (hasUser is null)
         {
-            return ServiceResult<TokenResponse>.Fail("Email or password is wrong.", HttpStatusCode.BadRequest);
+            return Result<TokenResponse>.Failure(HttpStatusCode.BadRequest, "Email or password is wrong.");
         }
 
         var result = await userManager.CheckPasswordAsync(hasUser, request.Password);
         if (!result)
         {
-            return ServiceResult<TokenResponse>.Fail("Email or password is wrong.", HttpStatusCode.BadRequest);
+            return Result<TokenResponse>.Failure(HttpStatusCode.BadRequest, "Email or password is wrong.");
         }
 
 
@@ -55,16 +55,16 @@ public class AuthService(UserManager<AppUser> userManager, IConfiguration config
             );
 
         var accessTokenAsString = new JwtSecurityTokenHandler().WriteToken(newToken); // converts the resulting jwt token to string format
-        return ServiceResult<TokenResponse>.Success(new TokenResponse(accessTokenAsString), HttpStatusCode.OK);
+        return Result<TokenResponse>.Successful(new TokenResponse(accessTokenAsString));
     }
-    public Task<ServiceResult<TokenResponse>> ClientCredential(ClientCredentialRequest request)
+    public Task<Result<TokenResponse>> ClientCredential(ClientCredentialRequest request)
     {
         var clientId = configuration.GetSection("Client_Token")["ClientId"];
         var clientSecretKey = configuration.GetSection("Client_Token")["ClientSecretKey"];
 
         if (request.ClientId != clientId || request.ClientSecretKey != clientSecretKey)
         {
-            return Task.FromResult(ServiceResult<TokenResponse>.Fail("ClientId or ClientSecretKey is wrong.", HttpStatusCode.BadRequest));
+            return Task.FromResult(Result<TokenResponse>.Failure(HttpStatusCode.BadRequest, "ClientId or ClientSecretKey is wrong."));
         }
 
         var clientClaims = new List<Claim>();
@@ -79,6 +79,6 @@ public class AuthService(UserManager<AppUser> userManager, IConfiguration config
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Client_Token")["ClientSecretKey"]!)), SecurityAlgorithms.HmacSha256)
             );
         var accessTokenAsString = new JwtSecurityTokenHandler().WriteToken(clientToken);
-        return Task.FromResult(ServiceResult<TokenResponse>.Success(new TokenResponse(accessTokenAsString), HttpStatusCode.OK));
+        return Task.FromResult(Result<TokenResponse>.Successful(new TokenResponse(accessTokenAsString)));
     }
 }
