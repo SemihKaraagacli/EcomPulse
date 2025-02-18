@@ -22,7 +22,7 @@ public class CreditCardController(ICreditCardService creditCardService) : Contro
         if (result.IsSuccessful)
         {
             Logger.Info("Credit card created successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -41,7 +41,7 @@ public class CreditCardController(ICreditCardService creditCardService) : Contro
         if (result.IsSuccessful)
         {
             Logger.Info("Credit card updated successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -60,7 +60,7 @@ public class CreditCardController(ICreditCardService creditCardService) : Contro
         if (result.IsSuccessful)
         {
             Logger.Info("Credit card deleted successfully for card: {Id}", id);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

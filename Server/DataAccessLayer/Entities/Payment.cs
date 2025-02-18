@@ -2,6 +2,10 @@
 
 public class Payment
 {
+    public Payment()
+    {
+        Id = Guid.NewGuid();
+    }
     public Guid Id { get; set; }
     public Guid OrderId { get; set; }
     public Order? Order { get; set; }

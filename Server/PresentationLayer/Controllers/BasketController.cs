@@ -22,7 +22,7 @@ public class BasketController(IBasketService basketService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Basket created successfully for user: {UserId}", request.UserId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -41,7 +41,7 @@ public class BasketController(IBasketService basketService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Basket retrieved successfully for user: {UserId}", userId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -60,7 +60,7 @@ public class BasketController(IBasketService basketService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Basket deleted successfully for user: {UserId}", userId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

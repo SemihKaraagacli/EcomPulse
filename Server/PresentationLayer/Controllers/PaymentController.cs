@@ -22,7 +22,7 @@ public class PaymentController(IPaymentService paymentService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Payment processed successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

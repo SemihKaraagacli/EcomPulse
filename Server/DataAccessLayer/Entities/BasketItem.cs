@@ -2,6 +2,10 @@
 
 public class BasketItem
 {
+    public BasketItem()
+    {
+        Id = Guid.NewGuid();
+    }
     public Guid Id { get; set; } = default!;
     public Guid BasketId { get; set; } = default!;
     public Basket? Basket { get; set; }

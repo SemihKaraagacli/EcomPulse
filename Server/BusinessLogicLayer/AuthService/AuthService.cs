@@ -45,7 +45,7 @@ public class AuthService(UserManager<AppUser> userManager, IConfiguration config
         JwtSecurityToken newToken = new JwtSecurityToken(
             issuer: configuration.GetSection("SignIn_Token").GetValue<string>("Issuer"),
             claims: userClaims,
-            expires: DateTime.Now.AddMinutes(30),
+            expires: request.RememberMe ? DateTime.Now.AddDays(30) : DateTime.Now.AddMinutes(30),
             signingCredentials: new SigningCredentials(
                 new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(

@@ -2,5 +2,6 @@
 
 public record SignInRequest(
     string Email,
-    string Password
+    string Password,
+    bool RememberMe
     );
