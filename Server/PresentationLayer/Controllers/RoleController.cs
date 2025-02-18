@@ -22,7 +22,7 @@ public class RoleController(IRoleService roleService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Role created successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -41,7 +41,7 @@ public class RoleController(IRoleService roleService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Roles retrieved successfully");
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -60,7 +60,7 @@ public class RoleController(IRoleService roleService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Role updated successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -79,7 +79,7 @@ public class RoleController(IRoleService roleService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Role deleted successfully for role: {RoleId}", roleId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -98,7 +98,7 @@ public class RoleController(IRoleService roleService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Role added to user successfully for user: {UserId}, role: {RoleId}", userId, roleId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -117,7 +117,7 @@ public class RoleController(IRoleService roleService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Role removed from user successfully for user: {UserId}, role: {RoleId}", userId, roleId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

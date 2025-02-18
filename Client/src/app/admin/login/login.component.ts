@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
           Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/),
         ],
       ],
+      rememberMe: [false],
     });
   }
   get f() {
@@ -42,10 +43,12 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+
     const signInModel: SignInViewModel = {
       email: this.f['email'].value,
       password: this.f['password'].value,
+      rememberMe: this.f['rememberMe'].value,
     };
-    this.authService.signIn(signInModel);
+    this.authService.signIn(signInModel); // rememberMe parametresi iletiliyor
   }
 }

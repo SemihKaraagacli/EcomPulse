@@ -22,7 +22,7 @@ public class ProductController(IProductService productService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Product created successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -42,7 +42,7 @@ public class ProductController(IProductService productService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Product deleted successfully for product: {Id}", id);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -62,7 +62,7 @@ public class ProductController(IProductService productService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Products retrieved successfully");
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -82,7 +82,7 @@ public class ProductController(IProductService productService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Product retrieved successfully for product: {Id}", id);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -102,7 +102,7 @@ public class ProductController(IProductService productService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Product updated successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -122,7 +122,7 @@ public class ProductController(IProductService productService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Products filtered successfully for category: {CategoryId}", categoryId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

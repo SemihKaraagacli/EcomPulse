@@ -22,7 +22,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         if (result.IsSuccessful)
         {
             Logger.Info("Category created successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -42,7 +42,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         if (result.IsSuccessful)
         {
             Logger.Info("Categories retrieved successfully");
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -62,7 +62,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         if (result.IsSuccessful)
         {
             Logger.Info("Category retrieved successfully for category: {Id}", id);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -82,7 +82,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         if (result.IsSuccessful)
         {
             Logger.Info("Category updated successfully for category: {Id} with data: {Data}", id, request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -102,7 +102,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         if (result.IsSuccessful)
         {
             Logger.Info("Category deleted successfully for category: {Id}", id);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

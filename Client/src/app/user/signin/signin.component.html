@@ -27,7 +27,11 @@
             <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
           </div>
         </div>
-
+        <div>
+          <label>
+            <input type="checkbox" formControlName="rememberMe" /> Remember Me
+          </label>
+        </div>
         <button type="submit" class="w-[320px] h-[45px] rounded-md px-4 py-3 text-white font-medium bg-[#0E1422]">Sign
           Up</button>
       </form>

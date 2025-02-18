@@ -11,9 +11,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   private url: string = environment.authBaseUrl;
-  model: SignInViewModel = new SignInViewModel('', '');
+  model: SignInViewModel = new SignInViewModel('', '', false);
   errorMessage: string = '';
   userClaims: any = {};
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -30,7 +31,7 @@ export class AuthService {
           username: decodedToken.username,
           role: decodedToken.role,
         };
-        this.saveTokenAndClaimsCookie(token, this.userClaims);
+        this.saveTokenAndClaimsCookie(token, this.userClaims, decodedToken.exp);
 
         const currentRoute = this.router.url;
 
@@ -48,6 +49,8 @@ export class AuthService {
             window.location.reload();
           });
         }
+
+        this.startTokenExpirationTimer(decodedToken.exp);
       },
       error: (err) => {
         console.log('SignIn failed.', err);
@@ -57,16 +60,28 @@ export class AuthService {
     });
   }
 
-  saveTokenAndClaimsCookie(token: string, claims: any): void {
+  saveTokenAndClaimsCookie(
+    token: string,
+    claims: any,
+    expiration: number
+  ): void {
     const cookieData = {
       token: token,
       claims: claims,
     };
 
-    this.cookieService.set('authCookie', JSON.stringify(cookieData), {
-      expires: 30,
-      path: '/',
-    });
+    const now = new Date();
+    const expirationDate = new Date(expiration * 1000);
+    const expiresInSeconds = Math.floor(
+      (expirationDate.getTime() - now.getTime()) / 1000
+    );
+
+    this.cookieService.set(
+      'authCookie',
+      JSON.stringify(cookieData),
+      expiresInSeconds,
+      '/'
+    );
   }
 
   getToken(): string | null {
@@ -79,6 +94,7 @@ export class AuthService {
 
     return null;
   }
+
   getclaims(): { id: string; username: string; role: string } | null {
     const cookieData = this.cookieService.get('authCookie');
 
@@ -89,14 +105,36 @@ export class AuthService {
 
     return null;
   }
+
   isAuthenticated(): boolean {
     return !!this.cookieService.get('authCookie');
   }
+
   isAdmin(): boolean {
     const claims = this.getclaims();
     return claims?.role ? claims.role.includes('admin') : false;
   }
+
   logout(): void {
     this.cookieService.delete('authCookie', '/');
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
+  }
+
+  startTokenExpirationTimer(expiration: number): void {
+    const expirationDate = new Date(expiration * 1000);
+    const checkInterval = 60 * 60 * 1000; // 1 saat = 60 dakika * 60 saniye * 1000 milisaniye
+
+    const checkTokenExpiration = () => {
+      const remainingTime = expirationDate.getTime() - new Date().getTime();
+      if (remainingTime <= 0) {
+        this.logout();
+      } else {
+        setTimeout(checkTokenExpiration, checkInterval);
+      }
+    };
+
+    setTimeout(checkTokenExpiration, checkInterval);
   }
 }

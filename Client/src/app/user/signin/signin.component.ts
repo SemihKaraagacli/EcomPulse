@@ -26,6 +26,7 @@ export class SigninComponent implements OnInit {
     this.signinForm = this.formbuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false],
     });
   }
   get f() {
@@ -36,10 +37,13 @@ export class SigninComponent implements OnInit {
     if (this.signinForm.invalid) {
       return;
     }
+
     const signInModel: SignInViewModel = {
       email: this.f['email'].value,
       password: this.f['password'].value,
+      rememberMe: this.f['rememberMe'].value,
     };
+
     this.authService.signIn(signInModel);
   }
 }

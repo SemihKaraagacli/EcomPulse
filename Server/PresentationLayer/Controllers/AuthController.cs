@@ -22,7 +22,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("SignIn successful for email: {Email}", request.Email);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -40,7 +40,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("ClientCredential authentication successful");
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

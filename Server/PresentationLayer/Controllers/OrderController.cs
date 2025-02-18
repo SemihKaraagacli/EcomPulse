@@ -22,7 +22,7 @@ public class OrderController(IOrderService orderService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Order created successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -41,7 +41,7 @@ public class OrderController(IOrderService orderService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Orders retrieved successfully for user: {UserId}", userId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -60,7 +60,7 @@ public class OrderController(IOrderService orderService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Order retrieved successfully for order: {OrderId}", orderId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -79,7 +79,7 @@ public class OrderController(IOrderService orderService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Order deleted successfully for order: {OrderId}", orderId);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

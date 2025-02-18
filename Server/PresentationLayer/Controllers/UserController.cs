@@ -22,7 +22,7 @@ public class UserController(IUserService userService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("User signed up successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -42,7 +42,7 @@ public class UserController(IUserService userService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("Users retrieved successfully");
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -62,7 +62,7 @@ public class UserController(IUserService userService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("User updated successfully with data: {Data}", request);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -82,7 +82,7 @@ public class UserController(IUserService userService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("User retrieved successfully for user: {UserId}", id);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {
@@ -102,7 +102,7 @@ public class UserController(IUserService userService) : ControllerBase
         if (result.IsSuccessful)
         {
             Logger.Info("User deleted successfully for user: {UserId}", id);
-            return Ok(result);
+            return Ok(result.Data);
         }
         else
         {

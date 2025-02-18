@@ -1,8 +1,10 @@
 export class SignInViewModel {
   email: string;
   password: string;
-  constructor(email: string, password: string) {
+  rememberMe: boolean;
+  constructor(email: string, password: string, rememberMe: boolean) {
     this.email = email;
     this.password = password;
+    this.rememberMe = rememberMe;
   }
 }
