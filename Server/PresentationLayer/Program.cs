@@ -154,6 +154,8 @@ var app = builder.Build();
 
 app.ConfigureExceptionHandling();
 
+//app.ConfigureExceptionHandling();
+
 app.MapOpenApi();
 
 app.MapScalarApiReference(opt =>
