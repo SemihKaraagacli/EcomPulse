@@ -156,7 +156,13 @@ app.ConfigureExceptionHandling();
 
 app.MapOpenApi();
 
-app.MapScalarApiReference();
+app.MapScalarApiReference(opt =>
+{
+    opt.WithTitle("EcomPulse Server")
+       .WithTheme(ScalarTheme.Alternate)
+       .WithLayout(ScalarLayout.Modern)
+       .WithModels(true);
+});
 
 app.UseHttpsRedirection();
 
