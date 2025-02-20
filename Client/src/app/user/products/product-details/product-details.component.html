@@ -1,0 +1,116 @@
+<div class="2xl:px-56 py-14 ">
+  <div class="flex items-start gap-32 ">
+    <div class="relative w-1/2 h-[590px] bg-[#F6F6F6] border">
+      <img class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  group-hover:scale-105 abc"
+        src="image.png" alt="Shopping Bag">
+    </div>
+    <div class="w-1/2 space-y-4 ">
+      <div class="flex items-center space-x-56">
+        <h1 class="text-[#0E1422] text-3xl font-extrabold">{{productService.product.name}}</h1>
+        <i class="fa-solid fa-share-nodes fa-xl"></i>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-3 bg-[#F6F6F6] text-[#5C5F6A] font-medium text-sm px-4 py-1 rounded-full">
+          <i class="fa-solid fa-star"></i>
+          <div>4.5- 54 Reviews</div>
+        </div>
+        <div class="border text-[#5C5F6A] font-medium text-sm px-4 py-1 rounded-full">
+          <div>IN STOCK</div>
+        </div>
+      </div>
+      <div class="font-bold text-xl text-[#0E1422]">
+        ${{productService.product.price}}
+      </div>
+      <form action="">
+        <div class="flex flex-col space-y-2 mb-10">
+          <div class="text-[#5C5F6A] font-medium text-xs">
+            QUANTITY
+          </div>
+          <div class="w-fit px-4 border flex items-center justify-center rounded-md space-x-7">
+            <span (click)="decrement()"
+              class="w-full text-center font-normal text-2xl cursor-pointer text-[#5C5F6A]">-</span>
+            <span id="count" class="w-full text-center font-semibold text-base text-[#0E1422]">{{
+              quantity}}</span>
+            <span (click)="increment()"
+              class="w-full text-center font-semibold text-2xl cursor-pointer text-[#5C5F6A]">+</span>
+          </div>
+        </div>
+        <div class="w-[300px] bg-[#0E1422] text-white text-center py-3 rounded-lg">
+          <button class="text-white text-base" type="submit">Add to cart</button>
+        </div>
+      </form>
+      <div class="pt-7">
+        <h1 class="text-[#0E1422] text-lg font-extrabold">Details</h1>
+        <p class="w-[600px] text-justify text-[#5C5F6A] text-sm font-medium">
+          {{productService.product.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="mb-40">
+  <h1 class="text-2xl font-extrabold text-center text-[#0E1422] mt-10">
+    You might also like</h1>
+
+  <div class="flex justify-center items-center gap-5 px-30">
+    <div class="w-[280px] h-[500px] py-4 px-2 group">
+      <div class="relative w-full h-[312px] bg-[#F6F6F6] mb-6 rounded-md overflow-hidden">
+        <img class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  group-hover:scale-105 abc"
+          src="image.png" alt="Shopping Bag">
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-white bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity">
+        </div>
+        <form class="absolute bottom-1 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 w-full ">
+          <div class="w-full bg-[#0E1422] text-white flex justify-center items-center py-3 rounded-b-md">
+            <button class="text-white text-base" type="submit" disabled>Add to cart</button>
+            <i class="fa-solid fa-cart-shopping ml-3 fa-lg"></i>
+          </div>
+        </form>
+      </div>
+      <div class="text-[#0E1422] text-base font-medium pl-1">ürün adı</div>
+      <div class="flex items-center">
+        <div class="py-1 px-4 border text-sm rounded-full mr-4">In Stock</div>
+        <div class="text-[#474B57] text-base">$100</div>
+      </div>
+    </div>
+    <div class="w-[280px] h-[500px] py-4 px-2 group">
+      <div class="relative w-full h-[312px] bg-[#F6F6F6] mb-6 rounded-md overflow-hidden">
+        <img class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  group-hover:scale-105 abc"
+          src="image.png" alt="Shopping Bag">
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-white bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity">
+        </div>
+        <form class="absolute bottom-1 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 w-full ">
+          <div class="w-full bg-[#0E1422] text-white flex justify-center items-center py-3 rounded-b-md">
+            <button class="text-white text-base" type="submit" disabled>Add to cart</button>
+            <i class="fa-solid fa-cart-shopping ml-3 fa-lg"></i>
+          </div>
+        </form>
+      </div>
+      <div class="text-[#0E1422] text-base font-medium pl-1">ürün adı</div>
+      <div class="flex items-center">
+        <div class="py-1 px-4 border text-sm rounded-full mr-4">In Stock</div>
+        <div class="text-[#474B57] text-base">$100</div>
+      </div>
+    </div>
+    <div class="w-[280px] h-[500px] py-4 px-2 group">
+      <div class="relative w-full h-[312px] bg-[#F6F6F6] mb-6 rounded-md overflow-hidden">
+        <img class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  group-hover:scale-105 abc"
+          src="image.png" alt="Shopping Bag">
+        <div
+          class="absolute top-0 left-0 w-full h-full bg-white bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity">
+        </div>
+        <form class="absolute bottom-1 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 w-full ">
+          <div class="w-full bg-[#0E1422] text-white flex justify-center items-center py-3 rounded-b-md">
+            <button class="text-white text-base" type="submit" disabled>Add to cart</button>
+            <i class="fa-solid fa-cart-shopping ml-3 fa-lg"></i>
+          </div>
+        </form>
+      </div>
+      <div class="text-[#0E1422] text-base font-medium pl-1">ürün adı</div>
+      <div class="flex items-center">
+        <div class="py-1 px-4 border text-sm rounded-full mr-4">In Stock</div>
+        <div class="text-[#474B57] text-base">$100</div>
+      </div>
+    </div>
+  </div>
+</section>

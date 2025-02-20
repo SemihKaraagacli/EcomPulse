@@ -18,6 +18,14 @@ export class ProductService {
     stock: 0,
     categoryId: '',
   };
+  product: ProductDto = {
+    id: '',
+    name: '',
+    description: '',
+    price: 0,
+    stock: 0,
+    categoryName: '',
+  };
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -42,6 +50,15 @@ export class ProductService {
   createProduct(data: ProductCreateRequestViewModel) {
     this.http.post(this.url, data).subscribe({
       next: (res) => {},
+      error: (err) => {},
+    });
+  }
+
+  getById(id: any) {
+    this.http.get(`${this.url}/${id}`).subscribe({
+      next: (res) => {
+        this.product = res as ProductDto;
+      },
       error: (err) => {},
     });
   }
