@@ -49,6 +49,6 @@ export class LoginComponent implements OnInit {
       password: this.f['password'].value,
       rememberMe: this.f['rememberMe'].value,
     };
-    this.authService.signIn(signInModel); // rememberMe parametresi iletiliyor
+    this.authService.signIn(signInModel);
   }
 }

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ClientcredentialService } from '../../shared/service/auth/clientcredential.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-mainpage',
@@ -7,9 +6,4 @@ import { ClientcredentialService } from '../../shared/service/auth/clientcredent
   templateUrl: './mainpage.component.html',
   styleUrl: './mainpage.component.scss',
 })
-export class MainpageComponent implements OnInit {
-  constructor(private clientCredential: ClientcredentialService) {}
-  ngOnInit(): void {
-    this.clientCredential.clientcredential();
-  }
-}
+export class MainpageComponent {}

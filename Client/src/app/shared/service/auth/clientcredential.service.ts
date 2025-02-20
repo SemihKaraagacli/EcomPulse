@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../../../environments/environment';
+import { jwt_decode } from 'jwt-decode-es';
 
 @Injectable({
   providedIn: 'root',
@@ -10,97 +12,113 @@ export class ClientcredentialService {
   private url: string = environment.authBaseUrl;
   private clientId: string = environment.ClientId;
   private clientSecretKey: string = environment.ClientSecretKey;
-  private tokenExpirationTime: number = 30 * 60 * 1000;
+  private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private cookieService: CookieService
+  ) {}
 
-  clientcredential() {
+  initializeToken() {
     const token = this.getToken();
+
     const now = new Date().getTime();
 
     if (!token || this.isTokenExpired(now)) {
-      this.router.navigate(['/']).then(() => {
-        this.refreshToken().catch((error) => {});
-      });
+      this.refreshToken();
+    } else {
+      this.startTokenExpirationTimer();
     }
   }
 
-  refreshToken(): Promise<void> {
-    const clientCrentialUrl = `${this.url}/clientcredential`;
+  private refreshToken(): void {
+    const clientCredentialUrl = `${this.url}/clientcredential`;
     const data = {
       ClientId: this.clientId,
       ClientSecretKey: this.clientSecretKey,
     };
 
-    return this.http
-      .post(clientCrentialUrl, data)
-      .toPromise()
-      .then((res: any) => {
+    this.http.post(clientCredentialUrl, data).subscribe({
+      next: (res: any) => {
         const token = res.accessToken;
         if (token) {
           this.saveToken(token);
+          this.startTokenExpirationTimer();
         } else {
           console.error('Token alınamadı');
+          this.clearToken();
         }
-      });
+      },
+      error: (err) => {
+        console.error('Token yenileme hatası:', err);
+        this.clearToken();
+      },
+    });
   }
 
-  saveToken(token: string): void {
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      const now = new Date().getTime();
-      const expiration = now + this.tokenExpirationTime;
-      document.cookie = `client_token=${token};expires=${new Date(
-        expiration
-      ).toUTCString()};path=/`;
-      document.cookie = `client_token_expiration=${expiration};expires=${new Date(
-        expiration
-      ).toUTCString()};path=/`;
+  private saveToken(token: string): void {
+    const decodedToken = jwt_decode(token);
+    if (decodedToken && decodedToken.exp) {
+      const expiration = decodedToken.exp * 1000;
+      const tokenData = JSON.stringify({ token, expiration });
+      this.cookieService.set(
+        'client_token',
+        tokenData,
+        new Date(expiration),
+        '/'
+      );
+    } else {
+      console.error('Token içinde exp alanı bulunamadı');
     }
   }
 
   getToken(): string | null {
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      const token = this.getCookie('client_token');
-      const expiration = this.getCookie('client_token_expiration');
-
-      if (token && expiration) {
-        const now = new Date().getTime();
-        if (this.isTokenExpired(now)) {
-          this.clearToken();
-        } else {
-          return token;
-        }
+    const tokenData = this.cookieService.get('client_token');
+    console.log(tokenData);
+    if (tokenData) {
+      const { token, expiration } = JSON.parse(tokenData);
+      const now = new Date().getTime();
+      if (expiration < now) {
+        this.clearToken();
+        return null;
       }
-    }
-    return null;
-  }
-
-  private getCookie(name: string): string | null {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-      return parts.pop()?.split(';').shift() || null;
+      return token;
     }
     return null;
   }
 
   private isTokenExpired(now: number): boolean {
-    const expiration = this.getCookie('client_token_expiration');
-    if (expiration) {
-      const isExpired = parseInt(expiration) < now;
-      if (isExpired) {
-        this.clearToken();
-      }
-      return isExpired;
+    const tokenData = this.cookieService.get('client_token');
+    if (tokenData) {
+      const { expiration } = JSON.parse(tokenData);
+      return expiration < now;
     }
     return true;
   }
 
   private clearToken(): void {
-    document.cookie =
-      'client_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-    document.cookie =
-      'client_token_expiration=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+    this.cookieService.delete('client_token', '/');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
     this.router.navigate(['/']);
+  }
+
+  private startTokenExpirationTimer(): void {
+    const tokenData = this.cookieService.get('client_token');
+    if (tokenData) {
+      const { expiration } = JSON.parse(tokenData);
+      const now = new Date().getTime();
+      const timeLeft = expiration - now;
+
+      if (timeLeft > 0) {
+        this.tokenExpirationTimer = setTimeout(() => {
+          this.refreshToken();
+        }, timeLeft - 5000);
+      } else {
+        this.refreshToken();
+      }
+    }
   }
 }

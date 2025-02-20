@@ -124,7 +124,7 @@ export class AuthService {
 
   startTokenExpirationTimer(expiration: number): void {
     const expirationDate = new Date(expiration * 1000);
-    const checkInterval = 60 * 60 * 1000; // 1 saat = 60 dakika * 60 saniye * 1000 milisaniye
+    const checkInterval = 60 * 60 * 1000;
 
     const checkTokenExpiration = () => {
       const remainingTime = expirationDate.getTime() - new Date().getTime();

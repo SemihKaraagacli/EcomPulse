@@ -5,7 +5,7 @@
         <h5 class="text-lg font-medium mb-4">Categories</h5>
         <div class="flex border-b py-2 px-2 items-center" *ngFor="let category of categoryService.categoryList">
           <input type="checkbox" name="category"
-            class="appearance-none w-5 h-5 border-2 border-[#E6E7E8]  checked:bg-[#F6F6F6] checked:border-[#E6E7E8] relative checked:after:content-['✔'] checked:after:absolute checked:after:inset-0 checked:after:flex checked:after:items-center checked:after:justify-center checked:after:text-white checked:after:text-sm"
+            class="appearance-none w-5 h-5 border-2 border-[#E6E7E8]  checked:bg-[#5C5F6A] checked:border-[#E6E7E8] relative checked:after:content-['✔'] checked:after:absolute checked:after:inset-0 checked:after:flex checked:after:items-center checked:after:justify-center checked:after:text-white checked:after:text-sm"
             [value]="category.id" [checked]="selectedCategory === category.id"
             (change)="onCategorySelect($event, category.id)">
           <label class="ml-3 cursor-pointer text-lg text-[#474B57]">{{ category.name }}</label>
@@ -28,7 +28,8 @@
       </section>
       <section class="">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
-          <a href="" class="w-full py-4 px-2 group" *ngFor="let product of productService.list">
+          <a routerLink="/products/{{product.id}}" class="w-full py-4 px-2 group"
+            *ngFor="let product of productService.list">
             <div class="relative w-full h-[312px] bg-[#F6F6F6] mb-6 rounded-md overflow-hidden">
               <img
                 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  group-hover:scale-105 abc"

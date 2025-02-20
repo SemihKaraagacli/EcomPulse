@@ -5,9 +5,13 @@ import { ClientcredentialService } from './shared/service/auth/clientcredential.
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterModule],
-  templateUrl: './app.component.html',
+  template: `<router-outlet></router-outlet>`,
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  constructor(private clientCredential: ClientcredentialService) {}
+export class AppComponent implements OnInit {
+  constructor(private clientCredentialService: ClientcredentialService) {}
+
+  ngOnInit(): void {
+    this.clientCredentialService.initializeToken();
+  }
 }
